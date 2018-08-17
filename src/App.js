@@ -28,12 +28,8 @@ class App extends Component {
                 <Nav />
             </Container>
         
-
-        
-            <Route exact path="/" component={Home} />
-            <Route path="/book" component={Book} />
-            <Route path="/contact" component={Contact} />
-    
+            <Route path="/book" component={Book}/>
+            <Route path="/contact" component={Contact}/>
          </React.Fragment> 
         </Router>
     );
