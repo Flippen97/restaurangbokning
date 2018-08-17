@@ -1,17 +1,16 @@
 import React from 'react';
 import './../../App.css';
+import CustomerForm from './../CustomerForm';
+import Container from './../styled/Container';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+
 
 function Book() {
     return (
         <React.Fragment>
-        
-            <h1>Här kan du boka ett bord</h1>
+            <Container width="100%" height="auto">
+                <CustomerForm />
+            </Container>
 
         </React.Fragment>
     );
