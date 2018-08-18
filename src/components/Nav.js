@@ -3,7 +3,6 @@ import React from 'react';
 import Home from './routes/Home'
 import Book from './routes/Book'
 import Contact from './routes/Contact'
-import Container from './styled/Container'
 
 import {
   BrowserRouter as Router,

@@ -87,9 +87,17 @@ li a:hover {
     flex-wrap: wrap;
 }
 
+.bookHeader {
+    width: 100%;
+    height: 20%;
+    color: lightgrey;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
 .bookSection {
     width: 33%;
-    height: 100%;
+    height: 80%;
     color: lightgrey;
     box-sizing: border-box;
     padding: 10px;
@@ -115,6 +123,42 @@ li a:hover {
 .bookSection > ul > li:hover {
     background-color: #555;
     color: white;
+}
+
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=text]:disabled {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    background-color: lightgrey;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
 }
 
 

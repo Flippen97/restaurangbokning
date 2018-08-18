@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './../App.css';
+    
+function FormInput(props) {    
 
-function FormInput(props) {
     return (
+        
         <React.Fragment>
         
            <div className="form-group">
               <label labelfor={props.name}> {props.label} </label>
                 <input 
-                    type={props.name} 
+                    type={props.type} 
                     name={props.name} 
-                    className={props.className} 
                     id={props.name} 
-                    placeholder={props.name}
+                    placeholder={props.state}
                     onChange={props.onChange}
                     value={props.value}
+                    // Get this ternary to work:
+                    //{props.state === '' ? disabled : ''}
                 />
             </div>
 

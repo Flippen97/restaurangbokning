@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import {
@@ -8,15 +7,12 @@ import {
   Link
 } from 'react-router-dom'
 
-import CustomerForm from './components/CustomerForm'
-import Nav from './components/Nav'
+//import Nav from './components/Nav'
 import Home from './components/routes/Home'
 import Book from './components/routes/Book'
 import Contact from './components/routes/Contact'
-import ContainsAll from './components/ContainsAll'
+//import ContainsAll from './components/ContainsAll'
 
-import Container from './components/styled/Container'
-import bgimg from './img/bg.jpg';
 
 
 class App extends Component {

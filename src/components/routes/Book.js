@@ -1,7 +1,6 @@
 import React from 'react';
 import './../../App.css';
 import CustomerForm from './../CustomerForm';
-import Container from './../styled/Container';
 
 import Calendar from 'react-calendar'
 
@@ -11,8 +10,9 @@ class Book extends React.Component {
     name: '',
     email: '',
     telephone: '',
-    date: new Date(),
-    time: '12:00'
+    date: '',
+//    date: '',
+    time: ''
   }
 
  onChange = date => this.setState({ date })
@@ -25,22 +25,33 @@ class Book extends React.Component {
     this.setState({ [event.target.name] : event.target.value })
   }
   
-  postBooking = () => {
-      console.log('Du har nu bokat och dina uppgifter är' + JSON.stringify(this.state));
-      
+  postBooking = (event) => {
+      event.preventDefault();
+      console.log('Du har nu bokat och dina uppgifter är' + JSON.stringify(this.state));  
   }
     
   render() {
       
-    let liClass;
-    if(this.state.date)
+    let timepickerText = '';
+      
+    if(!this.state.date){
+        timepickerText = `Välkommen till våran bordsbokning. För att kunna välja en sittning måste du först välja ett datum i kalendern.`
+    }else if(this.state.date && !this.state.time){
+        timepickerText = `Välj en sittning.`
+    }else if(this.state.date && this.state.time){
+        timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret till höger.`
+    }
     
     return (
         <React.Fragment>
             <div className="bookContainer">
+                <div className="bookHeader">
+                    <h2>Bordsboking</h2>
+                    {timepickerText}
+                </div>
         
                 <div className="bookSection">
-                    Välj ett datum:
+                    <h3>Välj ett datum:</h3>
                     <Calendar
                       onChange={this.onChange}
                       value={this.state.date}
@@ -48,15 +59,19 @@ class Book extends React.Component {
                 </div>
         
                 <div className="bookSection">
-                    Välj en sittning:
-                    <ul>
-                        <li onClick={this.setTime} data-time="18:00">18:00</li>
-                        <li onClick={this.setTime} data-time="21:00">21:00</li>
-                    </ul>
+                    <h3>Välj en sittning:</h3>
+                    
+                    <form>
+                    { /* Put disabled on these if a date has not yet been picked */ }
+                      <input type="radio" onClick={this.setTime} data-time="18:00" /> 18:00 <br />
+                      <input type="radio" onClick={this.setTime} data-time="21:00" /> 21:00
+                    </form>
+        
                 </div>
         
                 <div className="bookSection">
-                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} />
+                    <h3>Dina uppgifter:</h3>
+                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.time}/>
                 </div>
         
             </div>
