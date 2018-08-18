@@ -1,8 +1,9 @@
 import React from 'react';
-import './../App.css';
+//import './../App.css';
 import Home from './routes/Home'
 import Book from './routes/Book'
 import Contact from './routes/Contact'
+import Container from './styled/Container'
 
 import {
   BrowserRouter as Router,
@@ -11,19 +12,22 @@ import {
 } from 'react-router-dom'
 
 function Nav() {
+    
     return (
     <Router>
         <React.Fragment>
-            <ul>
-                <li><Link to="/">Hem</Link></li>
-                <li><Link to="/book">Boka bord</Link></li>
-                <li><Link to="/contact">Kontakt</Link></li>
-            </ul>
+        
+            <div className="navContainer">
+                    <ul>
+                        <li><Link to="/">Hem</Link></li>
+                        <li><Link to="/book">Boka bord</Link></li>
+                        <li><Link to="/contact">Kontakt</Link></li>
+                    </ul>
+            </div>
         
             <Route exact path="/" component={Home}/>
             <Route path="/book" component={Book}/>
             <Route path="/contact" component={Contact}/>
-        
         </React.Fragment>
     </Router>
     );

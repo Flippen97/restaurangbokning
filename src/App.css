@@ -1,28 +1,120 @@
-.App {
-  text-align: center;
+.containsAll {
+    width: 100%;
+    height: 100vh;
+    background-image: url('img/bg.jpg');
+    margin: 0px auto;
+    background-color: aqua;
+    border: 2px soid yellow;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.sectionContainer {
+    width: 100%; 
+    height: 80%; 
+    display: flex;
+    justify-content: center; 
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.section {
+    width: 96%;
+    height: 75%;
+    position: absolute;
+    z-index: 97; 
 }
 
-.App-title {
-  font-size: 1.5em;
+.sectionBg {
+    width: 96%;
+    height: 75%;
+    position: absolute;
+    z-index: 96; 
+    background-color: black;
+    opacity: 0.5;
 }
 
-.App-intro {
-  font-size: large;
+/******************************/
+/********** UTILITY ***********/
+/******************************/
+
+.show {
+    display: block;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.hide {
+    display: none;
 }
+
+
+/******************************/
+/*********** NAV **************/
+/******************************/
+
+.navContainer {
+    width: 100%;
+    height: 20%;
+    color: lightgrey;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    background-color: #f1f1f1;
+}
+
+li a {
+    display: inline;
+    display: block;
+    color: lightgrey;
+    padding: 8px 16px;
+    text-decoration: none;
+    float: left;
+}
+
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+/******************************/
+/*********** BOOK *************/
+/******************************/
+
+.bookContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.bookSection {
+    width: 33%;
+    height: 100%;
+    color: lightgrey;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.bookSection > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    background-color: #f1f1f1;
+}
+
+.bookSection > ul > li {
+    display: inline;
+    display: block;
+    color: lightgrey;
+    padding: 8px 16px;
+    text-decoration: none;
+    float: left;
+}
+
+.bookSection > ul > li:hover {
+    background-color: #555;
+    color: white;
+}
+
+

@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CustomerForm from './components/CustomerForm'
-import Nav from './components/Nav'
-import Home from './components/routes/Home'
-import Book from './components/routes/Book'
-import Contact from './components/routes/Contact'
 
 import {
   BrowserRouter as Router,
@@ -13,28 +8,43 @@ import {
   Link
 } from 'react-router-dom'
 
+import CustomerForm from './components/CustomerForm'
+import Nav from './components/Nav'
+import Home from './components/routes/Home'
+import Book from './components/routes/Book'
+import Contact from './components/routes/Contact'
+import ContainsAll from './components/ContainsAll'
+
+import Container from './components/styled/Container'
+import bgimg from './img/bg.jpg';
+
+
 class App extends Component {
+ 
   render() {
     return (
       <Router>
         <React.Fragment>
-             <div className="App">
-                <header className="App-header">
-                  <img src={logo} className="App-logo" alt="logo" />
-                  <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <p className="App-intro">
-                  To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
+            <div className="containsAll">
         
-                <Nav />
-                <CustomerForm />
+                <div className="navContainer">
+                    <ul>
+                        <li><Link to="/">Hem</Link></li>
+                        <li><Link to="/book">Boka bord</Link></li>
+                        <li><Link to="/contact">Kontakt</Link></li>
+                    </ul>
+                </div>
         
-              </div>
+                <div className="sectionContainer">
+                    <div className="sectionBg"></div>
+                    <div className="section">
+                        <Route exact path="/" component={Home}/>
+                        <Route path="/book" component={Book}/>
+                        <Route path="/contact" component={Contact}/>
+                    </div>
+                </div>
         
-              <Route exact path="/" component={Home} />
-              <Route path="/book" component={Book} />
-              <Route path="/contact" component={Contact} />
+            </div>
          </React.Fragment> 
         </Router>
     );
