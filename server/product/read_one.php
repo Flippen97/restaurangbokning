@@ -34,7 +34,9 @@ $product_arr = array(
     "id" =>  $product->id,
     "name" => $product->name,
     "email" => $product->email,
-    "telephone" => $product->telephone
+    "telephone" => $product->telephone,
+    "bdate" => $product->bdate,
+    "btime" => $product->btime
     
 );
  

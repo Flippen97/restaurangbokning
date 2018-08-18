@@ -24,11 +24,46 @@ class Book extends React.Component {
   handleChange = (event) => {
     this.setState({ [event.target.name] : event.target.value })
   }
+//  
+//  postBooking = (event) => {
+//      event.preventDefault();
+//      console.log('Du har nu bokat och dina uppgifter är' + JSON.stringify(this.state));  
+//  }
+
   
-  postBooking = (event) => {
-      event.preventDefault();
-      console.log('Du har nu bokat och dina uppgifter är' + JSON.stringify(this.state));  
-  }
+    postBooking = (event) => {
+        event.preventDefault();
+        
+//        fetch("https://www.idabergstrom.se/product/create.php", {
+//          method: "POST",
+//          mode: "cors",
+//          body: JSON.stringify({
+//            name: this.state.name,
+//            email: this.state.email,
+//            telephone: this.state.telephone,
+//            date: 'a date',
+//            time: '14:00',
+//          })
+//        })
+//          .then((response) => response.json())
+//        )};
+        
+
+    fetch(
+      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}&bdate=hej&btime=alsohej`, {
+          method: "POST",
+          mode: "cors" 
+      }
+        )
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+    }
     
   render() {
       

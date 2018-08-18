@@ -42,12 +42,12 @@ if($num>0){
 //            "category_id" => $category_id,
 //            "category_name" => $category_name
             
-            "id" => $id,
+//            "id" => $id,
             "name" => $name,
             "email" => $email,
             "telephone" => $telephone,
-            "date" => $date,
-            "time" => $time,
+            "bdate" => $bdate,
+            "btime" => $btime,
         );
  
         array_push($products_arr["records"], $product_item);

@@ -18,8 +18,8 @@ class Product{
     public $name;
     public $email;
     public $telephone;
-//    public $date;
-//    public $time;
+    public $bdate;
+    public $btime;
     
  
     // constructor with $db as database connection
@@ -42,8 +42,8 @@ class Product{
 //            customers.name as name,
 //            customers.email as email,
 //            customers.telephone as telephone,
-//            bookings.date as date,
-//            bookings.time as time
+//            bookings.bdate as bdate,
+//            bookings.btime as btime
 //        FROM bookings 
 //            JOIN customers WHERE bookings.customerId = customers.id";
 
@@ -73,9 +73,10 @@ class Product{
         // query to insert record
         
        $query = "INSERT INTO
-                    customers
+                    customers, bookings
                 SET
-                    name=:name, email=:email, telephone=:telephone";
+                    customers.name=:name, customers.email=:email, customers.telephone=:telephone, 
+                    bookings.bdate=:bdate, booking.dtime=:btime";
         
 //        $query = "INSERT INTO
 //                    " . $this->table_name . "
@@ -90,6 +91,8 @@ class Product{
         $this->name=htmlspecialchars(strip_tags($this->name));
         $this->email=htmlspecialchars(strip_tags($this->email));
         $this->telephone=htmlspecialchars(strip_tags($this->telephone));
+        $this->bdate=htmlspecialchars(strip_tags($this->bdate));
+        $this->btime=htmlspecialchars(strip_tags($this->btime));
 
         
 //        $this->name=htmlspecialchars(strip_tags($this->name));
@@ -103,6 +106,8 @@ class Product{
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":telephone", $this->telephone);
+        $stmt->bindParam(":bdate", $this->bdate);
+        $stmt->bindParam(":btime", $this->btime);
         
 //        $stmt->bindParam(":name", $this->name);
 //        $stmt->bindParam(":price", $this->price);
@@ -132,8 +137,8 @@ class Product{
             customers.name as name,
             customers.email as email,
             customers.telephone as telephone,
-            bookings.date as date,
-            bookings.time as time
+            bookings.bdate as bdate,
+            bookings.btime as btime
         FROM bookings 
             JOIN customers WHERE bookings.customerId = customers.id";
 //        
@@ -171,8 +176,98 @@ class Product{
         $this->name = $row['name'];
         $this->email = $row['email'];
         $this->telephone = $row['telephone'];
-//        $this->date = $row['date'];
-//        $this->time = $row['time'];
+        $this->bdate = $row['bdate'];
+        $this->btime = $row['btime'];
         
     }
+    
+    
+    // update the product
+    function update(){
+
+        // update query
+//        $query = "UPDATE
+//                    " . $this->table_name . "
+//                SET
+//                    name = :name,
+//                    price = :price,
+//                    description = :description,
+//                    category_id = :category_id
+//                WHERE
+//                    id = :id";
+        
+        $query = "UPDATE
+                    customers, bookings
+                SET
+                    customers.name = :name,
+                    customers.email = :email,
+                    customers.telephone = :telephone,
+                    bookings.bdate = :bdate,
+                    bookings.btime = :btime,
+                WHERE
+                    customers.id = :id";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+//        $this->name=htmlspecialchars(strip_tags($this->name));
+//        $this->price=htmlspecialchars(strip_tags($this->price));
+//        $this->description=htmlspecialchars(strip_tags($this->description));
+//        $this->category_id=htmlspecialchars(strip_tags($this->category_id));
+//        $this->id=htmlspecialchars(strip_tags($this->id));
+        
+        $this->name=htmlspecialchars(strip_tags($this->name));
+        $this->email=htmlspecialchars(strip_tags($this->email));
+        $this->telephone=htmlspecialchars(strip_tags($this->telephone));
+        $this->bdate=htmlspecialchars(strip_tags($this->bdate));
+        $this->btime=htmlspecialchars(strip_tags($this->btime));
+
+        // bind new values
+//        $stmt->bindParam(':name', $this->name);
+//        $stmt->bindParam(':price', $this->price);
+//        $stmt->bindParam(':description', $this->description);
+//        $stmt->bindParam(':category_id', $this->category_id);
+//        $stmt->bindParam(':id', $this->id);
+        
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':telephone', $this->telephone);
+        $stmt->bindParam(':bdate', $this->bdate);
+        $stmt->bindParam(':btime', $this->btime);
+
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+    }
+    
+    
+    
+    // delete the product
+    function delete(){
+
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->id=htmlspecialchars(strip_tags($this->id));
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $this->id);
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+
+    }
+    
 }

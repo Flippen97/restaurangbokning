@@ -17,15 +17,15 @@ import Contact from './components/routes/Contact'
 
 class App extends Component {
     
-componentDidMount = () => {   
-    fetch('https://www.idabergstrom.se/product/read.php')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myJson) {
-        console.log(myJson);
-      });
-}
+    componentDidMount = () => {   
+        fetch('https://www.idabergstrom.se/product/read.php')
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(myJson) {
+            console.log(myJson);
+          });
+    }
  
   render() {
     return (
