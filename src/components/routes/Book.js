@@ -35,9 +35,9 @@ class Book extends React.Component {
     let timepickerText = '';
       
     if(!this.state.date){
-        timepickerText = `Välkommen till våran bordsbokning. För att kunna välja en sittning måste du först välja ett datum i kalendern.`
+        timepickerText = `Välkommen till våran bordsbokning! Var god välj ett datum i kalendern.`
     }else if(this.state.date && !this.state.time){
-        timepickerText = `Välj en sittning.`
+        timepickerText = `Välj en sittning. Du kan välja mellan kl 18 och kl 21.`
     }else if(this.state.date && this.state.time){
         timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret till höger.`
     }

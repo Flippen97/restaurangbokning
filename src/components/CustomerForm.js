@@ -26,7 +26,7 @@ function CustomerForm(props) {
             />
         
             <FormInput
-                label="Telephone: "
+                label="Telefon: "
                 type="text" 
                 name="telephone"
 //               { /* className="form-control" */ }
