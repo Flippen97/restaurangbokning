@@ -46,7 +46,7 @@ class Book extends React.Component {
 
   
     postBooking = (event) => {
-// Working for posting customers table!        
+        
 //        fetch(
 //      `https://www.idabergstrom.se/product/create.php`, {
 //          method: "POST",
@@ -54,7 +54,9 @@ class Book extends React.Component {
 //          body: JSON.stringify({
 //            name: "lalala",
 //            email: "lalala",
-//            telephone: "234323"
+//            telephone: "234323",
+//            bdate: "3242",
+//            btime: "3523"
 //          }) 
 //        })
 //          .then(response => response.json())
@@ -70,11 +72,11 @@ class Book extends React.Component {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
-            name: "lalala",
-            email: "lalala",
-            telephone: "234323",
-            bdate: "3242",
-            btime: "3523"
+            name: this.state.name,
+            email: this.state.email,
+            telephone: this.state.telephone,
+            bdate: this.state.bdate,
+            btime: this.state.btime
           }) 
         })
           .then(response => response.json())
@@ -84,6 +86,8 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
+        
+
 
   }
     

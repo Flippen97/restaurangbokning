@@ -69,27 +69,15 @@ class Product{
     
  
     
-      // create product
+    // create product
     function create(){
         // query to insert record
-        
-//       $query = "INSERT INTO
-//                    customers, bookings
-//                SET
-//                    customers.name=:name, customers.email=:email, customers.telephone=:telephone, 
-//                    bookings.bdate=:bdate, booking.dtime=:btime";
-        
-// this query works in phpmyadmin:        
+      
         $query = "INSERT INTO customers (name, email, telephone)
                     VALUES (:name, :email, :telephone);
-                INSERT INTO bookings (bdate, btime)
-                    VALUES (:bdate, :btime)";
+                INSERT INTO bookings (bdate, btime, customerId)
+                    VALUES (:bdate, :btime, LAST_INSERT_ID())";
         
-        
-//        $query = "INSERT INTO
-//                    " . $this->table_name . "
-//                SET
-//                    name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
         // prepare query
         $stmt = $this->conn->prepare($query);
         
@@ -100,7 +88,6 @@ class Product{
         $this->bdate=htmlspecialchars(strip_tags($this->bdate));
         $this->btime=htmlspecialchars(strip_tags($this->btime));
         
-
         // bind values
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
