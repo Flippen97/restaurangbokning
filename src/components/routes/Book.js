@@ -1,6 +1,7 @@
 import React from 'react';
 import './../../App.css';
 import CustomerForm from './../CustomerForm';
+import FormInput from './../FormInput';
 
 import Calendar from 'react-calendar'
 
@@ -10,6 +11,7 @@ class Book extends React.Component {
     name: '',
     email: '',
     telephone: '',
+    tables: '',
     date: '',
 //    date: '',
     time: ''
@@ -21,10 +23,26 @@ class Book extends React.Component {
       this.setState({ time: event.target.dataset.time })
   }
   
+  setTables = (event) => {
+    /* Calculates number of tables depending on number of guests */
+    let tables;
+    if(event.target.value < 6){
+        tables = 1;
+        console.log(event.target.value + ' guests will need ' + tables + ' tables.');
+    }else if((event.target.value % 6) === 0){
+        tables = event.target.value / 6;
+        console.log(event.target.value + ' guests will need ' + tables + ' tables.');
+    }else{
+        tables = Math.ceil(parseFloat(event.target.value / 6));
+        console.log(event.target.value + ' guests will need ' + tables + ' tables.');
+    }
+    this.setState({ tables: tables })
+  }
+  
   handleChange = (event) => {
     this.setState({ [event.target.name] : event.target.value })
   }
-//  
+
 //  postBooking = (event) => {
 //      event.preventDefault();
 //      console.log('Du har nu bokat och dina uppgifter är' + JSON.stringify(this.state));  
@@ -91,6 +109,9 @@ class Book extends React.Component {
                       onChange={this.onChange}
                       value={this.state.date}
                     />
+                    Antal personer: <br />
+                    <FormInput name="tables" type="text" onChange={this.setTables}/>
+
                 </div>
         
                 <div className="bookSection">
