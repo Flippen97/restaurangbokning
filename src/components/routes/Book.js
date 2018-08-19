@@ -46,15 +46,17 @@ class Book extends React.Component {
 
   
     postBooking = (event) => {
-    // Working for posting empty rows:
-//    event.preventDefault();
-        
-//    fetch(
-//      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}`, {
+// Working for posting customers table!        
+//        fetch(
+//      `https://www.idabergstrom.se/product/create.php`, {
 //          method: "POST",
-//          mode: "cors" 
-//      }
-//        )
+//          mode: "cors",
+//          body: JSON.stringify({
+//            name: "lalala",
+//            email: "lalala",
+//            telephone: "234323"
+//          }) 
+//        })
 //          .then(response => response.json())
 //          .then(fetched => {
 //            console.log(fetched);
@@ -70,7 +72,9 @@ class Book extends React.Component {
           body: JSON.stringify({
             name: "lalala",
             email: "lalala",
-            telephone: "234323"
+            telephone: "234323",
+            bdate: "3242",
+            btime: "3523"
           }) 
         })
           .then(response => response.json())

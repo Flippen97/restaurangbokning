@@ -67,11 +67,9 @@ class Product{
         return $stmt;
     }
     
+ 
     
-    
-    
-    
-  // create product
+      // create product
     function create(){
         // query to insert record
         
@@ -83,9 +81,9 @@ class Product{
         
 // this query works in phpmyadmin:        
         $query = "INSERT INTO customers (name, email, telephone)
-                    VALUES (:name, :email, :telephone)";
-//                INSERT INTO bookings (bdate, btime)
-//                    VALUES (:bdate, :btime)";
+                    VALUES (:name, :email, :telephone);
+                INSERT INTO bookings (bdate, btime)
+                    VALUES (:bdate, :btime)";
         
         
 //        $query = "INSERT INTO
@@ -99,37 +97,26 @@ class Product{
         $this->name=htmlspecialchars(strip_tags($this->name));
         $this->email=htmlspecialchars(strip_tags($this->email));
         $this->telephone=htmlspecialchars(strip_tags($this->telephone));
-//        $this->bdate=htmlspecialchars(strip_tags($this->bdate));
-//        $this->btime=htmlspecialchars(strip_tags($this->btime));
+        $this->bdate=htmlspecialchars(strip_tags($this->bdate));
+        $this->btime=htmlspecialchars(strip_tags($this->btime));
         
-//        $this->name=htmlspecialchars(strip_tags($this->name));
-//        $this->price=htmlspecialchars(strip_tags($this->price));
-//        $this->description=htmlspecialchars(strip_tags($this->description));
-//        $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-//        $this->created=htmlspecialchars(strip_tags($this->created));
+
         // bind values
-        
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":telephone", $this->telephone);
-//        $stmt->bindParam(":bdate", $this->bdate);
-//        $stmt->bindParam(":btime", $this->btime);
+        $stmt->bindParam(":bdate", $this->bdate);
+        $stmt->bindParam(":btime", $this->btime);
         
-//        $stmt->bindParam(":name", $this->name);
-//        $stmt->bindParam(":price", $this->price);
-//        $stmt->bindParam(":description", $this->description);
-//        $stmt->bindParam(":category_id", $this->category_id);
-//        $stmt->bindParam(":created", $this->created);
         // execute query
         if($stmt->execute()){
             return true;
         }
         return false;
     }
-
     
     
-    
+ 
     
     // used when filling up the update product form
     function readOne(){
