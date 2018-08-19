@@ -13,7 +13,6 @@ class Book extends React.Component {
     telephone: '',
     tables: '',
     date: '',
-//    date: '',
     time: ''
   }
 
@@ -26,10 +25,7 @@ class Book extends React.Component {
   setTables = (event) => {
     /* Calculates number of tables depending on number of guests */
     let tables;
-    if(event.target.value < 6){
-        tables = 1;
-        console.log(event.target.value + ' guests will need ' + tables + ' tables.');
-    }else if((event.target.value % 6) === 0){
+    if((event.target.value % 6) === 0){
         tables = event.target.value / 6;
         console.log(event.target.value + ' guests will need ' + tables + ' tables.');
     }else{
@@ -59,16 +55,31 @@ class Book extends React.Component {
 //            name: this.state.name,
 //            email: this.state.email,
 //            telephone: this.state.telephone,
-//            date: 'a date',
-//            time: '14:00',
+//            bdate: 'a date',
+//            btime: '14:00',
 //          })
 //        })
 //          .then((response) => response.json())
 //        )};
         
 
+//    fetch(
+//      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}&bdate=hej&btime=alsohej`, {
+//          method: "POST",
+//          mode: "cors" 
+//      }
+//        )
+//          .then(response => response.json())
+//          .then(fetched => {
+//            console.log(fetched);
+//          })
+//          .catch(error => {
+//            console.log(error);
+//          });
+        
+
     fetch(
-      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}&bdate=hej&btime=alsohej`, {
+      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}`, {
           method: "POST",
           mode: "cors" 
       }
@@ -80,8 +91,26 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
+        
+//        fetch('https://www.idabergstrom.se/product/create.php',{
+//        method: 'POST',
+//        body: JSON.stringify({
+//            name: this.state.name,
+//            email: this.state.email,
+//            telephone: this.state.telephone,
+//            bdate: 'a date',
+//            btime: '14:00',
+//        })
+//        }).then(function(response) {
+//            return response.json();
+//          })
+//          .then(function(myJson) {
+//            console.log(myJson);
+//          });
+    
 
-    }
+
+  }
     
   render() {
       

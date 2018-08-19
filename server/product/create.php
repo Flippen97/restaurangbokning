@@ -30,8 +30,8 @@ $data = json_decode(file_get_contents("php://input"));
 $product->name = $data->name;
 $product->email = $data->email;
 $product->telephone = $data->telephone;
-$product->bdate = $data->bdate;
-$product->btime = $data->btime;
+//$product->bdate = $data->bdate;
+//$product->btime = $data->btime;
  
 // create the product
 if($product->create()){
