@@ -46,25 +46,11 @@ class Book extends React.Component {
 
   
     postBooking = (event) => {
-        event.preventDefault();
+    // Working for posting empty rows:
+//    event.preventDefault();
         
-//        fetch("https://www.idabergstrom.se/product/create.php", {
-//          method: "POST",
-//          mode: "cors",
-//          body: JSON.stringify({
-//            name: this.state.name,
-//            email: this.state.email,
-//            telephone: this.state.telephone,
-//            bdate: 'a date',
-//            btime: '14:00',
-//          })
-//        })
-//          .then((response) => response.json())
-//        )};
-        
-
 //    fetch(
-//      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}&bdate=hej&btime=alsohej`, {
+//      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}`, {
 //          method: "POST",
 //          mode: "cors" 
 //      }
@@ -77,13 +63,16 @@ class Book extends React.Component {
 //            console.log(error);
 //          });
         
-
-    fetch(
-      `https://www.idabergstrom.se/product/create.php?name=${this.state.name}&email=${this.state.email}&telephone=${this.state.telephone}`, {
+        fetch(
+      `https://www.idabergstrom.se/product/create.php`, {
           method: "POST",
-          mode: "cors" 
-      }
-        )
+          mode: "cors",
+          body: JSON.stringify({
+            name: "lalala",
+            email: "lalala",
+            telephone: "234323"
+          }) 
+        })
           .then(response => response.json())
           .then(fetched => {
             console.log(fetched);
@@ -91,24 +80,6 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
-        
-//        fetch('https://www.idabergstrom.se/product/create.php',{
-//        method: 'POST',
-//        body: JSON.stringify({
-//            name: this.state.name,
-//            email: this.state.email,
-//            telephone: this.state.telephone,
-//            bdate: 'a date',
-//            btime: '14:00',
-//        })
-//        }).then(function(response) {
-//            return response.json();
-//          })
-//          .then(function(myJson) {
-//            console.log(myJson);
-//          });
-    
-
 
   }
     
