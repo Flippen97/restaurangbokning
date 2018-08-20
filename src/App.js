@@ -25,8 +25,6 @@ class App extends Component {
           .then(function(myJson) {
             console.log(myJson);
           });
-        
-        this.updateBooking();
     }
     
     /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
@@ -53,8 +51,27 @@ class App extends Component {
           });
     }
     
+    deleteBooking = () => {   
+        fetch('https://www.idabergstrom.se/restaurant-api/product/delete.php', {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify({
+            bid: '16'
+          }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+            console.log("Nää nåt går fel");
+          });
+    }
     
-    /****************************************************************/
+    
+    
+    /**************************************************************************/
  
   render() {
     return (
@@ -68,6 +85,10 @@ class App extends Component {
                         <li><Link to="/book">Boka bord</Link></li>
                         <li><Link to="/contact">Kontakt</Link></li>
                     </ul>
+        
+                   { /* Just a test button. Remove l8r */ }
+                    <button onClick={this.deleteBooking}>Testknapp för delete</button>
+        
                 </div>
         
                 <div className="sectionContainer">

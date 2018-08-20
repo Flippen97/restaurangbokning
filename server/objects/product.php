@@ -6,10 +6,11 @@ class Product{
 //    private $table_name = "customers";
  
     // object properties
-//    public $id;
+    public $id;
     public $name;
     public $email;
     public $telephone;
+    public $bid;
     public $bdate;
     public $btime;
     
@@ -84,6 +85,7 @@ class Product{
             customers.name as name,
             customers.email as email,
             customers.telephone as telephone,
+            bookings.bid as bid,
             bookings.bdate as bdate,
             bookings.btime as btime
         FROM bookings 
@@ -106,6 +108,7 @@ class Product{
         $this->name = $row['name'];
         $this->email = $row['email'];
         $this->telephone = $row['telephone'];
+        $this->bid = $row['bid'];
         $this->bdate = $row['bdate'];
         $this->btime = $row['btime'];
         
@@ -113,24 +116,12 @@ class Product{
     
     
     //********* update the product ********//
-    /* Work in progress here.... */
     function update(){
 
         // update query
         
         $query = "UPDATE customers SET name = :name, email = :email, telephone = :telephone WHERE id = :id;
-                UPDATE bookings SET bdate = :bdate, btime = :btime, WHERE customerId = :id";
-        
-//        $query = "UPDATE
-//                    customers, bookings
-//                SET
-//                    customers.name = :name,
-//                    customers.email = :email,
-//                    customers.telephone = :telephone,
-//                    bookings.bdate = :bdate,
-//                    bookings.btime = :btime,
-//                WHERE
-//                    customers.id = :id";
+                UPDATE bookings SET bdate = :bdate, btime = :btime WHERE customerId = :id";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -162,20 +153,22 @@ class Product{
     
     
     //********* delete the product ********//
-    /* Work in progress here.... */
+    
+    /* This function deletes the booking, not the customer */
     function delete(){
 
         // delete query
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+        /* this query works just fine! */
+        $query = "DELETE FROM bookings WHERE bid = :bid";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize
-        $this->id=htmlspecialchars(strip_tags($this->id));
+//        $this->bid=htmlspecialchars(sbtrip_tags($this->bid));
 
         // bind id of record to delete
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(':bid', $this->bid);
 
         // execute query
         if($stmt->execute()){
