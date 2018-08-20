@@ -18,14 +18,43 @@ import Contact from './components/routes/Contact'
 class App extends Component {
     
     componentDidMount = () => {   
-        fetch('https://www.idabergstrom.se/product/read.php')
+        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
           .then(function(response) {
             return response.json();
           })
           .then(function(myJson) {
             console.log(myJson);
           });
+        
+        this.updateBooking();
     }
+    
+    /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
+    
+    updateBooking = () => {   
+        fetch('https://www.idabergstrom.se/restaurant-api/product/update.php', {
+          method: "POST",
+          mode: "cors",
+          body: JSON.stringify({
+            id: '41',
+            name: 'Uppdaterat namn',
+            email: 'Uppdaterad mail',
+            telephone: 'Uppdaterat telefonnummer',
+            bdate: 'Uppdaterad dag',
+            btime: 'Uppdaterad tid' 
+          }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }
+    
+    
+    /****************************************************************/
  
   render() {
     return (

@@ -30,7 +30,6 @@ $product->id = $data->id;
 //$product->description = $data->description;
 //$product->category_id = $data->category_id;
 
-$product->id = $data->id;
 $product->name = $data->name;
 $product->email = $data->email;
 $product->telephone = $data->telephone;

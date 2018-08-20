@@ -102,6 +102,7 @@ class Product{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // set values to object properties
+        $this->id = $row['id'];
         $this->name = $row['name'];
         $this->email = $row['email'];
         $this->telephone = $row['telephone'];
@@ -116,21 +117,26 @@ class Product{
     function update(){
 
         // update query
-        $query = "UPDATE
-                    customers, bookings
-                SET
-                    customers.name = :name,
-                    customers.email = :email,
-                    customers.telephone = :telephone,
-                    bookings.bdate = :bdate,
-                    bookings.btime = :btime,
-                WHERE
-                    customers.id = :id";
+        
+        $query = "UPDATE customers SET name = :name, email = :email, telephone = :telephone WHERE id = :id;
+                UPDATE bookings SET bdate = :bdate, btime = :btime, WHERE customerId = :id";
+        
+//        $query = "UPDATE
+//                    customers, bookings
+//                SET
+//                    customers.name = :name,
+//                    customers.email = :email,
+//                    customers.telephone = :telephone,
+//                    bookings.bdate = :bdate,
+//                    bookings.btime = :btime,
+//                WHERE
+//                    customers.id = :id";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
 
         // sanitize
+        $this->id=htmlspecialchars(strip_tags($this->id));
         $this->name=htmlspecialchars(strip_tags($this->name));
         $this->email=htmlspecialchars(strip_tags($this->email));
         $this->telephone=htmlspecialchars(strip_tags($this->telephone));
@@ -138,6 +144,7 @@ class Product{
         $this->btime=htmlspecialchars(strip_tags($this->btime));
 
         // bind new values
+        $stmt->bindParam(':id', $this->id);
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':telephone', $this->telephone);
