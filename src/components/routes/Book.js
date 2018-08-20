@@ -12,14 +12,14 @@ class Book extends React.Component {
     email: '',
     telephone: '',
     tables: '',
-    date: '',
-    time: ''
+    bdate: '',
+    btime: ''
   }
 
- onChange = date => this.setState({ date })
+ onChange = bdate => this.setState({ bdate })
     
   setTime = (event) => {
-      this.setState({ time: event.target.dataset.time })
+      this.setState({ btime: event.target.dataset.btime })
   }
   
   setTables = (event) => {
@@ -47,28 +47,7 @@ class Book extends React.Component {
   
     postBooking = (event) => {
         
-//        fetch(
-//      `https://www.idabergstrom.se/product/create.php`, {
-//          method: "POST",
-//          mode: "cors",
-//          body: JSON.stringify({
-//            name: "lalala",
-//            email: "lalala",
-//            telephone: "234323",
-//            bdate: "3242",
-//            btime: "3523"
-//          }) 
-//        })
-//          .then(response => response.json())
-//          .then(fetched => {
-//            console.log(fetched);
-//          })
-//          .catch(error => {
-//            console.log(error);
-//          });
-        
-        fetch(
-      `https://www.idabergstrom.se/product/create.php`, {
+        fetch(`https://www.idabergstrom.se/restaurant-api/product/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
@@ -76,7 +55,7 @@ class Book extends React.Component {
             email: this.state.email,
             telephone: this.state.telephone,
             bdate: this.state.bdate,
-            btime: this.state.btime
+            btime: this.state.btime 
           }) 
         })
           .then(response => response.json())
@@ -115,7 +94,7 @@ class Book extends React.Component {
                     <h3>Välj ett datum:</h3>
                     <Calendar
                       onChange={this.onChange}
-                      value={this.state.date}
+                      value={this.state.bdate}
                     />
                     Antal personer: <br />
                     <FormInput name="tables" type="text" onChange={this.setTables}/>
@@ -127,15 +106,15 @@ class Book extends React.Component {
                     
                     <form>
                     { /* Put disabled on these if a date has not yet been picked */ }
-                      <input type="radio" onClick={this.setTime} data-time="18:00" /> 18:00 <br />
-                      <input type="radio" onClick={this.setTime} data-time="21:00" /> 21:00
+                      <input type="radio" onClick={this.setTime} data-btime="18" /> 18:00 <br />
+                      <input type="radio" onClick={this.setTime} data-btime="21" /> 21:00
                     </form>
         
                 </div>
         
                 <div className="bookSection">
                     <h3>Dina uppgifter:</h3>
-                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.time}/>
+                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
                 </div>
         
             </div>

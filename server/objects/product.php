@@ -3,11 +3,10 @@ class Product{
  
     // database connection and table name
     private $conn;
-//    private $table_name = "products";
-    private $table_name = "customers";
+//    private $table_name = "customers";
  
     // object properties
-    public $id;
+//    public $id;
     public $name;
     public $email;
     public $telephone;
