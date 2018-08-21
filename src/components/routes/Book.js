@@ -16,7 +16,10 @@ class Book extends React.Component {
     btime: ''
   }
 
- onChange = bdate => this.setState({ bdate })
+ onChange = (event) => {
+     /* Date is converted to a more readable format when set into state */
+     this.setState({ bdate: event.toLocaleDateString("en-EUR") })
+ }
     
   setTime = (event) => {
       this.setState({ btime: event.target.dataset.btime })
@@ -94,7 +97,7 @@ class Book extends React.Component {
                     <h3>Välj ett datum:</h3>
                     <Calendar
                       onChange={this.onChange}
-                      value={this.state.bdate}
+        /* value={this.state.bdate} */
                     />
                     Antal personer: <br />
                     <FormInput name="tables" type="text" onChange={this.setTables}/>
