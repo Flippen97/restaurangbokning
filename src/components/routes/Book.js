@@ -5,6 +5,8 @@ import FormInput from './../FormInput';
 
 import Calendar from './../Calendar';
 
+import moment from 'moment';
+
 //import DayPicker from 'react-day-picker';
 //import 'react-day-picker/lib/style.css';
 
@@ -24,6 +26,11 @@ class Book extends React.Component {
          /* Date is converted to a more readable format when set into state */
     //     this.setState({ bdate: event.toLocaleDateString("en-EUR") })
          console.log(event);
+         let hej = event;
+         console.log(hej);
+         
+         let newDate = moment(hej).format("YYYY[,] MM[,] DD");
+         console.log(newDate);
          this.setState({ bdate: event })
      }
     
