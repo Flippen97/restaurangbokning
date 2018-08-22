@@ -3,7 +3,10 @@ import './../../App.css';
 import CustomerForm from './../CustomerForm';
 import FormInput from './../FormInput';
 
-import Calendar from 'react-calendar'
+import Calendar from './../Calendar';
+
+//import DayPicker from 'react-day-picker';
+//import 'react-day-picker/lib/style.css';
 
     
 class Book extends React.Component {
@@ -16,10 +19,13 @@ class Book extends React.Component {
     btime: ''
   }
 
- onChange = (event) => {
-     /* Date is converted to a more readable format when set into state */
-     this.setState({ bdate: event.toLocaleDateString("en-EUR") })
- }
+     /* This function is called from the Calendar component */
+     onDayClick = (event) => {
+         /* Date is converted to a more readable format when set into state */
+    //     this.setState({ bdate: event.toLocaleDateString("en-EUR") })
+         console.log(event);
+         this.setState({ bdate: event })
+     }
     
   setTime = (event) => {
       this.setState({ btime: event.target.dataset.btime })
@@ -41,12 +47,6 @@ class Book extends React.Component {
   handleChange = (event) => {
     this.setState({ [event.target.name] : event.target.value })
   }
-
-//  postBooking = (event) => {
-//      event.preventDefault();
-//      console.log('Du har nu bokat och dina uppgifter är' + JSON.stringify(this.state));  
-//  }
-
   
     postBooking = (event) => {
         
@@ -58,7 +58,7 @@ class Book extends React.Component {
             email: this.state.email,
             telephone: this.state.telephone,
             bdate: this.state.bdate,
-            btime: this.state.btime 
+            btime: this.state.btime,
           }) 
         })
           .then(response => response.json())
@@ -68,12 +68,31 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
-        
-
-
   }
+
+        
+//    componentDidMount = () => {   
+//        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
+//          .then(function(response) {
+//            return response.json();
+//          })
+//          .then(function(myJson) {
+//            let array = myJson.records;
+//                console.log(array);
+//            for(let i = 0; i < array.length; i++){
+//                console.log(array[i].bdate);
+//            }
+//          });
+//    }
+    
+    
+
+    
+
     
   render() {
+      
+
       
     let timepickerText = '';
       
@@ -95,10 +114,10 @@ class Book extends React.Component {
         
                 <div className="bookSection">
                     <h3>Välj ett datum:</h3>
-                    <Calendar
-                      onChange={this.onChange}
-        /* value={this.state.bdate} */
-                    />
+
+        
+                    <Calendar onDayClick={this.onDayClick} />
+        
                     Antal personer: <br />
                     <FormInput name="tables" type="text" onChange={this.setTables}/>
 
