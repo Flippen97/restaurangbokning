@@ -1,7 +1,8 @@
 .containsAll {
     width: 100%;
     height: 100vh;
-    background-image: url('img/bg.jpg');
+    background-image: url('img/mobile_bg.png');
+    background-size: cover;
     margin: 0px auto;
     background-color: aqua;
     border: 2px soid yellow;
@@ -67,7 +68,7 @@ li a {
     color: lightgrey;
     padding: 8px 16px;
     text-decoration: none;
-    float: left;
+    /*float: left;*/
 }
 
 li a:hover {
@@ -117,7 +118,7 @@ li a:hover {
     color: lightgrey;
     padding: 8px 16px;
     text-decoration: none;
-    float: left;
+    /*float: left;*/
 }
 
 .bookSection > ul > li:hover {
@@ -161,4 +162,15 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
+@media screen and (min-width: 800px) {
+    body {
+        background-image: url('img/tablet_bg.png');
+    }
+}
 
+@media screen and (min-width: 1000px) {
+    .containsAll {
+        background-image: url('img/webb_bg.png');
+    }
+    
+}
