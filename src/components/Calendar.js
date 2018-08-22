@@ -6,12 +6,24 @@ import 'react-day-picker/lib/style.css';
     
 class Calendar extends React.Component {
   state = {
-      allBookings: {},
+      allBookings: [],
       disabledDates: ''
   }
     
-  setDisabledDates = (date) => {
-      this.setState({ disabledDates: date })
+  disabledDates = () => {
+    let bookingsArray = this.state.allBookings;
+    let countedBookings = {};
+    let disabledDatesArray = []
+      
+    // This counts how many times a specific date has occured in the bookingsArray: 
+    bookingsArray.forEach(function(x) { countedBookings [x.bdate] = (countedBookings [x.bdate] || 0)+1; });
+    // This takes bookings that has over 30 counts and push them into disabledDates state:
+    for(var key in countedBookings){
+        if(countedBookings[key] >= 1){ // Later on, change this to 30! 
+             disabledDatesArray.push(key);   
+        }
+    }  
+    this.setState({ disabledDates: disabledDatesArray })
   }
   
     
@@ -19,51 +31,23 @@ class Calendar extends React.Component {
       this.setState({ allBookings: bookings })
   }
   
+  fetchBookings = () => {
+    return fetch("https://www.idabergstrom.se/restaurant-api/product/read.php")
+      .then((response) => response.json())
+  }
 
-
-    countBookings = (fetchedArray) => {
-        console.log(fetchedArray); 
-    }
 
 
     
     componentDidMount = () => {
-            fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
-              .then(function(response) {
-                return response.json();
-              })
-              .then(function(myJson) {
-                let data = myJson.records;
-                
-                let calenderContent = [...data];
-                let bookingArray = [];
-                let disabledDatesArray = []
-                
-                for(let i = 0; i < calenderContent.length; i++){
-                    let bookingObj = { bdate: calenderContent[i].bdate, btime: calenderContent[i].btime }
-                    bookingArray.push(bookingObj);
-                }
-                 
-                // This counts how many times a specific date has occured in the bookingsArray. 
-                var counts = {};
-                bookingArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
-                console.log(counts);
+        this.fetchBookings()
+        .then((data) => { 
+            this.setState({ allBookings: data.records }, () => {
 
-                
-                for(var key in counts){
-//                    console.log(key);
-//                    console.log(counts[key]);
-//                       console.log(this);
-                    if(counts[key] >= 1){ // Later on, change this to 30! 
-                         disabledDatesArray.push(key);   
-                    }
-                }
-                
-                console.log(disabledDatesArray);
+            this.disabledDates();
 
-
-              });  
-
+            });
+        })
     }
     
 
