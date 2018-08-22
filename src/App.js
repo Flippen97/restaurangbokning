@@ -9,6 +9,7 @@ import {
 
 //import Nav from './components/Nav'
 import Home from './components/routes/Home'
+import Menu from './components/routes/Menu'
 import Book from './components/routes/Book'
 import Contact from './components/routes/Contact'
 //import ContainsAll from './components/ContainsAll'
@@ -36,6 +37,7 @@ class App extends Component {
                 <div className="navContainer">
                     <ul>
                         <li><Link to="/">Hem</Link></li>
+                        <li><Link to="/menu">Meny</Link></li>
                         <li><Link to="/book">Boka bord</Link></li>
                         <li><Link to="/contact">Kontakt</Link></li>
                     </ul>
@@ -45,6 +47,7 @@ class App extends Component {
                     <div className="sectionBg"></div>
                     <div className="section">
                         <Route exact path="/" component={Home}/>
+                        <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>
                     </div>

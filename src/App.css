@@ -68,7 +68,7 @@ li a {
     color: lightgrey;
     padding: 8px 16px;
     text-decoration: none;
-    /*float: left;*/
+    float: left;
 }
 
 li a:hover {
@@ -118,7 +118,7 @@ li a:hover {
     color: lightgrey;
     padding: 8px 16px;
     text-decoration: none;
-    /*float: left;*/
+    float: left;
 }
 
 .bookSection > ul > li:hover {
