@@ -161,16 +161,43 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #45a049;
 }
+/*** CALENDAR TEST ***/
+.react-calender__tile .react-calender__month-view__days__day {
+    background-color: red !important;
+    border: 1 px solid purple !important;
+}
 
+.red > button {
+    border: 1 px solid purple !important;    
+}
+
+
+.react-calender__tile button{
+    background-color: red !important;
+    border: 1 px solid purple !important;
+}
+
+.react-calender__month-view__days__day button{
+    background-color: red !important;
+    border: 1 px solid purple !important;    
+}
+
+button .react-calender__month-view__days__day--weekend{
+    border: 1 px solid purple !important;
+}
+
+.time{
+    color: mediumslateblue !important;
+}
 @media screen and (min-width: 800px) {
     body {
         background-image: url('img/tablet_bg.png');
     }
 }
-
 @media screen and (min-width: 1000px) {
     .containsAll {
         background-image: url('img/webb_bg.png');
     }
     
 }
+

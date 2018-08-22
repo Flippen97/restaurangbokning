@@ -18,15 +18,58 @@ import Contact from './components/routes/Contact'
 
 class App extends Component {
     
-    componentDidMount = () => {   
-        fetch('https://www.idabergstrom.se/product/read.php')
-          .then(function(response) {
-            return response.json();
+//    componentDidMount = () => {   
+//        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
+//          .then(function(response) {
+//            return response.json();
+//          })
+//          .then(function(myJson) {
+//            console.log(myJson);
+//          });
+//    }
+    
+    /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
+    
+    updateBooking = () => {   
+        fetch('https://www.idabergstrom.se/restaurant-api/product/update.php', {
+          method: "POST",
+          mode: "cors",
+          body: JSON.stringify({
+            id: '41',
+            name: 'Uppdaterat namn',
+            email: 'Uppdaterad mail',
+            telephone: 'Uppdaterat telefonnummer',
+            bdate: 'Uppdaterad dag',
+            btime: 'Uppdaterad tid' 
+          }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
           })
-          .then(function(myJson) {
-            console.log(myJson);
+          .catch(error => {
+            console.log(error);
           });
     }
+    
+    deleteBooking = () => {   
+        fetch('https://www.idabergstrom.se/restaurant-api/product/delete.php', {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify({
+            bid: '17'
+          }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }
+    
+    /**************************************************************************/
  
   render() {
     return (
@@ -41,6 +84,10 @@ class App extends Component {
                         <li><Link to="/book">Boka bord</Link></li>
                         <li><Link to="/contact">Kontakt</Link></li>
                     </ul>
+        
+                   { /* Just a test button. Remove later:
+                    <button onClick={this.deleteBooking}>Testknapp för delete</button> */ }
+        
                 </div>
         
                 <div className="sectionContainer">

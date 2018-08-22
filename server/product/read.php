@@ -35,17 +35,11 @@ if($num>0){
         extract($row);
  
         $product_item=array(
-//            "id" => $id,
-//            "name" => $name,
-//            "description" => html_entity_decode($description),
-//            "price" => $price,
-//            "category_id" => $category_id,
-//            "category_name" => $category_name
-            
-//            "id" => $id,
+            "id" => $id,
             "name" => $name,
             "email" => $email,
             "telephone" => $telephone,
+            "bid" => $bid,
             "bdate" => $bdate,
             "btime" => $btime,
         );
