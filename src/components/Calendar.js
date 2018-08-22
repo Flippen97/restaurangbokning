@@ -6,8 +6,18 @@ import 'react-day-picker/lib/style.css';
     
 class Calendar extends React.Component {
   state = {
+      allBookings: {},
+      disabledDates: ''
   }
-
+    
+  setDisabledDates = (date) => {
+      this.setState({ disabledDates: date })
+  }
+  
+    
+  setAllBookings = (bookings) => {
+      this.setState({ allBookings: bookings })
+  }
   
 
 
@@ -17,54 +27,43 @@ class Calendar extends React.Component {
 
 
     
-    componentDidMount = () => {   
+    componentDidMount = () => {
             fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
               .then(function(response) {
                 return response.json();
               })
               .then(function(myJson) {
-                
                 let data = myJson.records;
                 
                 let calenderContent = [...data];
                 let bookingArray = [];
+                let disabledDatesArray = []
                 
                 for(let i = 0; i < calenderContent.length; i++){
                     let bookingObj = { bdate: calenderContent[i].bdate, btime: calenderContent[i].btime }
-                        bookingArray.push(bookingObj);
+                    bookingArray.push(bookingObj);
                 }
-                
+                 
+                // This counts how many times a specific date has occured in the bookingsArray. 
                 var counts = {};
                 bookingArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
                 console.log(counts);
-                
-                console.log(bookingArray);
-                
-                
-                
-//                let hej = calenderContent.map(bookingObj => {
-//                    let bookingObj = { bdate: calenderContent.bdate, btime: calenderContent.btime }
-//                    bookingObj = { bdate: calenderContent.bdate, btime: calenderContent.btime }
-////                    console.log(bookingObj);
-//                })
-//                
-//                console.log(hej);
-////                let datacopy = [...data[i].bdate];
 
                 
+                for(var key in counts){
+//                    console.log(key);
+//                    console.log(counts[key]);
+//                       console.log(this);
+                    if(counts[key] >= 1){ // Later on, change this to 30! 
+                         disabledDatesArray.push(key);   
+                    }
+                }
                 
+                console.log(disabledDatesArray);
 
-//var counts = {};
-//datacopy.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
-//console.log(counts);
-                
-//                for(let i = 0; i < datacopy.length; i++){
-//                    console.log(datacopy[i].bdate);
-//                }
-                
-                
-                
-              }); 
+
+              });  
+
     }
     
 
