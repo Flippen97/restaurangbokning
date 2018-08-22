@@ -1,7 +1,6 @@
 import React from 'react';
 import './../../App.css';
 import CustomerForm from './../CustomerForm';
-import FormInput from './../FormInput';
 
 import Calendar from './../Calendar';
 
@@ -13,50 +12,48 @@ import moment from 'moment';
     
 class Book extends React.Component {
   state = {
+      
+    /*** Booking: ***/
     name: '',
     email: '',
     telephone: '',
     tables: '',
     bdate: '',
-    btime: ''
+    btime: '',
+      
+    /*** Calendar: ***/
+    allBookings: [],
+    disabledDates: [],
+    availableAt18: true,
+    availableAt21: true   
   }
+    
+  /******************************************************/
+  /***************** Booking functions ******************/
+  /******************************************************/
 
      /* This function is called from the Calendar component */
      onDayClick = (event) => {
-         /* Date is converted to a more readable format when set into state */
-    //     this.setState({ bdate: event.toLocaleDateString("en-EUR") })
-         console.log(event);
-         let hej = event;
-         console.log(hej);
+         let selectedDate = event;
+         /* Date is formatted to be compatible with disable date-function in calender: */
+         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
-         let newDate = moment(hej).format("YYYY[,] MM[,] DD");
-         console.log(newDate);
-         this.setState({ bdate: event })
+         this.setState({ bdate: selectedDate }, () => {
+            this.isSittingAvailable();
+         });
      }
-    
-  setTime = (event) => {
-      this.setState({ btime: event.target.dataset.btime })
-  }
-  
-  setTables = (event) => {
-    /* Calculates number of tables depending on number of guests */
-    let tables;
-    if((event.target.value % 6) === 0){
-        tables = event.target.value / 6;
-        console.log(event.target.value + ' guests will need ' + tables + ' tables.');
-    }else{
-        tables = Math.ceil(parseFloat(event.target.value / 6));
-        console.log(event.target.value + ' guests will need ' + tables + ' tables.');
+
+    setTime = (event) => {
+        this.setState({ btime: event.target.dataset.btime })
     }
-    this.setState({ tables: tables })
-  }
-  
-  handleChange = (event) => {
-    this.setState({ [event.target.name] : event.target.value })
-  }
+
+    /* This function sets name, email, telephone states */
+    handleChange = (event) => {
+        this.setState({ [event.target.name] : event.target.value })
+    }
   
     postBooking = (event) => {
-        
+
         fetch(`https://www.idabergstrom.se/restaurant-api/product/create.php`, {
           method: "POST",
           mode: "cors",
@@ -75,55 +72,104 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
-  }
+    }
+    
+    
+  /******************************************************/
+  /***************** Availability content ***************/
+  /******************************************************/
 
+  
+    disabledDates = () => {
+        let bookingsArray = this.state.allBookings;
+        var counts = {};
+        let disabledDatesArray = [];
+        /* This counts how many times a specific date has occured in the bookingsArray: */
+        bookingsArray.forEach(function(x) { counts [x.bdate] = (counts [x.bdate] || 0)+1; });
+
+        /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
+        for(var key in counts){
+            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 30!
+                disabledDatesArray.push(key);
+            }
+        }
+        this.setState({ disabledDates: disabledDatesArray })  
+    }
+  
+    isSittingAvailable = () => {
+        /* NOT TESTED! HAVE TO TEST WHEN MORE CONTENT IN DB!!!! */
+        let selectedDate = this.state.bdate;
+        let bookingsArray = this.state.allBookings;
         
-//    componentDidMount = () => {   
-//        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
-//          .then(function(response) {
-//            return response.json();
-//          })
-//          .then(function(myJson) {
-//            let array = myJson.records;
-//                console.log(array);
-//            for(let i = 0; i < array.length; i++){
-//                console.log(array[i].bdate);
-//            }
-//          });
-//    }
-    
-    
+        const bookingsAt18 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '18')));
+        const bookingsAt21 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '21')));
+        
+        /* There are 15 tables, but we have to count with 14 here because of how array works: */
+        if(bookingsAt18.length >= 14){
+            this.setState({ availableAt18: false }) 
+        }
+        if(bookingsAt21.length >= 14){
+            this.setState({ availableAt21: false }) 
+        }
+    }
 
-    
+    fetchBookings = () => {
+    return fetch("https://www.idabergstrom.se/restaurant-api/product/read.php")
+      .then((response) => response.json())
+    }
+  
+    componentDidMount = () => {
+        this.fetchBookings()
+        .then((data) => { 
+            this.setState({ allBookings: data.records }, () => {
 
+            this.disabledDates();
+            });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
     
   render() {
       
 
-      
+     
     let timepickerText = '';
       
-    if(!this.state.date){
+    if(!this.state.bdate){
         timepickerText = `Välkommen till våran bordsbokning! Var god välj ett datum i kalendern.`
-    }else if(this.state.date && !this.state.time){
+    }else if(this.state.bdate && !this.state.btime){
         timepickerText = `Välj en sittning. Du kan välja mellan kl 18 och kl 21.`
-    }else if(this.state.date && this.state.time){
+    }else if(this.state.bdate && this.state.btime){
         timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret till höger.`
     }
+
     
     return (
         <React.Fragment>
             <div className="bookContainer">
+        
                 <div className="bookHeader">
                     <h2>Bordsboking</h2>
                     {timepickerText}
                 </div>
         
+        
+        { /*
                 <div className="bookSection">
                     <h3>Välj ett datum:</h3>
-
+        */ }
         
-                    <Calendar onDayClick={this.onDayClick} />
+                <Calendar 
+                    onDayClick={this.onDayClick} 
+                    setTime={this.setTime} 
+                    setTables={this.setTables}
+                    disabledDates={this.state.disabledDates}
+                    bdate={this.state.bdate}
+                />
+        
+        { /*
         
                     Antal personer: <br />
                     <FormInput name="tables" type="text" onChange={this.setTables}/>
@@ -134,12 +180,12 @@ class Book extends React.Component {
                     <h3>Välj en sittning:</h3>
                     
                     <form>
-                    { /* Put disabled on these if a date has not yet been picked */ }
                       <input type="radio" onClick={this.setTime} data-btime="18" /> 18:00 <br />
                       <input type="radio" onClick={this.setTime} data-btime="21" /> 21:00
                     </form>
         
                 </div>
+        */ }
         
                 <div className="bookSection">
                     <h3>Dina uppgifter:</h3>
