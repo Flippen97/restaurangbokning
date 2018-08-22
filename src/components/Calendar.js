@@ -2,29 +2,34 @@ import React from 'react';
 import './../App.css';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import moment from 'moment';
 
     
 class Calendar extends React.Component {
   state = {
       allBookings: [],
-      disabledDates: ''
+      disabledDates: [],
+      disabledHtmlString: []
   }
     
   disabledDates = () => {
     let bookingsArray = this.state.allBookings;
-    let countedBookings = {};
-    let disabledDatesArray = []
+    var counts = {};
+    let disabledDatesArray = [];
       
     // This counts how many times a specific date has occured in the bookingsArray: 
-    bookingsArray.forEach(function(x) { countedBookings [x.bdate] = (countedBookings [x.bdate] || 0)+1; });
-    // This takes bookings that has over 30 counts and push them into disabledDates state:
-    for(var key in countedBookings){
-        if(countedBookings[key] >= 1){ // Later on, change this to 30! 
-             disabledDatesArray.push(key);   
+    bookingsArray.forEach(function(x) { counts [x.bdate] = (counts [x.bdate] || 0)+1; });
+      
+    // This takes bookings that has over 30 counts (a.k.a. restaurant is booked all night) and push them into disabledDates state:
+    for(var key in counts){
+        if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 30!
+            disabledDatesArray.push(key);
         }
-    }  
-    this.setState({ disabledDates: disabledDatesArray })
+    }
+    this.setState({ disabledDates: disabledDatesArray })  
   }
+  
+  
   
     
   setAllBookings = (bookings) => {
@@ -43,6 +48,7 @@ class Calendar extends React.Component {
         this.fetchBookings()
         .then((data) => { 
             this.setState({ allBookings: data.records }, () => {
+                
 
             this.disabledDates();
 
@@ -58,10 +64,11 @@ class Calendar extends React.Component {
         <React.Fragment>
                 <DayPicker onDayClick={this.props.onDayClick} 
                             initialMonth={new Date(2018, 7)}
-                            disabledDays={[
+                           /* disabledDays={[
                             new Date(2018, 7, 23),
                             new Date(2018, 7, 2)
-                            ]}
+                            ]} */
+                        disabledDays={ this.state.disabledDates.map((date) => new Date(date)) }
                     />
 
         </React.Fragment>
