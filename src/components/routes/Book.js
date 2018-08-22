@@ -23,8 +23,9 @@ class Book extends React.Component {
       
     /*** Calendar: ***/
     allBookings: [],
-    disabledDates: []
-      
+    disabledDates: [],
+    availableAt18: true,
+    availableAt21: true   
   }
     
   /******************************************************/
@@ -96,21 +97,20 @@ class Book extends React.Component {
     }
   
     isSittingAvailable = () => {
+        /* NOT TESTED! HAVE TO TEST WHEN MORE CONTENT IN DB!!!! */
+        let selectedDate = this.state.bdate;
+        let bookingsArray = this.state.allBookings;
         
-        console.log("hej")
+        const bookingsAt18 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '18')));
+        const bookingsAt21 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '21')));
         
-        console.log(this.state.bdate);
-        
-//        let bookingsArray = this.state.allBookings;
-//        
-//        const result = bookingsArray.filter(day => bookingsArray.bdate === this.state.bdate);
-//        console.log(result);
-        
-        
-//        var counts = {};   
-//        // This counts how many times a specific date has occured in the bookingsArray: 
-//        bookingsArray.forEach(function(x) { counts [x.btime] = (counts [x.btime] || 0)+1; });
-//        console.log(counts);
+        /* There are 15 tables, but we have to count with 14 here because of how array works: */
+        if(bookingsAt18.length >= 14){
+            this.setState({ availableAt18: false }) 
+        }
+        if(bookingsAt21.length >= 14){
+            this.setState({ availableAt21: false }) 
+        }
     }
 
     fetchBookings = () => {
