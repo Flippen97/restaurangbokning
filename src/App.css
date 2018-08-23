@@ -1,35 +1,3 @@
-.containsAll {
-    width: 100%;
-    height: 100vh;
-    background-image: url('img/mobile_bg.png');
-    background-size: cover;
-    margin: 0px auto;
-    background-color: aqua;
-    border: 2px soid yellow;
-}
-
-.sectionContainer {
-    width: 100%; 
-    height: 80%; 
-    display: flex;
-    justify-content: center; 
-}
-
-.section {
-    width: 96%;
-    height: 75%;
-    position: absolute;
-    z-index: 97; 
-}
-
-.sectionBg {
-    width: 96%;
-    height: 75%;
-    position: absolute;
-    z-index: 96; 
-    background-color: black;
-    opacity: 0.5;
-}
 
 /******************************/
 /********** UTILITY ***********/
@@ -42,43 +10,140 @@
 .hide {
     display: none;
 }
-
-
+/******************************/
+/********** header ***********/
+/******************************/
+header{
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    z-index: 1;
+    color: white;
+}
+header .fa{
+    font-size: 2em;
+}
+header i{
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    position: absolute;
+}
+h1{
+    font-family: Cochin;
+    font-style: italic;
+    font-weight: 200;
+    padding-top: 7px; 
+    text-align: center;
+    margin: 0;
+}
 /******************************/
 /*********** NAV **************/
 /******************************/
 
 .navContainer {
+    position: absolute;
+    top:50px; 
     width: 100%;
-    height: 20%;
-    color: lightgrey;
+    color: white;
+    z-index: 2;
 }
 
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 400px;
-    background-color: #f1f1f1;
+    background-color:rgba(0,0,0,0.3);
 }
-
+li{
+    text-align: end;
+}
 li a {
-    display: inline;
-    display: block;
-    color: lightgrey;
+    display:block;
+    color: white;
     padding: 8px 16px;
     text-decoration: none;
-    float: left;
 }
 
 li a:hover {
     background-color: #555;
     color: white;
 }
+/******************************/
+/*********** Home *************/
+/******************************/
+.containerHome{
+    width: 100%;
+    height: 100vh;
+    background-image: url('img/mobile_bg.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+    background-size: cover;
+    background-blend-mode: darken;
+    margin: 0px auto;
+    color:white;
+}
+.containerHome .sectionContainer .section{ 
+    width: 100%;
+    height: calc(100vh - 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.70) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+}
+.containerHome .sectionContainer .section div{
+    text-align: center;
+}
+.containerHome .sectionContainer .section .Rad1{
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+.containerHome .sectionContainer .section .Rad2{
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 3em;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+.containerHome .sectionContainer .section .Rad3{
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+.containerHome .sectionContainer .section button{
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 0.8em;
+    color: #000000 !important;
+    background-color: #fff;
+    border-radius: 5px;
+    text-transform: uppercase;
+    padding: 5px 20px;
+}
+.containerHome .sectionContainer .section button:hover {
+    background-color:lightgray;
+    cursor: pointer;
+}
+        
+/******************************/
+/*********** Menu *************/
+/******************************/
+.containerMenu{
+    width: 100%;
+    height: 100vh;
+    background-color: cadetblue;
+    margin: 0px auto;
+}
 
 /******************************/
 /*********** BOOK *************/
 /******************************/
+.containerBook{
+    width: 100%;
+    height: 100vh;
+    background-color: cadetblue;
+    margin: 0px auto;
+}
 
 .bookContainer {
     width: 100%;
@@ -189,15 +254,53 @@ button .react-calender__month-view__days__day--weekend{
 .time{
     color: mediumslateblue !important;
 }
+/******************************/
+/********** Contact ***********/
+/******************************/
+.containerContact{
+    width: 100%;
+    height: 100vh;
+    background-color: cadetblue;
+    margin: 0px auto;
+}
 @media screen and (min-width: 800px) {
-    body {
+    .containerHome {
         background-image: url('img/tablet_bg.png');
     }
 }
 @media screen and (min-width: 1000px) {
-    .containsAll {
+    .containerHome {
         background-image: url('img/webb_bg.png');
     }
+    /******************************/
+    /*********** NAV **************/
+    /******************************/
+    .navContainer {
+        width: 100%;
+        height: 20%;
+        color: lightgrey;
+    }
     
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 400px;
+        background-color: #f1f1f1;
+    }
+    
+    li a {
+        display: inline;
+        display: block;
+        color: lightgrey;
+        padding: 8px 16px;
+        text-decoration: none;
+        float: left;
+    }
+    
+    li a:hover {
+        background-color: #555;
+        color: white;
+    }
 }
 

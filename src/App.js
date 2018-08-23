@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
 
 import {
@@ -17,7 +18,10 @@ import Contact from './components/routes/Contact'
 
 
 class App extends Component {
-    
+    state = {
+        toggleNav: false,
+        mainStyle: "containerHome"
+    };
 //    componentDidMount = () => {   
 //        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
 //          .then(function(response) {
@@ -68,6 +72,14 @@ class App extends Component {
             console.log(error);
           });
     }
+    toggleNav = () =>{
+        this.setState({ toggleNav: !this.state.toggleNav });
+    }
+    mainStyle = (input) =>{
+        this.setState({ mainStyle: input });
+        this.setState({ toggleNav: false });
+        console.log(this.state)
+    }
     
     /**************************************************************************/
  
@@ -75,23 +87,30 @@ class App extends Component {
     return (
       <Router>
         <React.Fragment>
-            <div className="containsAll">
-        
-                <div className="navContainer">
-                    <ul>
-                        <li><Link to="/">Hem</Link></li>
-                        <li><Link to="/menu">Meny</Link></li>
-                        <li><Link to="/book">Boka bord</Link></li>
-                        <li><Link to="/contact">Kontakt</Link></li>
-                    </ul>
-        
-                   { /* Just a test button. Remove later:
+            <div className={this.state.mainStyle}>
+
+                <header>
+                    <h1>Food Fusion</h1>
+                    <i className="fa fa-bars" aria-hidden="true" onClick={this.toggleNav}></i>
+                </header>
+
+                {this.state.toggleNav ? (
+                    <nav className="navContainer">
+                        <ul>
+                            <li onClick={() => this.mainStyle("containerHome")}><Link to="/">Hem</Link></li>
+                            <li onClick={() => this.mainStyle("containerMenu")}><Link to="/menu">Meny</Link></li>
+                            <li onClick={() => this.mainStyle("containerBook")}><Link to="/book">Boka bord</Link></li>
+                            <li onClick={() => this.mainStyle("containerContact")}><Link to="/contact">Kontakt</Link></li>
+                        </ul>
+                    { /* Just a test button. Remove later:
                     <button onClick={this.deleteBooking}>Testknapp för delete</button> */ }
-        
-                </div>
+                    </nav>
+                ) : (
+                <div />
+                )}
+                
         
                 <div className="sectionContainer">
-                    <div className="sectionBg"></div>
                     <div className="section">
                         <Route exact path="/" component={Home}/>
                         <Route path="/menu" component={Menu}/>
