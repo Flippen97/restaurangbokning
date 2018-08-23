@@ -1,48 +1,43 @@
 import React from 'react';
 import './../App.css';
 import DayPicker from 'react-day-picker';
+import FormInput from './FormInput';
 import 'react-day-picker/lib/style.css';
 
     
-class Calendar extends React.Component {
-  state = {
-  }
+function Calendar(props) {
 
-    
-    componentDidMount = () => {   
-        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(myJson) {
-            let array = myJson.records;
-                console.log(array);
-            for(let i = 0; i < array.length; i++){
-                console.log(array[i].bdate);
-            }
-          });
-    }
-    
-    
-
-    
-
-    
-  render() {
-    
     return (
         <React.Fragment>
-                <DayPicker onDayClick={this.props.onDayClick} 
-                            initialMonth={new Date(2018, 7)}
-                            disabledDays={[
-                            new Date(2018, 7, 23),
-                            new Date(2018, 7, 2)
-                            ]}
-                    />
+        
+            <div className="bookSection">
+                <h3>Välj ett datum:</h3>
+
+                <DayPicker 
+                    onDayClick={props.onDayClick} 
+                    initialMonth={new Date(2018, 7)}
+                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+                />
+
+                Antal personer: <br />
+                <FormInput name="tables" type="text" onChange={props.setTables}/>
+
+            </div>
+        
+            <div className="bookSection">
+                <h3>Välj en sittning:</h3>
+
+                <form>
+                { /* Put disabled on these if a date has not yet been picked */ }
+                  <input type="radio" onClick={props.setTime} data-btime="18" /> 18:00 <br />
+                  <input type="radio" onClick={props.setTime} data-btime="21" /> 21:00
+                </form>
+
+            </div>
 
         </React.Fragment>
     );
-  }
+
 }
 
 export default Calendar;
