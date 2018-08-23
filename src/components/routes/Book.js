@@ -122,8 +122,7 @@ class Book extends React.Component {
         this.fetchBookings()
         .then((data) => { 
             this.setState({ allBookings: data.records }, () => {
-
-            this.disabledDates();
+                this.disabledDates();
             });
         })
         .catch(error => {
