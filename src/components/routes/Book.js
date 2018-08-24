@@ -49,8 +49,23 @@ class Book extends React.Component {
 
     /* This function sets name, email, telephone states */
     handleChange = (event) => {
-        this.setState({ [event.target.name] : event.target.value })
+        let email = event.target.value; 
+        
+        /* Email only pushed to state if it's valid. If empty state, the user will not be allowed to book. */
+        if(event.target.name === 'email'){
+            if(this.validateEmail(email)){
+                this.setState({ email : email })
+            } 
+        }else{
+            this.setState({ [event.target.name] : event.target.value })
+        }
     }
+    
+    validateEmail(emailToValidate){
+        var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(String(emailToValidate).toLowerCase());
+    }
+    /* "But keep in mind that one should not rely only upon JavaScript validation. JavaScript can easily be disabled. This should be validated on the server side as well." */
   
     postBooking = (event) => {
 
