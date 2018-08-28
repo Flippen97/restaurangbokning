@@ -39,6 +39,8 @@ class Book extends React.Component {
          selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
          this.setState({ bdate: selectedDate }, () => {
+             /* If a date is selected, we need to check which times are available on that date, 
+             so we are running another function to check that: isSittingAvailable() */
             this.isSittingAvailable();
          });
      }
@@ -69,7 +71,7 @@ class Book extends React.Component {
   
     postBooking = (event) => {
 
-        fetch(`https://www.idabergstrom.se/restaurant-api/product/create.php`, {
+        fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
@@ -104,7 +106,7 @@ class Book extends React.Component {
 
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 30!
+            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
@@ -129,14 +131,14 @@ class Book extends React.Component {
     }
 
     fetchBookings = () => {
-    return fetch("https://www.idabergstrom.se/restaurant-api/product/read.php")
+    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
       .then((response) => response.json())
     }
   
     componentDidMount = () => {
         this.fetchBookings()
         .then((data) => { 
-            this.setState({ allBookings: data.records }, () => {
+            this.setState({ allBookings: data }, () => {
                 this.disabledDates();
             });
         })
