@@ -6,7 +6,7 @@ function Error() {
     return (
         <React.Fragment>
         
-            <h1>Error: path does not exist, please pick another one</h1>
+            <p>Error: path does not exist, please pick another one</p>
 
         </React.Fragment>
     );
