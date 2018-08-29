@@ -20,7 +20,7 @@ class Book extends React.Component {
     tables: '',
     bdate: '',
     btime: '',
-    numberOfGuests: ''
+    numberOfGuests: '',
     selectedDate: undefined,
     /*** Calendar: ***/
     allBookings: [],
@@ -58,6 +58,9 @@ class Book extends React.Component {
     }
     setTime = (event) => {
         this.setState({ btime: event.target.dataset.btime})
+    }
+    setNumberOfGuests = (event) => {
+        this.setState({ numberOfGuests: event.target.value})
     }
 
     /* This function sets name, email, telephone states */
@@ -195,6 +198,7 @@ class Book extends React.Component {
                     selectedDate={this.state.selectedDate}
                     bookingStep={this.state.bookingStep}
                     changeBokingStep={this.changeBokingStep}
+                    setNumberOfGuests={this.setNumberOfGuests}
                 />
         
         
