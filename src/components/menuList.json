@@ -1,0 +1,271 @@
+{
+    "starters": [
+        {
+            "id": 1,
+            "title": "TIEPIDA DI MARE",
+            "description": "Stekta tigerräkor och gröna musslor med vitlök, chili, schalottenlök och vitt vin.",
+            "price": "155:-"
+        },
+        {
+            "id": 2,
+            "title": "TOAST SKAGEN",
+            "description": "Hemgjord skagenröra av handskalade räkor med citron och smörstekt bröd. Toppas med löjrom och dill.",
+            "price": "145:-"
+        },
+        {
+            "id": 3,
+            "title": "CHÈVRE CON BARBABIETOLE",
+            "description": "Panerad chèvre med blandsallad och honung, citron, pinjenötter och rödbetor.",
+            "price": "135:-"
+        },
+        {
+            "id": 4,
+            "title": "BRUSCHETTA EMILIANA",
+            "description": "Med coktailtomater, parmaskinka, basilika, vitlök och oliver.",
+            "price": "125:-"
+        },
+        {
+            "id": 5,
+            "title": "COZZE ALLA MARINARA",
+            "description": "Vitvinskokta hela blåmusslor med, tomat, färsk chili, vitlök, purjolök & persilja.",
+            "price": "135:- "
+        },
+        {
+            "id": 6,
+            "title": "CARPACCIO",
+            "description": "rå oxfilé, svartpeppar, ruccola, citron & hyvlad parmesan.",
+            "price": "165:-"
+        },
+        {
+            "id": 7,
+            "title": "MOZZARELLA DI BUFALO",
+            "description": "Buffelmozarella med sicilienska pachinotomater, olivoljal, basilika & svartpeppar.",
+            "price": "115:-"
+        },
+        {
+            "id": 8,
+            "title": "CAESARSALLAD",
+            "description": "Med kyckling eller räkor.",
+            "price": "195:- "
+        },
+        {
+            "id": 9,
+            "title": "AFFETTATI MISTI",
+            "description": "Kallskuret, för två personer 220:-.",
+            "price": "135:-"
+        }
+    ],
+    "mainCourse":[
+        {
+            "id": 1,
+            "title": "FILETTO DI TONNO ALLA GRIGLIA",
+            "description": "Grillad tonfiskfilé serveras med krämig Karl-Johan Svamp risotto.",
+            "price": "275:-"
+        },
+        {
+            "id": 2,
+            "title": "PEPATA DI COZZE",
+            "description": "Färska musslor, vitvin, vitlök, chili, grädde, persilja och aioli serveras med vitlöksbröd.",
+            "price": "195:-"
+        },
+        {
+            "id": 3,
+            "title": "FILETTO DI MANZO TARUFO",
+            "description": "200 gr grillad oxfilé, rostade grönsaker, tryffelsås.",
+            "price": "320:-"
+        },
+        {
+            "id": 4,
+            "title": "DI POLLO FORMAGGIO DI CAPRA",
+            "description": "Majskyckling rullader med getost- och Bresaola serveras med milanes risotto grillade coctailtomater.",
+            "price": "255:-"
+        },
+        {
+            "id": 5,
+            "title": "RIGATONI DI POLLO",
+            "description": "Pasta med kycklingfilé, chevre, spenat, lök, grädde & pinjenötter.",
+            "price": "175:-"
+        },
+        {
+            "id": 6,
+            "title": "FETUCCINE DI PESTO",
+            "description": "Pasta med hemgjord grön pesto, soltorkade tomater, mozarella och pinjenötte.r",
+            "price": "165:-"
+        },
+        {
+            "id": 7,
+            "title": "PENNE DI MANZO",
+            "description": "Pasta med strimlad oxfilé, chili, skogssvamp, lök, vitlök, chili, spenat, grädde, tomatsås och parmesan.",
+            "price": "189:-"
+        },
+        {
+            "id": 8,
+            "title": "CARBONARA / BOLOGNAISE / LASAGNE",
+            "description": "Övriga pasta rätter.",
+            "price": "169:-"
+        },
+        {
+            "id": 9,
+            "title": "PIZZA MARGHERITA",
+            "description": "Mozzarella, färsk basilika.",
+            "price": "126:-"
+        },
+        {
+            "id": 10,
+            "title": "PIZZA DELLA CASA",
+            "description": "Mozzarella, marinerad oxfilé, vitlök, champinjoner, sparris, körsbärstomater, svartpeppar, basilika.",
+            "price": "158:-"
+        }
+    ],
+    "deserts": [
+        {
+            "id": 1,
+            "title": "TORTINO AL CIOCCOLATO",
+            "description": "Chokladfondant, serveras med vaniljglass och bär.",
+            "price": "115:-"
+        },
+        {
+            "id": 2,
+            "title": "PANNACOTTA DI BOSCO",
+            "description": "Gräddkräm med vaniljsmak på en hallonspegel.",
+            "price": "95:-"
+        },
+        {
+            "id": 3,
+            "title": "CREME BRULEE ALL`ARANCIA",
+            "description": "Apelsin crème brulée.",
+            "price": "115:-"
+        },
+        {
+            "id": 4,
+            "title": "TIRAMISU",
+            "description": "Savoyardikex, mascarpone, äggkräm, espresso, marsalavin.",
+            "price": "95:-"
+        },
+        {
+            "id": 5,
+            "title": "OSTBRICKA",
+            "description": "Fem olika sorters ostar med tilltugg.",
+            "price": "155:-"
+        },
+        {
+            "id": 6,
+            "title": "AFFOCATO AL CAFEE",
+            "description": "Vaniljglass med kaffe",
+            "price": "95:-"
+        },
+        {
+            "id": 7,
+            "title": "SORBETTO",
+            "description": "Citron sorbet med limoncello.",
+            "price": "85:-"
+        }
+    ],
+    "white":[
+        {
+            "id": 1,
+            "title": "HUSETS VITA VIN",
+            "description": "Ortonese Malvasaia Terre Di Chiete 2010 Region: Abruzzo/Italien Druvor: Malvasia 85% Chardonnay 15% Karaktär: Medelstor fräsch smak av melon, päron, persika, citrus, fikon. Fruktig och kryddig lång eftersmak av örter Passar till: Bra buffévin, antipasti och till lätta rätter av fisk skaldjur eller kyckling.",
+            "priceGlas": "75:-",
+            "priceBottle": "280:-"
+        },
+        {
+            "id": 2,
+            "title": "TORRE DEL FALASCO GARGANEGA IGT 2010",
+            "description": "Region: Veneto/Italien Druvor: Garganega Karaktär: Medelfylligt vin med fräsch syra bra koncentration mineralrik med lång eftersmak. Passar till: Aperetif, Antipasti Fiskrätter, sallader, pasta, risotto med fisk och skaldjurssåser.",
+            "priceGlas": "80:-",
+            "priceBottle": "290:-"
+        },
+        {
+            "id": 3,
+            "title": "FUEDO ARANCIO CHARDONNAY IGT 2009",
+            "description": "Region: Sicilien Druvor: Chardonnay Karaktär: Fylligt välbalanserat vin med smak av melon och aprikos och en lång avslutning med ton av fat God till: Pastarätter på fisk eller skaldjur med saffranssmak, Grillad fisk,skaldjur eller ljust kött.",
+            "priceGlas": "80:-",
+            "priceBottle": "290:-"
+        },
+        {
+            "id": 4,
+            "title": "DORIGO PINOT GRIGIO DOC 2010",
+            "description": "Region: Colli orientale del friuli Druvor: Pinot Grigio Karaktär: Ren fräsch smak av rikt mogen frukt, kryddighet och liten fetma. God till: Sparrisrisotto, smakrika rätter av grillad fisk eller skaldjur, Eleganta smaksatta pastarätter.",
+            "priceGlas": "90:-",
+            "priceBottle": "345:-"
+        },
+        {
+            "id": 5,
+            "title": "GRECO DI TOFU DOCG 2009",
+            "description": "Region: Campania Druvor: Greco Karaktär: Fräsch frisk syra med stor kropp och mineralrik eftersmak med inslag av grapefrukt God till: Smakrika rätter av fisk,skaldjur och ljus fågel.",
+            "priceGlas": "125:-",
+            "priceBottle": "510:-"
+        }
+    ],
+    "red":[
+        {
+            "id": 1,
+            "title": "SANGIOVESE DI TOSCANA",
+            "description": "Region: Toscana Druvor: Sangiovese Karaktär: Kryddig saftig smak av körsbär, björnbär och tranbär frisk syra och saftiga tanniner med en lång eftersmak. God till: Antipasti med kallskuret, grillade smakrika korvar, och rätter av lamm, kalv eller kyckling.",
+            "priceGlas": "90:-",
+            "priceBottle": "340:-"
+        },
+        {
+            "id": 2,
+            "title": "CHIANTI DOCG",
+            "description": "Region: Toscana Druvor: Sangiovese, canaiola och trebbiano toscano Karaktär: Rubinröd med blänkande inslag, torr smak, sammetsmjuk. God till: Pastarätter, pizza, salami, grillade kötträtter, stekar, får- och getostar etc.",
+            "priceGlas": "95:-",
+            "priceBottle": "350:-"
+        },
+        {
+            "id": 3,
+            "title": "RIPASSO D.O.C.",
+            "description": "Region: Valpoliciella Veneto Druvor: Corvina/Corvinone, Molinara, Rondinella Karaktär: Medelfylligt vin med smak av mörk frukt choklad och lite mandel, lång lite het eftersmak. God till: Smakrika rätter av vilt eller nöt, passar även till vällagrad parmesan.",
+            "priceGlas": "100:-",
+            "priceBottle": "380:-"
+        },
+        {
+            "id": 4,
+            "title": "VALPOLICIELLA DOC CLASSICO CZ",
+            "description": "Region: Valpoliciella Veneto Druvor: Corvina/Corvinone, Molinara, Rondinella Karaktär: Djup rubinröd, elegant, delikat upphöjd bouquet. Torr varm smak, sammetslen med inslag av lätt bitterhet. God till: Pizza, kryddiga korvar, parmaskinka, lagrade ostar.",
+            "priceGlas": "115:-",
+            "priceBottle": "440:-"
+        },
+        {
+            "id": 5,
+            "title": "AMARONE DELLA VALPOLICELLA D.O.C",
+            "description": "Fylligt rik smak av mörka bär, torr choklad, körsbär, den långa eftersmaken har toner av tobak kraftiga kötträtter av nötkött och vilt gärna med svamp.",
+            "priceGlas": "155:-",
+            "priceBottle": "660:-"
+        }
+    ],
+    "other":[
+        {
+            "id": 1,
+            "title": "ÖL",
+            "description": "Birra Moretti 66CL, Castello 66cl, Mariestad 50cl.",
+            "price": "55:-"
+        },
+        {
+            "id": 2,
+            "title": "STARKSPRIT",
+            "description": "Vodka, Gin, Tequila, Gammel Dansk, Jägermeister, Triplesec, Bacardi, Mörk rom, Limoncello.",
+            "price": "21:-/cl"
+        },
+        {
+            "id": 3,
+            "title": "WHISKEY",
+            "description": "Jack Daniels, J&B, Jameson, Jim Beam.",
+            "price": "21:-/cl"
+        },
+        {
+            "id": 4,
+            "title": "LÄSK",
+            "description": "Cola, Orange, Sprite och Juice.",
+            "price": "30:-"
+        },
+        {
+            "id": 5,
+            "title": "KAFFE",
+            "description": "Espresso, Cappuccino, Café Latte",
+            "price": "32:-"
+        }
+    ]
+ 
+ }
