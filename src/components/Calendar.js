@@ -36,8 +36,8 @@ function Calendar(props) {
                         <input type="radio" onClick={props.setTime} data-btime="21" /> 21:00
                     </form>
                     Antal personer: <br />
-                    <FormInput name="tables" type="text" onChange={props.setTables}/>
-                    <button>Nästa</button>
+                    <FormInput name="numberOfGuests" type="text" onChange={props.onChange} />
+                    <button onClick={props.changeBokingStep} disabled={props.bdate === ''} value={"3"}>Nästa</button>
                 </div>) 
             : (<React.Fragment />)}
 
