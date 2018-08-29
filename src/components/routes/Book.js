@@ -20,6 +20,7 @@ class Book extends React.Component {
     tables: '',
     bdate: '',
     btime: '',
+    numberOfGuests: ''
     selectedDate: undefined,
     /*** Calendar: ***/
     allBookings: [],
@@ -90,6 +91,7 @@ class Book extends React.Component {
             telephone: this.state.telephone,
             bdate: this.state.bdate,
             btime: this.state.btime,
+            numberOfGuests: this.state.numberOfGuests
           }) 
         })
           .then(response => response.json())
