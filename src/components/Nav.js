@@ -30,7 +30,6 @@ function Nav() {
             <Route path="/menu" component={Menu}/>
             <Route path="/book" component={Book}/>
             <Route path="/contact" component={Contact}/>
-            <Route component={Error} />
         </React.Fragment>
     </Router>
     );

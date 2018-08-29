@@ -178,10 +178,13 @@ class App extends Component {
                 <div className="sectionContainer">
                     {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
                     <div className="section">
+                    <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>
+                        <Route component={Error} />
+                    </Switch>
                     </div>
                 </div>
         
