@@ -42,16 +42,16 @@ class App extends Component {
     /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
     
     updateBooking = () => {   
-        fetch('https://www.idabergstrom.se/restaurant-api/product/update.php', {
+        fetch('https://www.idabergstrom.se/restaurant-api/update.php', {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
-            id: '41',
+            id: '24',
             name: 'Uppdaterat namn',
             email: 'Uppdaterad mail',
             telephone: 'Uppdaterat telefonnummer',
             bdate: 'Uppdaterad dag',
-            btime: 'Uppdaterad tid' 
+            btime: 'Uppdaterad tid'
           }) 
         })
           .then(response => response.json())
@@ -64,11 +64,11 @@ class App extends Component {
     }
     
     deleteBooking = () => {   
-        fetch('https://www.idabergstrom.se/restaurant-api/product/delete.php', {
+        fetch('https://www.idabergstrom.se/restaurant-api/deleteBooking.php', {
           method: 'POST',
           mode: 'cors',
           body: JSON.stringify({
-            bid: '17'
+            bid: '20'
           }) 
         })
           .then(response => response.json())
@@ -108,6 +108,28 @@ class App extends Component {
             this.setState({ toggleNav: false });
         }
     }
+    
+    /* searchBooking = () => {   
+        fetch('https://www.idabergstrom.se/restaurant-api/search.php', {
+          method: 'POST',
+          mode: 'cors',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+          body: JSON.stringify({
+            keywords: 'Pelle'
+          }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    } */
+    
+    /**************************************************************************/
     toggleNav = () =>{
         this.setState({ toggleNav: !this.state.toggleNav });
     }
@@ -121,7 +143,7 @@ class App extends Component {
         }
     }
     
-    /**************************************************************************/
+
  
   render() {
     return (
@@ -142,8 +164,10 @@ class App extends Component {
                             <li onClick={() => this.mainStyle("containerBook")}><Link to="/book">Boka bord</Link></li>
                             <li onClick={() => this.mainStyle("containerContact")}><Link to="/contact">Kontakt</Link></li>
                         </ul>
-                    { /* Just a test button. Remove later:
-                    <button onClick={this.deleteBooking}>Testknapp för delete</button> */ }
+                    { /* Just a test button. Remove later: */ }
+                    <button onClick={this.deleteBooking}>Testknapp för delete</button>
+                    <button onClick={this.updateBooking}>Testknapp för uppdatering</button>
+                    <button onClick={this.searchBooking}>Testknapp för sök</button>
                     </nav>
                 ) : (
                 <div />
