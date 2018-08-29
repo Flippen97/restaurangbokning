@@ -17,7 +17,6 @@ class Book extends React.Component {
     name: '',
     email: '',
     telephone: '',
-    tables: '',
     bdate: '',
     btime: '',
     numberOfGuests: '',
@@ -59,9 +58,10 @@ class Book extends React.Component {
     setTime = (event) => {
         this.setState({ btime: event.target.dataset.btime})
     }
-    setNumberOfGuests = (event) => {
-        this.setState({ numberOfGuests: event.target.value})
-    }
+//    setNumberOfGuests = () => {
+//        console.log(this);
+////        this.setState({ numberOfGuests: this.target.value})
+//    }
 
     /* This function sets name, email, telephone states */
     handleChange = (event) => {
@@ -83,22 +83,18 @@ class Book extends React.Component {
     }
     /* "But keep in mind that one should not rely only upon JavaScript validation. JavaScript can easily be disabled. This should be validated on the server side as well." */
   
-    postBooking = (event) => {
+    postBooking = () => {
 
-        fetch(`https://www.idabergstrom.se/server2/create.php`, {
+        fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
-            /* name: 'TEST IGEN!',
-            email: 'hejhej.se',
-            telephone: '345435',
-            bdate: '2018, 05, 18',
-            btime: 'testigen' */
                 name: this.state.name,
                 email: this.state.email,
                 telephone: this.state.telephone,
                 bdate: this.state.bdate,
-                btime: this.state.btime
+                btime: this.state.btime,
+                numberOfGuests: this.state.numberOfGuests
             }) 
         })
           .then(response => response.json())
@@ -108,7 +104,7 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
-    }
+    } 
     
     
     
@@ -205,6 +201,7 @@ class Book extends React.Component {
                     bookingStep={this.state.bookingStep}
                     changeBokingStep={this.changeBokingStep}
                     setNumberOfGuests={this.setNumberOfGuests}
+                    onChange={this.handleChange}
                 />
         
         
