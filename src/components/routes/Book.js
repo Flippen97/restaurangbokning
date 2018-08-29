@@ -20,12 +20,16 @@ class Book extends React.Component {
     tables: '',
     bdate: '',
     btime: '',
-      
+    selectedDate: undefined,
     /*** Calendar: ***/
     allBookings: [],
     disabledDates: [],
     availableAt18: true,
-    availableAt21: true   
+    availableAt21: true,
+    /*** How far they have come in booking ***/
+    bookingStep: "1",
+
+
   }
     
   /******************************************************/
@@ -33,20 +37,26 @@ class Book extends React.Component {
   /******************************************************/
 
      /* This function is called from the Calendar component */
-     onDayClick = (event) => {
-         let selectedDate = event;
-         /* Date is formatted to be compatible with disable date-function in calender: */
-         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
+    onDayClick = (event,  modifiers = {}) => {
+        if (modifiers.disabled) {
+            return;
+        }
+        this.setState({ selectedDate: event})
+        let selectedDate = event;
+        /* Date is formatted to be compatible with disable date-function in calender: */
+        selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
          this.setState({ bdate: selectedDate }, () => {
              /* If a date is selected, we need to check which times are available on that date, 
              so we are running another function to check that: isSittingAvailable() */
             this.isSittingAvailable();
-         });
-     }
-
+        });
+    }
+    changeBokingStep = (event) => {
+        this.setState({ bookingStep: event.target.value}) 
+    }
     setTime = (event) => {
-        this.setState({ btime: event.target.dataset.btime })
+        this.setState({ btime: event.target.dataset.btime})
     }
 
     /* This function sets name, email, telephone states */
@@ -102,7 +112,7 @@ class Book extends React.Component {
         var counts = {};
         let disabledDatesArray = [];
         /* This counts how many times a specific date has occured in the bookingsArray: */
-        bookingsArray.forEach(function(x) { counts [x.bdate] = (counts [x.bdate] || 0)+1; });
+        bookingsArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
 
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
@@ -164,6 +174,9 @@ class Book extends React.Component {
     
     return (
         <React.Fragment>
+            <div className="headerImg">
+                <h2>Boka bord</h2>
+            </div>
             <div className="bookContainer">
         
                 <div className="bookHeader">
@@ -171,42 +184,25 @@ class Book extends React.Component {
                     {timepickerText}
                 </div>
         
-        
-        { /*
-                <div className="bookSection">
-                    <h3>Välj ett datum:</h3>
-        */ }
-        
                 <Calendar 
                     onDayClick={this.onDayClick} 
                     setTime={this.setTime} 
                     setTables={this.setTables}
                     disabledDates={this.state.disabledDates}
                     bdate={this.state.bdate}
+                    selectedDate={this.state.selectedDate}
+                    bookingStep={this.state.bookingStep}
+                    changeBokingStep={this.changeBokingStep}
                 />
         
-        { /*
         
-                    Antal personer: <br />
-                    <FormInput name="tables" type="text" onChange={this.setTables}/>
-
-                </div>
-        
-                <div className="bookSection">
-                    <h3>Välj en sittning:</h3>
-                    
-                    <form>
-                      <input type="radio" onClick={this.setTime} data-btime="18" /> 18:00 <br />
-                      <input type="radio" onClick={this.setTime} data-btime="21" /> 21:00
-                    </form>
-        
-                </div>
-        */ }
-        
+                {this.state.bookingStep === "3" ? (
                 <div className="bookSection">
                     <h3>Dina uppgifter:</h3>
                     <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
-                </div>
+                    <button>Nästa</button>
+                </div>) 
+                : (<React.Fragment />)}
         
             </div>
         </React.Fragment>

@@ -20,9 +20,10 @@ import Contact from './components/routes/Contact'
 class App extends Component {
     state = {
         toggleNav: false,
-        mainStyle: "containerHome"
+        mainStyle: "containerHome",
+        scroll: ""
     };
-//    componentDidMount = () => {   
+   componentDidMount = () => {   
 //        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
 //          .then(function(response) {
 //            return response.json();
@@ -30,7 +31,13 @@ class App extends Component {
 //          .then(function(myJson) {
 //            console.log(myJson);
 //          });
-//    }
+        //add styling if you go to site from direkturl
+        this.checkUrl();
+        //check width to see if nav should be displayed
+        this.widthCheck();
+        window.addEventListener("resize", this.widthCheck)
+        window.addEventListener('scroll', this.handleScroll);
+    }
     
     /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
     
@@ -72,6 +79,35 @@ class App extends Component {
             console.log(error);
           });
     }
+    checkUrl = () =>{
+        if(window.location.href.indexOf("menu") > -1) {
+            this.setState({ mainStyle: "containerMenu" });
+        }else if(window.location.href.indexOf("book") > -1) {
+            this.setState({ mainStyle: "containerBook" });
+        }else if(window.location.href.indexOf("contact") > -1) {
+            this.setState({ mainStyle: "containerContact" });
+        }else {
+            this.setState({ mainStyle: "containerHome" });
+        }
+    }
+    handleScroll = () =>{
+        const scroll = window.scrollY;
+        if(scroll>160){
+            this.setState({ scroll: "blackbackground" });
+        }else{
+            this.setState({ scroll: "" });
+        }
+        console.log(scroll)
+    }
+    widthCheck = () =>{
+        var width = window.innerWidth;
+        if(width>1000){
+            this.setState({ toggleNav: true });
+        }
+        else{
+            this.setState({ toggleNav: false });
+        }
+    }
     
     /* searchBooking = () => {   
         fetch('https://www.idabergstrom.se/restaurant-api/search.php', {
@@ -94,14 +130,17 @@ class App extends Component {
     } */
     
     /**************************************************************************/
-    
     toggleNav = () =>{
         this.setState({ toggleNav: !this.state.toggleNav });
     }
     mainStyle = (input) =>{
         this.setState({ mainStyle: input });
-        this.setState({ toggleNav: false });
-        console.log(this.state)
+        var width = window.innerWidth;
+        if(width>1000){
+            this.setState({ toggleNav: true });
+        }else{
+            this.setState({ toggleNav: false });
+        }
     }
     
 
@@ -112,7 +151,7 @@ class App extends Component {
         <React.Fragment>
             <div className={this.state.mainStyle}>
 
-                <header>
+                <header className={this.state.scroll}>
                     <h1>Food Fusion</h1>
                     <i className="fa fa-bars" aria-hidden="true" onClick={this.toggleNav}></i>
                 </header>
@@ -136,6 +175,7 @@ class App extends Component {
                 
         
                 <div className="sectionContainer">
+                    {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
                     <div className="section">
                         <Route exact path="/" component={Home}/>
                         <Route path="/menu" component={Menu}/>
