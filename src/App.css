@@ -130,9 +130,69 @@ li a:hover {
 /******************************/
 .containerMenu{
     width: 100%;
-    height: 100vh;
-    background-color: cadetblue;
     margin: 0px auto;
+}
+.containerMenu .sectionContainer .section .menu{
+    padding: 4%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+.containerMenu .sectionContainer .section .menu h3{
+    font-size: 1.5em;
+    text-align: center;
+}
+.containerMenu .sectionContainer .section .menu .starters div,
+.containerMenu .sectionContainer .section .menu .mainCourse div,
+.containerMenu .sectionContainer .section .menu .deserts div,
+.containerMenu .sectionContainer .section .menu .other div{
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+.containerMenu .sectionContainer .section .menu .starters div .produkt,
+.containerMenu .sectionContainer .section .menu .mainCourse div .produkt,
+.containerMenu .sectionContainer .section .menu .deserts div .produkt,
+.containerMenu .sectionContainer .section .menu .other div .produkt{
+    display: block;
+}
+.containerMenu .sectionContainer .section .menu .white div,
+.containerMenu .sectionContainer .section .menu .red div{
+    display: grid;
+    grid-template-columns: 70% 15% 15%;  
+}
+.containerMenu .sectionContainer .section .menu .white div .produkt,
+.containerMenu .sectionContainer .section .menu .red div .produkt{
+    display: block;
+}
+.containerMenu .sectionContainer .section .menu .starters div .price,
+.containerMenu .sectionContainer .section .menu .mainCourse div .price,
+.containerMenu .sectionContainer .section .menu .deserts div .price,
+.containerMenu .sectionContainer .section .menu .other div .price,
+.containerMenu .sectionContainer .section .menu .white div .priceGlas,
+.containerMenu .sectionContainer .section .menu .red div .priceGlas,
+.containerMenu .sectionContainer .section .menu .white div .priceBottle,
+.containerMenu .sectionContainer .section .menu .red div .priceBottle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerMenu .sectionContainer .section .headerImg{
+    height: 185px;
+    background-image: url('img/head_mobile_menu.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+    background-size: cover;
+    background-blend-mode: darken;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerMenu .sectionContainer .section .headerImg h2{
+    margin: 0;
+    color: white;
+    font-size: 2em;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    margin-top: 40px;
+    padding: 10px 73px;
 }
 
 /******************************/
@@ -140,57 +200,50 @@ li a:hover {
 /******************************/
 .containerBook{
     width: 100%;
-    height: 100vh;
-    background-color: cadetblue;
     margin: 0px auto;
 }
-
-.bookContainer {
-    width: 100%;
-    height: 100%;
+.containerBook .sectionContainer .section .headerImg{
+    height: 185px;
+    background-image: url('img/head_mobile_book.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+    background-size: cover;
+    background-blend-mode: darken;
+    background-position: center;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
-
+.containerBook .sectionContainer .section .headerImg h2{
+    margin: 0;
+    color: white;
+    font-size: 2em;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    margin-top: 40px;
+    padding: 10px 73px;
+}
 .bookHeader {
     width: 100%;
     height: 20%;
-    color: lightgrey;
-    box-sizing: border-box;
+    color: black;
     padding: 10px;
 }
 
 .bookSection {
-    width: 33%;
-    height: 80%;
-    color: lightgrey;
-    box-sizing: border-box;
+    width: 50%;
+    color: black;
     padding: 10px;
 }
-
-.bookSection > ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 400px;
-    background-color: #f1f1f1;
+.DayPicker-Day:hover {
+    background-color: #c59d5f !important;
 }
-
-.bookSection > ul > li {
-    display: inline;
-    display: block;
-    color: lightgrey;
-    padding: 8px 16px;
-    text-decoration: none;
-    float: left;
+.DayPicker-Day:active {
+    background-color: gold !important;
 }
-
-.bookSection > ul > li:hover {
-    background-color: #555;
-    color: white;
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    position: relative;
+    color: #f0f8ff;
+    background-color: #8d6f41 !important;
 }
-
 
 input[type=text], select {
     width: 100%;
@@ -212,9 +265,10 @@ input[type=text]:disabled {
     box-sizing: border-box;
 }
 
-input[type=submit] {
+input[type=submit],
+.nextButton{
     width: 100%;
-    background-color: #4CAF50;
+    background-color: #c59d5f;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -223,84 +277,215 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-/*** CALENDAR TEST ***/
-.react-calender__tile .react-calender__month-view__days__day {
-    background-color: red !important;
-    border: 1 px solid purple !important;
-}
-
-.red > button {
-    border: 1 px solid purple !important;    
-}
-
-
-.react-calender__tile button{
-    background-color: red !important;
-    border: 1 px solid purple !important;
-}
-
-.react-calender__month-view__days__day button{
-    background-color: red !important;
-    border: 1 px solid purple !important;    
-}
-
-button .react-calender__month-view__days__day--weekend{
-    border: 1 px solid purple !important;
-}
-
-.time{
-    color: mediumslateblue !important;
+input[type=submit]:hover,
+input[type=submit]:disabled,
+.nextButton:hover,
+.nextButton:disabled{
+    background-color: #7c6e59;
 }
 /******************************/
 /********** Contact ***********/
 /******************************/
 .containerContact{
     width: 100%;
-    height: 100vh;
-    background-color: cadetblue;
     margin: 0px auto;
 }
+.containerContact .sectionContainer .section .headerImg{
+    height: 185px;
+    background-image: url('img/head_mobile_contact.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+    background-size: cover;
+    background-blend-mode: darken;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerContact .sectionContainer .section .headerImg h2{
+    margin: 0;
+    color: white;
+    font-size: 2em;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    margin-top: 40px;
+    padding: 10px 73px;
+}
+.containerContact .sectionContainer .section .contact{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+.containerContact .sectionContainer .section .contact form{
+    padding: 7%;
+    padding-top: 0;
+}
+.containerContact .sectionContainer .section .contact .contactInfo{
+    padding: 7%;
+}
+.contactInfo span{
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+.map {
+    -webkit-filter: grayscale(100%);
+       -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+         -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+}
+
+/******************************************************************************************/
+/******************************** Tablet Screen *******************************************/
+/******************************************************************************************/
+
 @media screen and (min-width: 800px) {
+    /******************************/
+    /*********** Home *************/
+    /******************************/
     .containerHome {
-        background-image: url('img/tablet_bg.png');
+        background-image: url('img/tablet_bg.png'), linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-blend-mode: darken;
+    }
+    /******************************/
+    /*********** Menu *************/
+    /******************************/
+    .containerMenu .sectionContainer .section .menu{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .containerMenu .sectionContainer .section .headerImg{
+        background-image: url('img/head_tablet_menu.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-blend-mode: darken;
+        background-position: center;
+    }
+    /******************************/
+    /*********** Book *************/
+    /******************************/
+    .containerBook .sectionContainer .section .headerImg{
+        background-image: url('img/head_tablet_book.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-blend-mode: darken;
+        background-position: center;
+    }
+    /******************************/
+    /********* Contact ************/
+    /******************************/
+    .containerContact .sectionContainer .section .headerImg{
+        background-image: url('img/head_tablet_contact.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-blend-mode: darken;
+        background-position: center;
+    }
+    .containerContact .sectionContainer .section .contact{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        margin: 20px auto;
+        max-width: 900px;
+    }.containerContact .sectionContainer .section .contact form{
+        padding: 7%;
     }
 }
+
+
+
+/******************************************************************************************/
+/********************************** Webb Screen *******************************************/
+/******************************************************************************************/
+
 @media screen and (min-width: 1000px) {
-    .containerHome {
-        background-image: url('img/webb_bg.png');
+    header .fa{
+        display: none;
+    }
+    header{
+        position: fixed;
+    }
+    h1{
+        text-align: left;
+        margin: 0 0 0 80px;
     }
     /******************************/
     /*********** NAV **************/
     /******************************/
     .navContainer {
+        margin-top: -50px;
         width: 100%;
-        height: 20%;
-        color: lightgrey;
+        height: 50px;
+        color: white;
+        position: fixed;
     }
-    
+    .blackbackground{
+        background-color: rgba(0,0,0,0.8);
+    }
     ul {
         list-style-type: none;
-        margin: 0;
+        text-align: right;
+        margin: 8px 60px 0 0;
         padding: 0;
+        margin-left: auto;
         width: 400px;
-        background-color: #f1f1f1;
+        background-color: rgba(0,0,0,0);
     }
-    
+    li{
+        display: inline-block;
+    }
     li a {
-        display: inline;
         display: block;
-        color: lightgrey;
+        color: white;
         padding: 8px 16px;
         text-decoration: none;
-        float: left;
+        font-size: 1.3em;
     }
     
     li a:hover {
-        background-color: #555;
-        color: white;
+        background-color: rgba(0,0,0,0);
+        color: #c59d5f;
+        text-decoration: underline white;
+    }
+    /******************************/
+    /*********** Home *************/
+    /******************************/
+    .containerHome {
+        background-image: url('img/webb_bg.png'), linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-blend-mode: darken;
+    }
+    /******************************/
+    /*********** Menu *************/
+    /******************************/
+    .containerMenu .sectionContainer .section .menu{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .containerMenu .sectionContainer .section .headerImg{
+        height: 200px;
+        background-image: url('img/head_webb_menu.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: darken;
+    }
+    /******************************/
+    /*********** Book *************/
+    /******************************/
+    .containerBook .sectionContainer .section .headerImg{
+        height: 200px;
+        background-image: url('img/head_webb_book.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: darken;
+    }
+    /******************************/
+    /********* Contact ************/
+    /******************************/
+    .containerContact .sectionContainer .section .headerImg{
+        height: 200px;
+        background-image: url('img/head_webb_contact.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: darken;
+    }
+    .containerContact .sectionContainer .section .contact{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
-

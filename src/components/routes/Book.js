@@ -17,15 +17,19 @@ class Book extends React.Component {
     name: '',
     email: '',
     telephone: '',
-    tables: '',
     bdate: '',
     btime: '',
-      
+    numberOfGuests: '',
+    selectedDate: undefined,
     /*** Calendar: ***/
     allBookings: [],
     disabledDates: [],
     availableAt18: true,
-    availableAt21: true   
+    availableAt21: true,
+    /*** How far they have come in booking ***/
+    bookingStep: "1",
+
+
   }
     
   /******************************************************/
@@ -33,37 +37,65 @@ class Book extends React.Component {
   /******************************************************/
 
      /* This function is called from the Calendar component */
-     onDayClick = (event) => {
-         let selectedDate = event;
-         /* Date is formatted to be compatible with disable date-function in calender: */
-         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
+    onDayClick = (event,  modifiers = {}) => {
+        if (modifiers.disabled) {
+            return;
+        }
+        this.setState({ selectedDate: event})
+        let selectedDate = event;
+        /* Date is formatted to be compatible with disable date-function in calender: */
+        selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
          this.setState({ bdate: selectedDate }, () => {
+             /* If a date is selected, we need to check which times are available on that date, 
+             so we are running another function to check that: isSittingAvailable() */
             this.isSittingAvailable();
-         });
-     }
-
-    setTime = (event) => {
-        this.setState({ btime: event.target.dataset.btime })
+        });
     }
+    changeBokingStep = (event) => {
+        this.setState({ bookingStep: event.target.value}) 
+    }
+    setTime = (event) => {
+        this.setState({ btime: event.target.dataset.btime})
+    }
+//    setNumberOfGuests = () => {
+//        console.log(this);
+////        this.setState({ numberOfGuests: this.target.value})
+//    }
 
     /* This function sets name, email, telephone states */
     handleChange = (event) => {
-        this.setState({ [event.target.name] : event.target.value })
+        let email = event.target.value; 
+        
+        /* Email only pushed to state if it's valid. If empty state, the user will not be allowed to book. */
+        if(event.target.name === 'email'){
+            if(this.validateEmail(email)){
+                this.setState({ email : email })
+            } 
+        }else{
+            this.setState({ [event.target.name] : event.target.value })
+        }
     }
+    
+    validateEmail(emailToValidate){
+        var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regex.test(String(emailToValidate).toLowerCase());
+    }
+    /* "But keep in mind that one should not rely only upon JavaScript validation. JavaScript can easily be disabled. This should be validated on the server side as well." */
   
-    postBooking = (event) => {
+    postBooking = () => {
 
-        fetch(`https://www.idabergstrom.se/restaurant-api/product/create.php`, {
+        fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
-            name: this.state.name,
-            email: this.state.email,
-            telephone: this.state.telephone,
-            bdate: this.state.bdate,
-            btime: this.state.btime,
-          }) 
+                name: this.state.name,
+                email: this.state.email,
+                telephone: this.state.telephone,
+                bdate: this.state.bdate,
+                btime: this.state.btime,
+                numberOfGuests: this.state.numberOfGuests
+            }) 
         })
           .then(response => response.json())
           .then(fetched => {
@@ -72,7 +104,8 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
-    }
+    } 
+    
     
     
   /******************************************************/
@@ -85,11 +118,11 @@ class Book extends React.Component {
         var counts = {};
         let disabledDatesArray = [];
         /* This counts how many times a specific date has occured in the bookingsArray: */
-        bookingsArray.forEach(function(x) { counts [x.bdate] = (counts [x.bdate] || 0)+1; });
+        bookingsArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
 
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 30!
+            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
@@ -114,14 +147,14 @@ class Book extends React.Component {
     }
 
     fetchBookings = () => {
-    return fetch("https://www.idabergstrom.se/restaurant-api/product/read.php")
+    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
       .then((response) => response.json())
     }
   
     componentDidMount = () => {
         this.fetchBookings()
         .then((data) => { 
-            this.setState({ allBookings: data.records }, () => {
+            this.setState({ allBookings: data }, () => {
                 this.disabledDates();
             });
         })
@@ -147,6 +180,10 @@ class Book extends React.Component {
     
     return (
         <React.Fragment>
+            <div className="headerImg">
+                <h2>Boka bord</h2>
+                <button onClick={this.postBooking}>Testknapp för boka!</button>
+            </div>
             <div className="bookContainer">
         
                 <div className="bookHeader">
@@ -154,42 +191,27 @@ class Book extends React.Component {
                     {timepickerText}
                 </div>
         
-        
-        { /*
-                <div className="bookSection">
-                    <h3>Välj ett datum:</h3>
-        */ }
-        
                 <Calendar 
                     onDayClick={this.onDayClick} 
                     setTime={this.setTime} 
                     setTables={this.setTables}
                     disabledDates={this.state.disabledDates}
                     bdate={this.state.bdate}
+                    selectedDate={this.state.selectedDate}
+                    bookingStep={this.state.bookingStep}
+                    changeBokingStep={this.changeBokingStep}
+                    setNumberOfGuests={this.setNumberOfGuests}
+                    onChange={this.handleChange}
                 />
         
-        { /*
         
-                    Antal personer: <br />
-                    <FormInput name="tables" type="text" onChange={this.setTables}/>
-
-                </div>
-        
-                <div className="bookSection">
-                    <h3>Välj en sittning:</h3>
-                    
-                    <form>
-                      <input type="radio" onClick={this.setTime} data-btime="18" /> 18:00 <br />
-                      <input type="radio" onClick={this.setTime} data-btime="21" /> 21:00
-                    </form>
-        
-                </div>
-        */ }
-        
+                {this.state.bookingStep === "3" ? (
                 <div className="bookSection">
                     <h3>Dina uppgifter:</h3>
                     <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
-                </div>
+                    <button>Nästa</button>
+                </div>) 
+                : (<React.Fragment />)}
         
             </div>
         </React.Fragment>
