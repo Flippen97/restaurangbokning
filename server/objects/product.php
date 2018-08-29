@@ -179,4 +179,59 @@ class Product{
 
     }
     
+    //********* search in the database ********//
+    /* Work in progress... */
+    // search products
+    function search($keywords){
+
+        // select all query
+        
+        $query = "SELECT * FROM customers
+                 LEFT JOIN bookings
+                ON customers.id = bookings.customerId
+                WHERE
+                customers.name LIKE " . $keywords . " 
+                ORDER BY DESC";
+//        
+//        $query = "SELECT * FROM customers
+//                 LEFT JOIN bookings
+//                ON customers.id = bookings.customerId
+//                WHERE
+//                    customers.email LIKE " . $keywords . " 
+//                    OR customers.name LIKE " . $keywords . " 
+//                    OR bookings.bid LIKE " . $keywords . "
+//                ORDER BY DESC";
+        
+        
+        
+//        $query = "SELECT
+//                    c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+//                FROM
+//                    " . $this->table_name . " p
+//                    LEFT JOIN
+//                        categories c
+//                            ON p.category_id = c.id
+//                WHERE
+//                    p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?
+//                ORDER BY
+//                    p.created DESC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+//        $keywords=htmlspecialchars(strip_tags($keywords));
+//        $keywords = "%{$keywords}%";
+
+        // bind
+        $stmt->bindParam(1, $keywords);
+//        $stmt->bindParam(2, $keywords);
+//        $stmt->bindParam(3, $keywords);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+    
 }
