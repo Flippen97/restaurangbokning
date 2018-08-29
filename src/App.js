@@ -14,7 +14,7 @@ import Menu from './components/routes/Menu'
 import Book from './components/routes/Book'
 import Contact from './components/routes/Contact'
 //import ContainsAll from './components/ContainsAll'
-
+import Error from './components/routes/Error'
 
 
 class App extends Component {
