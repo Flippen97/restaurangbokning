@@ -37,7 +37,7 @@ function Calendar(props) {
                     </form>
                     Antal personer: <br />
                     <FormInput name="tables" type="text" onChange={props.setNumberOfGuests}/>
-                    <button>Nästa</button>
+                    <button onClick={props.changeBokingStep} disabled={props.bdate === ''} value={"3"}>Nästa</button>
                 </div>) 
             : (<React.Fragment />)}
 
