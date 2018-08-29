@@ -85,17 +85,21 @@ class Book extends React.Component {
   
     postBooking = (event) => {
 
-        fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
+        fetch(`https://www.idabergstrom.se/server2/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
-            name: this.state.name,
-            email: this.state.email,
-            telephone: this.state.telephone,
-            bdate: this.state.bdate,
-            btime: this.state.btime,
-            numberOfGuests: this.state.numberOfGuests
-          }) 
+            /* name: 'TEST IGEN!',
+            email: 'hejhej.se',
+            telephone: '345435',
+            bdate: '2018, 05, 18',
+            btime: 'testigen' */
+                name: this.state.name,
+                email: this.state.email,
+                telephone: this.state.telephone,
+                bdate: this.state.bdate,
+                btime: this.state.btime
+            }) 
         })
           .then(response => response.json())
           .then(fetched => {
@@ -105,6 +109,7 @@ class Book extends React.Component {
             console.log(error);
           });
     }
+    
     
     
   /******************************************************/
@@ -181,6 +186,7 @@ class Book extends React.Component {
         <React.Fragment>
             <div className="headerImg">
                 <h2>Boka bord</h2>
+                <button onClick={this.postBooking}>Testknapp för boka!</button>
             </div>
             <div className="bookContainer">
         
