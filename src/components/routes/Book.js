@@ -1,6 +1,9 @@
 import React from 'react';
 import './../../App.css';
 
+import CustomerForm from './../CustomerForm';
+import FormInput from './../FormInput';
+
 import Calendar from './../Calendar';
 
 import moment from 'moment';
@@ -19,6 +22,7 @@ class Book extends React.Component {
     bdate: '',
     btime: '',
     numberOfGuests: '',
+    customerId: '',
     selectedDate: undefined,
     /*** Calendar: ***/
     allBookings: [],
@@ -93,7 +97,34 @@ class Book extends React.Component {
                 telephone: this.state.telephone,
                 bdate: this.state.bdate,
                 btime: this.state.btime,
-                numberOfGuests: this.state.numberOfGuests
+                numberOfGuests: this.state.numberOfGuests,
+            }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    } 
+    
+    postBookingWithCustomerId = () => {
+        
+
+                    console.log(this.state.btime)
+                    console.log(this.state.bdate)
+                    console.log(this.state.customerId)
+                    console.log(this.state.numberOfGuests)
+
+        fetch(`https://www.idabergstrom.se/restaurant-api/createWithCustomerId.php`, {
+          method: "POST",
+          mode: "cors",
+          body: JSON.stringify({
+                bdate: this.state.bdate,
+                btime: this.state.btime,
+                numberOfGuests: this.state.numberOfGuests,
+                customerId: this.state.customerId
             }) 
         })
           .then(response => response.json())
@@ -144,9 +175,31 @@ class Book extends React.Component {
             this.setState({ availableAt21: false }) 
         }
     }
+    
+    allreadyCustomer = () => {
+
+        fetch('https://www.idabergstrom.se/restaurant-api/fetchOneWithTelephone.php', {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify({
+            telephone: this.state.telephone
+          }) 
+        })
+          .then(response => response.json())
+          .then(data => {
+             this.setState({ 
+                    customerId: data[0].id, 
+                }, () => {
+                  this.postBookingWithCustomerId();
+                })
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }
 
     fetchBookings = () => {
-    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
+    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAllGuests.php")
       .then((response) => response.json())
     }
   
@@ -155,6 +208,7 @@ class Book extends React.Component {
         .then((data) => { 
             this.setState({ allBookings: data }, () => {
                 this.disabledDates();
+                console.log(this.state.allBookings)
             });
         })
         .catch(error => {
@@ -203,6 +257,22 @@ class Book extends React.Component {
                     postBooking={this.postBooking}
                 />
         
+        
+                {this.state.bookingStep === "3" ? (
+                <div className="bookSection">
+        
+                    Bokat tidigare? V.g. fyll i telefonnummer: 
+                    <FormInput onChange={this.handleChange} name="telephone" />
+                    <button onClick={this.allreadyCustomer}> Boka! </button>
+        
+        
+                    <h3>Dina uppgifter:</h3>
+                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
+                    <button>Nästa</button>
+                </div>) 
+                : (<React.Fragment />)}
+        
+
             </div>
         </React.Fragment>
     );
