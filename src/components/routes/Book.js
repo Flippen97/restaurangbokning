@@ -1,5 +1,6 @@
 import React from 'react';
 import './../../App.css';
+
 import CustomerForm from './../CustomerForm';
 import FormInput from './../FormInput';
 
@@ -234,7 +235,6 @@ class Book extends React.Component {
         <React.Fragment>
             <div className="headerImg">
                 <h2>Boka bord</h2>
-                <button onClick={this.postBooking}>Testknapp för boka!</button>
             </div>
             <div className="bookContainer">
         
@@ -254,6 +254,7 @@ class Book extends React.Component {
                     changeBokingStep={this.changeBokingStep}
                     setNumberOfGuests={this.setNumberOfGuests}
                     onChange={this.handleChange}
+                    postBooking={this.postBooking}
                 />
         
         
@@ -271,6 +272,7 @@ class Book extends React.Component {
                 </div>) 
                 : (<React.Fragment />)}
         
+
             </div>
         </React.Fragment>
     );

@@ -167,10 +167,11 @@ class App extends Component {
                             <li onClick={() => this.mainStyle("containerBook")}><Link to="/book">Boka bord</Link></li>
                             <li onClick={() => this.mainStyle("containerContact")}><Link to="/contact">Kontakt</Link></li>
                         </ul>
-                    { /* Just a test button. Remove later: */ }
+                    { /* Just a test button. Remove later: *//* 
                     <button onClick={this.deleteBooking}>Testknapp för delete</button>
                     <button onClick={this.updateBooking}>Testknapp för uppdatering</button>
                     <button onClick={this.searchBooking}>Testknapp för sök</button>
+                    */}
                     </nav>
                 ) : (
                 <div />
