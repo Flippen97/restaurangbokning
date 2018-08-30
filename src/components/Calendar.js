@@ -3,6 +3,7 @@ import './../App.css';
 import DayPicker from 'react-day-picker';
 import FormInput from './FormInput';
 import 'react-day-picker/lib/style.css';
+import CustomerForm from './CustomerForm';
 
     
 function Calendar(props) {
@@ -40,7 +41,14 @@ function Calendar(props) {
                     <button onClick={props.changeBokingStep} disabled={props.bdate === ''} value={"3"}>Nästa</button>
                 </div>) 
             : (<React.Fragment />)}
-
+            
+            {props.bookingStep === "3" ? (
+                <div className="bookSection">
+                    <h3>Dina uppgifter:</h3>
+                    <CustomerForm onChange={props.onChange}/>
+                    <button onClick={props.postBooking}>BOKA NU!!</button>
+                </div>) 
+            : (<React.Fragment />)}
 
         </React.Fragment>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import './../../App.css';
-import CustomerForm from './../CustomerForm';
 
 import Calendar from './../Calendar';
 
@@ -182,7 +181,6 @@ class Book extends React.Component {
         <React.Fragment>
             <div className="headerImg">
                 <h2>Boka bord</h2>
-                <button onClick={this.postBooking}>Testknapp för boka!</button>
             </div>
             <div className="bookContainer">
         
@@ -202,16 +200,8 @@ class Book extends React.Component {
                     changeBokingStep={this.changeBokingStep}
                     setNumberOfGuests={this.setNumberOfGuests}
                     onChange={this.handleChange}
+                    postBooking={this.postBooking}
                 />
-        
-        
-                {this.state.bookingStep === "3" ? (
-                <div className="bookSection">
-                    <h3>Dina uppgifter:</h3>
-                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
-                    <button>Nästa</button>
-                </div>) 
-                : (<React.Fragment />)}
         
             </div>
         </React.Fragment>
