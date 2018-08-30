@@ -1,4 +1,5 @@
 <?php
+    /* This file fetches current bookings and customer info. Customers who do not have a booking is not included. */
 
     include_once 'database.php';
 

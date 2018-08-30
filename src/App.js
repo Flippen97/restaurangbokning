@@ -13,6 +13,8 @@ import Home from './components/routes/Home'
 import Menu from './components/routes/Menu'
 import Book from './components/routes/Book'
 import Contact from './components/routes/Contact'
+
+import Admin from './components/routes/Admin'
 //import ContainsAll from './components/ContainsAll'
 
 
@@ -79,6 +81,7 @@ class App extends Component {
             console.log(error);
           });
     }
+    
     checkUrl = () =>{
         if(window.location.href.indexOf("menu") > -1) {
             this.setState({ mainStyle: "containerMenu" });
@@ -181,6 +184,8 @@ class App extends Component {
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>
+                    
+                        <Route path="/admin" component={Admin}/>
                     </div>
                 </div>
         

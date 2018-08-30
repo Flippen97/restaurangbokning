@@ -1,6 +1,7 @@
 import React from 'react';
 import './../../App.css';
 import CustomerForm from './../CustomerForm';
+import FormInput from './../FormInput';
 
 import Calendar from './../Calendar';
 
@@ -145,9 +146,29 @@ class Book extends React.Component {
             this.setState({ availableAt21: false }) 
         }
     }
+    
+    allreadyCustomer = (event) => {
+
+        console.log("Hej");
+        
+        fetch('https://www.idabergstrom.se/restaurant-api/fetchOneWithTelephone.php', {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify({
+            telephone: '23443'
+          }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }
 
     fetchBookings = () => {
-    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
+    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAllGuests.php")
       .then((response) => response.json())
     }
   
@@ -156,6 +177,7 @@ class Book extends React.Component {
         .then((data) => { 
             this.setState({ allBookings: data }, () => {
                 this.disabledDates();
+                console.log(this.state.allBookings)
             });
         })
         .catch(error => {
@@ -207,6 +229,12 @@ class Book extends React.Component {
         
                 {this.state.bookingStep === "3" ? (
                 <div className="bookSection">
+        
+                    Bokat tidigare? V.g. fyll i telefonnummer: 
+                    <FormInput onChange={this.handleChange} name="telephone" />
+                    <button onClick={this.allreadyCustomer}> Autofyll </button>
+        
+        
                     <h3>Dina uppgifter:</h3>
                     <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
                     <button>Nästa</button>
