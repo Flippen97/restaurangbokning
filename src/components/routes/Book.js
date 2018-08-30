@@ -108,6 +108,33 @@ class Book extends React.Component {
           });
     } 
     
+    postBookingWithCustomerId = () => {
+        
+
+                    console.log(this.state.btime)
+                    console.log(this.state.bdate)
+                    console.log(this.state.customerId)
+                    console.log(this.state.numberOfGuests)
+
+        fetch(`https://www.idabergstrom.se/restaurant-api/createWithCustomerId.php`, {
+          method: "POST",
+          mode: "cors",
+          body: JSON.stringify({
+                bdate: this.state.bdate,
+                btime: this.state.btime,
+                numberOfGuests: this.state.numberOfGuests,
+                customerId: this.state.customerId
+            }) 
+        })
+          .then(response => response.json())
+          .then(fetched => {
+            console.log(fetched);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    } 
+    
     
     
   /******************************************************/
@@ -150,8 +177,6 @@ class Book extends React.Component {
     
     allreadyCustomer = () => {
 
-        console.log("Hej");
-        
         fetch('https://www.idabergstrom.se/restaurant-api/fetchOneWithTelephone.php', {
           method: 'POST',
           mode: 'cors',
@@ -163,8 +188,8 @@ class Book extends React.Component {
           .then(data => {
              this.setState({ 
                     customerId: data[0].id, 
-                    name: data[0].name, 
-                    email: data[0].email 
+                }, () => {
+                  this.postBookingWithCustomerId();
                 })
           })
           .catch(error => {
