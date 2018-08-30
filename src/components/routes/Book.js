@@ -21,6 +21,7 @@ class Book extends React.Component {
     bdate: '',
     btime: '',
     numberOfGuests: '',
+    customerId: '',
     selectedDate: undefined,
     /*** Calendar: ***/
     allBookings: [],
@@ -95,7 +96,7 @@ class Book extends React.Component {
                 telephone: this.state.telephone,
                 bdate: this.state.bdate,
                 btime: this.state.btime,
-                numberOfGuests: this.state.numberOfGuests
+                numberOfGuests: this.state.numberOfGuests,
             }) 
         })
           .then(response => response.json())
@@ -147,7 +148,7 @@ class Book extends React.Component {
         }
     }
     
-    allreadyCustomer = (event) => {
+    allreadyCustomer = () => {
 
         console.log("Hej");
         
@@ -155,12 +156,16 @@ class Book extends React.Component {
           method: 'POST',
           mode: 'cors',
           body: JSON.stringify({
-            telephone: '23443'
+            telephone: this.state.telephone
           }) 
         })
           .then(response => response.json())
-          .then(fetched => {
-            console.log(fetched);
+          .then(data => {
+             this.setState({ 
+                    customerId: data[0].id, 
+                    name: data[0].name, 
+                    email: data[0].email 
+                })
           })
           .catch(error => {
             console.log(error);
@@ -232,7 +237,7 @@ class Book extends React.Component {
         
                     Bokat tidigare? V.g. fyll i telefonnummer: 
                     <FormInput onChange={this.handleChange} name="telephone" />
-                    <button onClick={this.allreadyCustomer}> Autofyll </button>
+                    <button onClick={this.allreadyCustomer}> Boka! </button>
         
         
                     <h3>Dina uppgifter:</h3>
