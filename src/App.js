@@ -14,6 +14,8 @@ import Home from './components/routes/Home'
 import Menu from './components/routes/Menu'
 import Book from './components/routes/Book'
 import Contact from './components/routes/Contact'
+
+import Admin from './components/routes/Admin'
 //import ContainsAll from './components/ContainsAll'
 import Error from './components/routes/Error'
 
@@ -80,6 +82,7 @@ class App extends Component {
             console.log(error);
           });
     }
+    
     checkUrl = () =>{
         if(window.location.href.indexOf("menu") > -1) {
             this.setState({ mainStyle: "containerMenu" });
@@ -165,10 +168,11 @@ class App extends Component {
                             <li onClick={() => this.mainStyle("containerBook")}><Link to="/book">Boka bord</Link></li>
                             <li onClick={() => this.mainStyle("containerContact")}><Link to="/contact">Kontakt</Link></li>
                         </ul>
-                    { /* Just a test button. Remove later: */ }
+                    { /* Just a test button. Remove later: *//* 
                     <button onClick={this.deleteBooking}>Testknapp för delete</button>
                     <button onClick={this.updateBooking}>Testknapp för uppdatering</button>
                     <button onClick={this.searchBooking}>Testknapp för sök</button>
+                    */}
                     </nav>
                 ) : (
                 <div />
@@ -183,6 +187,7 @@ class App extends Component {
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>
+                        <Route path="/admin" component={Admin}/>
                         <Route component={Error} />
                     </Switch>
                     </div>
