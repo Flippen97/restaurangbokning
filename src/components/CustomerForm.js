@@ -30,9 +30,9 @@ function CustomerForm(props) {
                 onChange={props.onChange}
             />
 
-            <div className="form-group">
+            {/*<div className="form-group">
                 <input type="submit" onClick={props.postBooking} value="Posta ny kund" state={props.state}/>
-            </div>
+            </div>*/}
       </form>
       
     );
