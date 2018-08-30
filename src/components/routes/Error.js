@@ -6,7 +6,7 @@ function Error() {
     return (
         <React.Fragment>
         
-            <p>Error: path does not exist, please pick another one</p>
+            <h1>Error: Tyvärr kunde sidan du sökte efter inte hittas för att den inte finns,försök gärna igen</h1>
 
         </React.Fragment>
     );
