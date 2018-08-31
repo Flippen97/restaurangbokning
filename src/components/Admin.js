@@ -15,9 +15,10 @@ class Admin extends Component {
         name: "",
         email: "",
         telephone: ""
-      }
+      },
 
       //isNewBookingAdded: false
+      isBookingInfoVisible: false
     };
 
     this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
@@ -160,9 +161,9 @@ class Admin extends Component {
     this.fetchAllBookings();
   };
 
-  onShowClick() {
-    console.log("hello world!");
-  }
+  /*  onShowClick = e => {
+    this.setState({ isBookingInfoVisible: !this.state.isBookingInfoVisible });
+  }; */
 
   clickHandlerUpdateBooking = item => {
     this.updateBooking(
@@ -188,14 +189,23 @@ class Admin extends Component {
       <div key={item.bid}>
         <div className="all-bookings">
           <h3>Input fields to change info</h3>
-          {index + 1} &nbsp; Customer ID: {item.bid} &nbsp;{" "}
-          <button onClick={this.onClickDeleteHandler.bind(this, item.bid)}>
-            Delete!
-          </button>{" "}
-          <i onClick={this.onShowClick} className="fas fa-sort-down" />
+          {index + 1} &nbsp; Customer ID: {item.bid} &nbsp; Name: {item.name}{" "}
+          <i className="fas fa-pencil-alt" /> &nbsp;
+          <i
+            onClick={this.onClickDeleteHandler.bind(this, item.bid)}
+            className="fas fa-times"
+          />{" "}
+          &nbsp;{" "}
+          <i
+            onClick={() =>
+              this.setState({
+                isBookingInfoVisible: !this.state.isBookingInfoVisible
+              })
+            }
+            className="fas fa-sort-down"
+          />
           <br />
           <br />
-          &nbsp; Name: {item.name} <i className="fas fa-pencil-alt" />
           &nbsp;{" "}
           <input
             name="name"
@@ -205,7 +215,8 @@ class Admin extends Component {
               this.onInputChange(event.target.name, event.target.value, index)
             }
           />{" "}
-          &nbsp;Email: {item.email} &nbsp;{" "}
+          &nbsp;Email: {item.email} &nbsp; <i className="fas fa-pencil-alt" />{" "}
+          &nbsp;
           <input
             type="text"
             name="email"
@@ -215,6 +226,7 @@ class Admin extends Component {
             }
           />
           &nbsp;Telephone: {item.telephone} &nbsp;{" "}
+          <i className="fas fa-pencil-alt" /> &nbsp;
           <input
             type="text"
             value={item.telephone}
@@ -223,7 +235,8 @@ class Admin extends Component {
               this.onInputChange(event.target.name, event.target.value, index)
             }
           />
-          &nbsp; Date: {item.bdate} &nbsp;{" "}
+          &nbsp; Date: {item.bdate} &nbsp; <i className="fas fa-pencil-alt" />{" "}
+          &nbsp;
           <input
             type="text"
             value={item.bdate}
@@ -232,7 +245,8 @@ class Admin extends Component {
               this.onInputChange(event.target.name, event.target.value, index)
             }
           />{" "}
-          &nbsp; Time: {item.btime} &nbsp;{" "}
+          &nbsp; Time: {item.btime} &nbsp; <i className="fas fa-pencil-alt" />{" "}
+          &nbsp;
           <input
             type="text"
             value={item.btime}
@@ -242,6 +256,7 @@ class Admin extends Component {
             }
           />
           &nbsp; Number of Guests: {item.numberOfGuests} &nbsp;{" "}
+          <i className="fas fa-pencil-alt" /> &nbsp;
           <input
             type="text"
             value={item.numberOfGuests}
