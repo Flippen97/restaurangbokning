@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import "./../App.css";
 import DayPicker from "react-day-picker";
+import DayPickerInput from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css";
 
 class Admin extends Component {
   constructor(props) {
     super(props);
-
+    this.handleDayChange = this.handleDayChange.bind(this);
     this.state = {
       /*** Booking: ***/
       allBookings: [],
@@ -17,7 +19,8 @@ class Admin extends Component {
         email: "",
         telephone: ""
       },
-
+      //Calendar
+      selectedDay: undefined,
       disabledDates: [],
       availableAt18: true,
       availableAt21: true,
@@ -187,10 +190,16 @@ class Admin extends Component {
     this.fetchAllBookings();
   };
 
+  handleDayChange(day) {
+    this.setState({ selectedDay: day });
+  }
+
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
+
+    const { selectedDay } = this.state;
     // console.log(this.state.allBookings);
     const { isBookingInfoVisible } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
@@ -225,7 +234,12 @@ class Admin extends Component {
           className="fas fa-sort-down"
         />{" "}
         <br />
-        Name: {item.name}{" "}
+        <br />
+        Name:{" "}
+        {(islistOfBookingsVisible && !isEditFieldVisible) ||
+        (isBookingInfoVisible && !isEditFieldVisible) ? (
+          <span> {item.name} </span>
+        ) : null}
         {isBookingInfoVisible ? (
           <div className="all-bookings">
             &nbsp;{" "}
@@ -283,7 +297,19 @@ class Admin extends Component {
               <div>Date: </div>
               {islistOfBookingsVisible ? <div> {item.bdate} </div> : null}
               {isEditFieldVisible ? (
-                <input
+                <DayPickerInput
+                  dayPickerProps={{
+                    month: new Date(2018, 10),
+                    showWeekNumbers: true,
+                    todayButton: "Today"
+                  }}
+                  onDayChange={this.handleDayChange}
+                  onChange={event =>
+                    //this.setState({ [event.target.name]: event.target.value })
+                    this.onCreateNewGuestInputInfo(event)
+                  }
+                />
+              ) : /*                 <input
                   type="date"
                   min="2018-09-01"
                   value={item.bdate}
@@ -295,8 +321,8 @@ class Admin extends Component {
                       index
                     )
                   }
-                />
-              ) : null}{" "}
+                /> */
+              null}{" "}
               <br />
               <div> Time: </div>
               {islistOfBookingsVisible ? <div> {item.btime} </div> : null}
@@ -431,14 +457,33 @@ class Admin extends Component {
                 </li>
                 <li>
                   <h3>Date</h3>
-                  <input
+                  <div>
+                    {selectedDay && (
+                      <p>Day: {selectedDay.toLocaleDateString()}</p>
+                    )}
+                    {!selectedDay && <p>Choose a day</p>}
+                    <DayPickerInput
+                      dayPickerProps={{
+                        month: new Date(2018, 10),
+                        showWeekNumbers: true,
+                        todayButton: "Today"
+                      }}
+                      onDayChange={this.handleDayChange}
+                      onChange={event =>
+                        //this.setState({ [event.target.name]: event.target.value })
+                        this.onCreateNewGuestInputInfo(event)
+                      }
+                    />
+                  </div>
+
+                  {/*                   <input
                     type="text"
                     name="bdate"
                     onChange={event =>
                       //this.setState({ [event.target.name]: event.target.value })
                       this.onCreateNewGuestInputInfo(event)
                     }
-                  />
+                  /> */}
                 </li>
                 <li>
                   <h3>Time</h3>
@@ -468,11 +513,11 @@ class Admin extends Component {
           ) : null}
         </div>
 
-        <DayPicker
+        {/*         <DayPicker
           //onDayClick={onDayClick}
           initialMonth={new Date(2018, 7)}
           //disabledDays={disabledDates.map(date => new Date(date))}
-        />
+        /> */}
       </React.Fragment>
     );
   }
