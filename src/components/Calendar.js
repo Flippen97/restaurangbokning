@@ -33,8 +33,8 @@ function Calendar(props) {
                     <h3>Välj en sittning:</h3>
                     <form>
                     { /* Put disabled on these if a date has not yet been picked */ }
-                        <input type="radio" onClick={props.setTime} data-btime="18" /> 18:00 <br />
-                        <input type="radio" onClick={props.setTime} data-btime="21" /> 21:00
+                        <input type="radio" onClick={props.setTime} disabled={!props.availableAt18} data-btime="18" /> 18:00 <br />
+                        <input type="radio" onClick={props.setTime} disabled={!props.availableAt21} data-btime="21" /> 21:00
                     </form>
                     Antal personer: <br />
                     <FormInput name="numberOfGuests" type="text" onChange={props.onChange} />

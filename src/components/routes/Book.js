@@ -152,7 +152,7 @@ class Book extends React.Component {
 
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
+            if(counts[key] >= 4){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
@@ -167,11 +167,13 @@ class Book extends React.Component {
         const bookingsAt18 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '18')));
         const bookingsAt21 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '21')));
         
+        console.log('at 18:', bookingsAt18);
         /* There are 15 tables, but we have to count with 14 here because of how array works: */
-        if(bookingsAt18.length >= 14){
+        /* TEST, THESE MUST BE CHANGED TO 14 LATER ON! */
+        if(bookingsAt18.length >= 1){
             this.setState({ availableAt18: false }) 
         }
-        if(bookingsAt21.length >= 14){
+        if(bookingsAt21.length >= 1){
             this.setState({ availableAt21: false }) 
         }
     }
@@ -255,6 +257,8 @@ class Book extends React.Component {
                     setNumberOfGuests={this.setNumberOfGuests}
                     onChange={this.handleChange}
                     postBooking={this.postBooking}
+                    availableAt18={this.state.availableAt18}
+                    availableAt21={this.state.availableAt21}
                 />
         
         
