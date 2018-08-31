@@ -198,9 +198,8 @@ class Admin extends Component {
     console.log(test);
     let list = this.state.allBookings.map((item, index) => (
       <div key={item.bid}>
-        <h3>Input fields to change info</h3>
-        {index + 1} &nbsp; Customer ID: {item.bid} &nbsp; <br />
-        Name: {item.name}{" "}
+        <br />
+        {index + 1} &nbsp; Customer ID: {item.bid} &nbsp;{" "}
         <i
           onClick={() =>
             this.setState({
@@ -223,7 +222,9 @@ class Admin extends Component {
             })
           }
           className="fas fa-sort-down"
-        />
+        />{" "}
+        <br />
+        Name: {item.name}{" "}
         {isBookingInfoVisible ? (
           <div className="all-bookings">
             &nbsp;{" "}
@@ -242,6 +243,7 @@ class Admin extends Component {
                   }
                 />
               ) : null}{" "}
+              <br />
               <div>Email: </div>
               {islistOfBookingsVisible ? <div> {item.email} </div> : null}
               {isEditFieldVisible ? (
@@ -275,7 +277,8 @@ class Admin extends Component {
                     )
                   }
                 />
-              ) : null}
+              ) : null}{" "}
+              <br />
               <div>Date: </div>
               {islistOfBookingsVisible ? <div> {item.bdate} </div> : null}
               {isEditFieldVisible ? (
@@ -292,7 +295,8 @@ class Admin extends Component {
                     )
                   }
                 />
-              ) : null}
+              ) : null}{" "}
+              <br />
               <div> Time: </div>
               {islistOfBookingsVisible ? <div> {item.btime} </div> : null}
               {isEditFieldVisible ? (
@@ -338,7 +342,8 @@ class Admin extends Component {
                   />
                   21
                 </div>
-              ) : null}
+              ) : null}{" "}
+              <br />
               <div>Number of Guests: </div>
               {islistOfBookingsVisible ? (
                 <div> {item.numberOfGuests} </div>
@@ -358,8 +363,9 @@ class Admin extends Component {
                     )
                   }
                 />
-              ) : null}{" "}
-            </div>
+              ) : null}
+            </div>{" "}
+            <br />
             <button onClick={this.clickHandlerUpdateBooking.bind(this, item)}>
               Update!
             </button>
