@@ -18,4 +18,8 @@
       ":btime"     => $array["btime"],
       ":numberOfGuests" => $array["numberOfGuests"]
     ));
+
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($data, JSON_PRETTY_PRINT);
 ?>

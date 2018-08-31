@@ -19,7 +19,14 @@ function Calendar(props) {
                     onDayClick={props.onDayClick}
                     selectedDays={props.selectedDate}
                     initialMonth={new Date(2018, 7)}
-                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+//                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+
+                disabledDays={[ props.disabledDates.map((date) => new Date(date)), 
+                              {
+//                               after: new Date(2017, 3, 20),
+                                before: new Date(),
+                            }, ]}
+
                 />
                 <span className="chosenDate">Valt datum: {props.bdate}</span>
                 <button className="nextButton" onClick={props.changeBokingStep} disabled={props.bdate === ''} value={"2"}>Nästa</button>

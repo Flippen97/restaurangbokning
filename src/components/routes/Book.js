@@ -101,9 +101,9 @@ class Book extends React.Component {
             }) 
         })
           .then(response => response.json())
-          .then(fetched => {
-            console.log(fetched);
-          })
+//          .then(fetched => {
+//            console.log(fetched);
+//          })
           .catch(error => {
             console.log(error);
           });
