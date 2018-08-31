@@ -20,9 +20,7 @@ class Admin extends Component {
       //isNewBookingAdded: false
     };
 
-    this.clickHandlerPostNewBooking = this.clickHandlerPostNewBooking.bind(
-      this
-    );
+    this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
 
     this.onClickDeleteHandler = this.onClickDeleteHandler.bind(this);
   }
@@ -141,7 +139,7 @@ class Admin extends Component {
   }
 
   deleteBooking = bid => {
-    fetch("https://www.idabergstrom.se/restaurant-api/product/delete.php", {
+    fetch("https://www.idabergstrom.se/restaurant-api/deleteBooking.php", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -162,6 +160,24 @@ class Admin extends Component {
     this.fetchAllBookings();
   };
 
+  onShowClick() {
+    console.log("hello world!");
+  }
+
+  clickHandlerUpdateBooking = item => {
+    this.updateBooking(
+      item.id,
+      item.name,
+      item.email,
+      item.telephone,
+      item.bdate,
+      item.btime,
+      item.numberOfGuests
+    );
+
+    this.fetchAllBookings();
+  };
+
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
@@ -175,10 +191,12 @@ class Admin extends Component {
           {index + 1} &nbsp; Customer ID: {item.bid} &nbsp;{" "}
           <button onClick={this.onClickDeleteHandler.bind(this, item.bid)}>
             Delete!
-          </button>
+          </button>{" "}
+          <i onClick={this.onShowClick} className="fas fa-sort-down" />
           <br />
           <br />
-          &nbsp; Name: {item.name} &nbsp;{" "}
+          &nbsp; Name: {item.name} <i className="fas fa-pencil-alt" />
+          &nbsp;{" "}
           <input
             name="name"
             type="text"
@@ -233,7 +251,7 @@ class Admin extends Component {
             }
           />
         </div>
-        <button onClick={this.clickHandlerPostNewBooking.bind(this, item)}>
+        <button onClick={this.clickHandlerUpdateBooking.bind(this, item)}>
           Update!
         </button>
       </div>
@@ -317,18 +335,6 @@ class Admin extends Component {
           </form>
         </div>
       </React.Fragment>
-    );
-  }
-
-  clickHandlerPostNewBooking(item) {
-    return this.updateBooking(
-      item.id,
-      item.name,
-      item.email,
-      item.telephone,
-      item.bdate,
-      item.btime,
-      item.numberOfGuests
     );
   }
 }
