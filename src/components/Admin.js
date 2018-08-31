@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./../App.css";
-/* import Calendar from "./Calendar";
-
-import moment from "moment"; */
+import DayPicker from "react-day-picker";
 
 class Admin extends Component {
   constructor(props) {
@@ -19,6 +17,10 @@ class Admin extends Component {
         email: "",
         telephone: ""
       },
+
+      disabledDates: [],
+      availableAt18: true,
+      availableAt21: true,
 
       //isNewBookingAdded: false
       isBookingInfoVisible: false,
@@ -194,8 +196,7 @@ class Admin extends Component {
     const { isAddNewGuestFormVisible } = this.state;
     const { isEditFieldVisible } = this.state;
     const { islistOfBookingsVisible } = this.state;
-    let test = "testDiv";
-    console.log(test);
+
     let list = this.state.allBookings.map((item, index) => (
       <div key={item.bid}>
         <br />
@@ -466,6 +467,12 @@ class Admin extends Component {
             </form>
           ) : null}
         </div>
+
+        <DayPicker
+          //onDayClick={onDayClick}
+          initialMonth={new Date(2018, 7)}
+          //disabledDays={disabledDates.map(date => new Date(date))}
+        />
       </React.Fragment>
     );
   }
