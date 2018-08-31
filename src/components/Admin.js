@@ -9,14 +9,15 @@ class Admin extends Component {
       /*** Booking: ***/
       allBookings: [],
       newBooking: {
-        name: "",
-        email: "",
-        telephone: "",
-        tables: "",
         bdate: "",
         btime: "",
-        numberOfGuests: ""
+        numberOfGuests: "",
+        name: "",
+        email: "",
+        telephone: ""
       }
+
+      //isNewBookingAdded: false
     };
 
     this.clickHandlerPostNewBooking = this.clickHandlerPostNewBooking.bind(
@@ -26,12 +27,21 @@ class Admin extends Component {
     this.onClickDeleteHandler = this.onClickDeleteHandler.bind(this);
   }
 
-  componentDidMount() {
+  fetchAllBookings = () => {
     fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
       .then(response => response.json())
       .then(data => {
         this.setState({ allBookings: data });
       });
+  };
+
+  componentDidMount() {
+    this.fetchAllBookings();
+    /*     fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ allBookings: data });
+      }); */
   }
 
   onInputChange(eventTargetName, newValue, index) {
@@ -63,25 +73,8 @@ class Admin extends Component {
     this.setState({ allBookings: newBookings }); //update the value
   }
 
-  /*  deleteBooking = bid => {
-    fetch("https://www.idabergstrom.se/restaurant-api/product/delete.php", {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify({
-        bid: bid
-      })
-    })
-      .then(response => response.json())
-      .then(fetched => {
-        console.log(fetched);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }; */
-
   postBooking = event => {
-    fetch(`https://www.idabergstrom.se/restaurant-api/product/create.php`, {
+    fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -111,7 +104,7 @@ class Admin extends Component {
     btime,
     numberOfGuests
   ) => {
-    fetch("https://www.idabergstrom.se/restaurant-api/product/update.php", {
+    fetch("https://www.idabergstrom.se/restaurant-api/update.php", {
       method: "POST",
       mode: "cors",
       body: JSON.stringify({
@@ -133,14 +126,6 @@ class Admin extends Component {
       });
   };
 
-  /*   onCreateNewGuest = (targetName, targetValue) => {
-    this.setState({
-      newBooking: {
-        [targetName]: targetValue
-      }
-    });
-  }; */
-
   onCreateNewGuestInputInfo(e) {
     const updateNewBooking = {
       [e.target.name]: e.target.value
@@ -153,27 +138,7 @@ class Admin extends Component {
     this.setState({
       newBooking: updatedBooking
     });
-
-    //this.updateBookingsState();
-
-    /*    const updatedAllBookings = Object.assign(
-      this.state.allBookings,
-      updateNewBooking
-    ); */
   }
-
-  /*  updateBookingsState = () => {
-    //this.state.allBookings[50] = {test : 'ho'}
-    // console.log(this.state.allBookings[50]);
-    const addNewBookingToAllBookings = Object.assign(
-      this.state.allBookings,
-      this.newBooking
-    );
-
-    this.setState(prevState => ({
-      allBookings: [...prevState.allBookings, addNewBookingToAllBookings]
-    }));
-  }; */
 
   deleteBooking = bid => {
     fetch("https://www.idabergstrom.se/restaurant-api/product/delete.php", {
@@ -194,16 +159,8 @@ class Admin extends Component {
 
   onClickDeleteHandler = bid => {
     this.deleteBooking(bid);
+    this.fetchAllBookings();
   };
-
-  /*   updateAllBookingsWithNewBooking = e => {
-    // let tempAllBookings = this.state.allBookings.slice(0);
-    let tempAllBookings = [...this.state.allBookings];
-    tempAllBookings.push(this.state.newBooking);
-    this.setState({
-      allBookings: tempAllBookings
-    });
-  }; */
 
   render() {
     if (!this.state.allBookings) {
@@ -211,11 +168,16 @@ class Admin extends Component {
     }
     // console.log(this.state.allBookings);
 
-    const list = this.state.allBookings.map((item, index) => (
+    let list = this.state.allBookings.map((item, index) => (
       <div key={item.bid}>
         <div className="all-bookings">
           <h3>Input fields to change info</h3>
-          {index + 1} &nbsp; Customer ID: {item.bid} <br />
+          {index + 1} &nbsp; Customer ID: {item.bid} &nbsp;{" "}
+          <button onClick={this.onClickDeleteHandler.bind(this, item.bid)}>
+            Delete!
+          </button>
+          <br />
+          <br />
           &nbsp; Name: {item.name} &nbsp;{" "}
           <input
             name="name"
@@ -224,10 +186,7 @@ class Admin extends Component {
             onChange={event =>
               this.onInputChange(event.target.name, event.target.value, index)
             }
-          />
-          <button onClick={this.onClickDeleteHandler.bind(this, item.bid)}>
-            Delete!
-          </button>
+          />{" "}
           &nbsp;Email: {item.email} &nbsp;{" "}
           <input
             type="text"
@@ -286,74 +245,76 @@ class Admin extends Component {
         <h2>List of bookings: </h2>
         <div>{list}</div>
         <div className="newGuestInfoInput">
-          <h2>Add Guest:</h2>
-          <div>
-            <h3>Name</h3>
-            <input
-              type="text"
-              name="name"
-              onChange={
-                event => this.onCreateNewGuestInputInfo(event)
-                //this.setState({ [event.target.name]: event.target.value })
-              }
-            />
-          </div>
-          <div>
-            <h3>Email</h3>
-            <input
-              type="text"
-              name="email"
-              onChange={event =>
-                //this.setState({ [event.target.name]: event.target.value })
-                this.onCreateNewGuestInputInfo(event)
-              }
-            />
-          </div>
-          <div>
-            <h3>Telephone</h3>
-            <input
-              type="text"
-              name="telephone"
-              onChange={event =>
-                //this.setState({ [event.target.name]: event.target.value })
-                this.onCreateNewGuestInputInfo(event)
-              }
-            />
-          </div>
-          <div>
-            <h3>Date</h3>
-            <input
-              type="text"
-              name="bdate"
-              onChange={event =>
-                //this.setState({ [event.target.name]: event.target.value })
-                this.onCreateNewGuestInputInfo(event)
-              }
-            />
-          </div>
-          <div>
-            <h3>Time</h3>
-            <input
-              type="text"
-              name="btime"
-              onChange={event =>
-                // this.setState({ [event.target.name]: event.target.value })
-                this.onCreateNewGuestInputInfo(event)
-              }
-            />
-          </div>
-          <div>
-            <h3>Number Of Guests</h3>
-            <input
-              type="text"
-              name="numberOfGuests"
-              onChange={event =>
-                // this.setState({ [event.target.name]: event.target.value })
-                this.onCreateNewGuestInputInfo(event)
-              }
-            />
-          </div>
-          <button onClick={this.postBooking}>Create new record</button>
+          <form>
+            <h2>Add Guest:</h2>
+            <div>
+              <h3>Name</h3>
+              <input
+                type="text"
+                name="name"
+                onChange={
+                  event => this.onCreateNewGuestInputInfo(event)
+                  //this.setState({ [event.target.name]: event.target.value })
+                }
+              />
+            </div>
+            <div>
+              <h3>Email</h3>
+              <input
+                type="text"
+                name="email"
+                onChange={event =>
+                  //this.setState({ [event.target.name]: event.target.value })
+                  this.onCreateNewGuestInputInfo(event)
+                }
+              />
+            </div>
+            <div>
+              <h3>Telephone</h3>
+              <input
+                type="text"
+                name="telephone"
+                onChange={event =>
+                  //this.setState({ [event.target.name]: event.target.value })
+                  this.onCreateNewGuestInputInfo(event)
+                }
+              />
+            </div>
+            <div>
+              <h3>Date</h3>
+              <input
+                type="text"
+                name="bdate"
+                onChange={event =>
+                  //this.setState({ [event.target.name]: event.target.value })
+                  this.onCreateNewGuestInputInfo(event)
+                }
+              />
+            </div>
+            <div>
+              <h3>Time</h3>
+              <input
+                type="text"
+                name="btime"
+                onChange={event =>
+                  // this.setState({ [event.target.name]: event.target.value })
+                  this.onCreateNewGuestInputInfo(event)
+                }
+              />
+            </div>
+            <div>
+              <h3>Number Of Guests</h3>
+              <input
+                type="text"
+                name="numberOfGuests"
+                onChange={event =>
+                  // this.setState({ [event.target.name]: event.target.value })
+                  this.onCreateNewGuestInputInfo(event)
+                }
+              />
+            </div>
+            <button onClick={this.postBooking}>Create new record</button>
+          </form>
         </div>
       </React.Fragment>
     );
