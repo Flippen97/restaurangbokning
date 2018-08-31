@@ -18,7 +18,8 @@ class Admin extends Component {
       },
 
       //isNewBookingAdded: false
-      isBookingInfoVisible: false
+      isBookingInfoVisible: false,
+      isAddNewGuestFormVisible: false
     };
 
     this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
@@ -184,7 +185,8 @@ class Admin extends Component {
       return <div>Loading...</div>;
     }
     // console.log(this.state.allBookings);
-
+    const { isBookingInfoVisible } = this.state;
+    const { isAddNewGuestFormVisible } = this.state;
     let list = this.state.allBookings.map((item, index) => (
       <div key={item.bid}>
         <div className="all-bookings">
@@ -277,77 +279,92 @@ class Admin extends Component {
         <h1>{this.props.header}</h1>
         <h2>List of bookings: </h2>
         <div>{list}</div>
+
         <div className="newGuestInfoInput">
-          <form>
-            <h2>Add Guest:</h2>
-            <div>
-              <h3>Name</h3>
-              <input
-                type="text"
-                name="name"
-                onChange={
-                  event => this.onCreateNewGuestInputInfo(event)
-                  //this.setState({ [event.target.name]: event.target.value })
-                }
-              />
-            </div>
-            <div>
-              <h3>Email</h3>
-              <input
-                type="text"
-                name="email"
-                onChange={event =>
-                  //this.setState({ [event.target.name]: event.target.value })
-                  this.onCreateNewGuestInputInfo(event)
-                }
-              />
-            </div>
-            <div>
-              <h3>Telephone</h3>
-              <input
-                type="text"
-                name="telephone"
-                onChange={event =>
-                  //this.setState({ [event.target.name]: event.target.value })
-                  this.onCreateNewGuestInputInfo(event)
-                }
-              />
-            </div>
-            <div>
-              <h3>Date</h3>
-              <input
-                type="text"
-                name="bdate"
-                onChange={event =>
-                  //this.setState({ [event.target.name]: event.target.value })
-                  this.onCreateNewGuestInputInfo(event)
-                }
-              />
-            </div>
-            <div>
-              <h3>Time</h3>
-              <input
-                type="text"
-                name="btime"
-                onChange={event =>
-                  // this.setState({ [event.target.name]: event.target.value })
-                  this.onCreateNewGuestInputInfo(event)
-                }
-              />
-            </div>
-            <div>
-              <h3>Number Of Guests</h3>
-              <input
-                type="text"
-                name="numberOfGuests"
-                onChange={event =>
-                  // this.setState({ [event.target.name]: event.target.value })
-                  this.onCreateNewGuestInputInfo(event)
-                }
-              />
-            </div>
-            <button onClick={this.postBooking}>Create new record</button>
-          </form>
+          <h2>
+            Add Guest: &nbsp;{" "}
+            <i
+              onClick={() =>
+                this.setState({
+                  isAddNewGuestFormVisible: !this.state.isAddNewGuestFormVisible
+                })
+              }
+              className="fas fa-sort-down"
+            />
+          </h2>
+          {isAddNewGuestFormVisible ? (
+            <form>
+              <ul>
+                <li>
+                  <h3>Name</h3>
+                  <input
+                    type="text"
+                    name="name"
+                    onChange={
+                      event => this.onCreateNewGuestInputInfo(event)
+                      //this.setState({ [event.target.name]: event.target.value })
+                    }
+                  />
+                </li>
+                <li>
+                  <h3>Email</h3>
+                  <input
+                    type="text"
+                    name="email"
+                    onChange={event =>
+                      //this.setState({ [event.target.name]: event.target.value })
+                      this.onCreateNewGuestInputInfo(event)
+                    }
+                  />
+                </li>
+                <li>
+                  <h3>Telephone</h3>
+                  <input
+                    type="text"
+                    name="telephone"
+                    onChange={event =>
+                      //this.setState({ [event.target.name]: event.target.value })
+                      this.onCreateNewGuestInputInfo(event)
+                    }
+                  />
+                </li>
+                <li>
+                  <h3>Date</h3>
+                  <input
+                    type="text"
+                    name="bdate"
+                    onChange={event =>
+                      //this.setState({ [event.target.name]: event.target.value })
+                      this.onCreateNewGuestInputInfo(event)
+                    }
+                  />
+                </li>
+                <li>
+                  <h3>Time</h3>
+                  <input
+                    type="text"
+                    name="btime"
+                    onChange={event =>
+                      // this.setState({ [event.target.name]: event.target.value })
+                      this.onCreateNewGuestInputInfo(event)
+                    }
+                  />
+                </li>
+                <li>
+                  <h3>Number Of Guests</h3>
+                  <input
+                    type="text"
+                    name="numberOfGuests"
+                    onChange={event =>
+                      // this.setState({ [event.target.name]: event.target.value })
+                      this.onCreateNewGuestInputInfo(event)
+                    }
+                  />
+                </li>
+              </ul>
+              <button onClick={this.postBooking}>Create new record</button>
+            </form>
+          ) : null}
         </div>
       </React.Fragment>
     );
