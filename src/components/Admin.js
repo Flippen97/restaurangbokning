@@ -288,7 +288,7 @@ class Admin extends Component {
         <div className="newGuestInfoInput">
           <h2>Add Guest:</h2>
           <div>
-            <h3>Guest's Name</h3>
+            <h3>Name</h3>
             <input
               type="text"
               name="name"
@@ -299,7 +299,7 @@ class Admin extends Component {
             />
           </div>
           <div>
-            <h3>Guest's email</h3>
+            <h3>Email</h3>
             <input
               type="text"
               name="email"
@@ -310,7 +310,7 @@ class Admin extends Component {
             />
           </div>
           <div>
-            <h3>Guest's telephone</h3>
+            <h3>Telephone</h3>
             <input
               type="text"
               name="telephone"
