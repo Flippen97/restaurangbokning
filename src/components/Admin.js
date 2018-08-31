@@ -263,7 +263,8 @@ class Admin extends Component {
               {islistOfBookingsVisible ? <div> {item.telephone} </div> : null}
               {isEditFieldVisible ? (
                 <input
-                  type="text"
+                  type="number"
+                  max="999999999999"
                   value={item.telephone}
                   name="telephone"
                   onChange={event =>
@@ -279,7 +280,8 @@ class Admin extends Component {
               {islistOfBookingsVisible ? <div> {item.bdate} </div> : null}
               {isEditFieldVisible ? (
                 <input
-                  type="text"
+                  type="date"
+                  min="2018-09-01"
                   value={item.bdate}
                   name="bdate"
                   onChange={event =>
@@ -294,18 +296,48 @@ class Admin extends Component {
               <div> Time: </div>
               {islistOfBookingsVisible ? <div> {item.btime} </div> : null}
               {isEditFieldVisible ? (
-                <input
-                  type="text"
-                  value={item.btime}
-                  name="btime"
-                  onChange={event =>
-                    this.onInputChange(
-                      event.target.name,
-                      event.target.value,
-                      index
-                    )
-                  }
-                />
+                <div>
+                  <input
+                    type="number"
+                    min="18"
+                    max="21"
+                    value={item.btime}
+                    name="btime"
+                    onChange={event =>
+                      this.onInputChange(
+                        event.target.name,
+                        event.target.value,
+                        index
+                      )
+                    }
+                  />
+                  <input
+                    type="radio"
+                    value="18"
+                    name="btime"
+                    onChange={event =>
+                      this.onInputChange(
+                        event.target.name,
+                        event.target.value,
+                        index
+                      )
+                    }
+                  />
+                  18
+                  <input
+                    type="radio"
+                    value="21"
+                    name="btime"
+                    onChange={event =>
+                      this.onInputChange(
+                        event.target.name,
+                        event.target.value,
+                        index
+                      )
+                    }
+                  />
+                  21
+                </div>
               ) : null}
               <div>Number of Guests: </div>
               {islistOfBookingsVisible ? (
@@ -313,7 +345,9 @@ class Admin extends Component {
               ) : null}
               {isEditFieldVisible ? (
                 <input
-                  type="text"
+                  type="number"
+                  min="1"
+                  max="6"
                   value={item.numberOfGuests}
                   name="numberOfGuests"
                   onChange={event =>
