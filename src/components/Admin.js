@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import "./../App.css";
+/* import Calendar from "./Calendar";
+
+import moment from "moment"; */
 
 class Admin extends Component {
   constructor(props) {
@@ -18,8 +21,9 @@ class Admin extends Component {
       },
 
       //isNewBookingAdded: false
-      isBookingInfoVisible: true,
+      isBookingInfoVisible: false,
       isAddNewGuestFormVisible: false,
+      islistOfBookingsVisible: true,
       isEditFieldVisible: false
     };
 
@@ -189,6 +193,7 @@ class Admin extends Component {
     const { isBookingInfoVisible } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
     const { isEditFieldVisible } = this.state;
+    const { islistOfBookingsVisible } = this.state;
     let test = "testDiv";
     console.log(test);
     let list = this.state.allBookings.map((item, index) => (
@@ -199,7 +204,8 @@ class Admin extends Component {
         <i
           onClick={() =>
             this.setState({
-              isEditFieldVisible: !this.state.isEditFieldVisible
+              isEditFieldVisible: !this.state.isEditFieldVisible,
+              islistOfBookingsVisible: !this.state.islistOfBookingsVisible
             })
           }
           className="fas fa-pencil-alt"
@@ -236,76 +242,89 @@ class Admin extends Component {
                   }
                 />
               ) : null}{" "}
-              &nbsp;Email: {item.email} &nbsp;{" "}
-              <i className="fas fa-pencil-alt" /> &nbsp;
-              <input
-                type="text"
-                name="email"
-                value={item.email}
-                onChange={event =>
-                  this.onInputChange(
-                    event.target.name,
-                    event.target.value,
-                    index
-                  )
-                }
-              />
-              &nbsp;Telephone: {item.telephone} &nbsp;{" "}
-              <i className="fas fa-pencil-alt" /> &nbsp;
-              <input
-                type="text"
-                value={item.telephone}
-                name="telephone"
-                onChange={event =>
-                  this.onInputChange(
-                    event.target.name,
-                    event.target.value,
-                    index
-                  )
-                }
-              />
-              &nbsp; Date: {item.bdate} &nbsp;{" "}
-              <i className="fas fa-pencil-alt" /> &nbsp;
-              <input
-                type="text"
-                value={item.bdate}
-                name="bdate"
-                onChange={event =>
-                  this.onInputChange(
-                    event.target.name,
-                    event.target.value,
-                    index
-                  )
-                }
-              />{" "}
-              &nbsp; Time: {item.btime} &nbsp;{" "}
-              <i className="fas fa-pencil-alt" /> &nbsp;
-              <input
-                type="text"
-                value={item.btime}
-                name="btime"
-                onChange={event =>
-                  this.onInputChange(
-                    event.target.name,
-                    event.target.value,
-                    index
-                  )
-                }
-              />
-              &nbsp; Number of Guests: {item.numberOfGuests} &nbsp;{" "}
-              <i className="fas fa-pencil-alt" /> &nbsp;
-              <input
-                type="text"
-                value={item.numberOfGuests}
-                name="numberOfGuests"
-                onChange={event =>
-                  this.onInputChange(
-                    event.target.name,
-                    event.target.value,
-                    index
-                  )
-                }
-              />
+              <div>Email: </div>
+              {islistOfBookingsVisible ? <div> {item.email} </div> : null}
+              {isEditFieldVisible ? (
+                <input
+                  type="text"
+                  name="email"
+                  value={item.email}
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+              ) : null}
+              <br />
+              <div>Telephone: </div>
+              {islistOfBookingsVisible ? <div> {item.telephone} </div> : null}
+              {isEditFieldVisible ? (
+                <input
+                  type="text"
+                  value={item.telephone}
+                  name="telephone"
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+              ) : null}
+              <div>Date: </div>
+              {islistOfBookingsVisible ? <div> {item.bdate} </div> : null}
+              {isEditFieldVisible ? (
+                <input
+                  type="text"
+                  value={item.bdate}
+                  name="bdate"
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+              ) : null}
+              <div> Time: </div>
+              {islistOfBookingsVisible ? <div> {item.btime} </div> : null}
+              {isEditFieldVisible ? (
+                <input
+                  type="text"
+                  value={item.btime}
+                  name="btime"
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+              ) : null}
+              <div>Number of Guests: </div>
+              {islistOfBookingsVisible ? (
+                <div> {item.numberOfGuests} </div>
+              ) : null}
+              {isEditFieldVisible ? (
+                <input
+                  type="text"
+                  value={item.numberOfGuests}
+                  name="numberOfGuests"
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+              ) : null}{" "}
             </div>
             <button onClick={this.clickHandlerUpdateBooking.bind(this, item)}>
               Update!
