@@ -332,19 +332,7 @@ class Admin extends Component {
               <div>Date: </div>
               {islistOfBookingsVisible ? <div> {item.bdate} </div> : null}
               {isEditFieldVisible ? (
-                <DayPickerInput
-                  dayPickerProps={{
-                    month: new Date(2018, 7),
-                    showWeekNumbers: true,
-                    todayButton: "Today"
-                  }}
-                  disabledDays={disabledDates.map(date => new Date(date))}
-                  onDayChange={this.handleDayChange}
-                  onChange={event =>
-                    //this.setState({ [event.target.name]: event.target.value })
-                    this.onCreateNewGuestInputInfo(event)
-                  }
-                />
+                <CalendarInputDayPicker />
               ) : /*                 <input
                   type="date"
                   min="2018-09-01"
@@ -571,36 +559,6 @@ class Admin extends Component {
             </form>
           ) : null}
         </div>
-
-        {/*           <DayPicker
-            //onDayClick={onDayClick}
-            initialMonth={new Date(2018, 7)}
-            disabledDays={disabledDates.map(date => new Date(date))}
-          /> */}
-
-        <div>
-          <p>
-            {isEmpty && "Please type or pick a day"}
-            {!isEmpty && !selectedDay && "This day is invalid"}
-            {selectedDay && isDisabled && "This day is disabled"}
-            {selectedDay &&
-              !isDisabled &&
-              `You chose ${selectedDay.toLocaleDateString()}`}
-          </p>
-          <DayPickerInput
-            value={selectedDay}
-            onDayChange={this.handleDayChange}
-            dayPickerProps={{
-              selectedDays: selectedDay,
-              disabledDays: disabledDates.map(date => new Date(date))
-              /*               disabledDays: {
-                daysOfWeek: [0, 6]
-              } */
-            }}
-          />
-        </div>
-
-        <CalendarInputDayPicker />
       </React.Fragment>
     );
   }
