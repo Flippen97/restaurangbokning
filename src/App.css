@@ -328,6 +328,7 @@ button .react-calender__month-view__days__day--weekend {
 .fa-sort-down,
 .fa-plus,
 .fa-check,
+.fa-plus-circle,
 .updateButton {
   cursor: pointer;
 }

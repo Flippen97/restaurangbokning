@@ -495,7 +495,7 @@ class Admin extends Component {
                       .isAddNewGuestFormVisible
                   })
                 }
-                className="fas fa-plus"
+                className="fas fa-plus-circle"
               />
             </h2>
             {isAddNewGuestFormVisible ? (
