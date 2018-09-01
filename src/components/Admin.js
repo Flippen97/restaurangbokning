@@ -3,7 +3,8 @@ import "./../App.css";
 import DayPicker from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import CalendarInputDayPicker from "./CalendarInputDayPicker";
+//import CalendarInputDayPicker from "./CalendarInputDayPicker";
+import ListOfBookings from "./ListOfBookings";
 
 class Admin extends Component {
   constructor(props) {
@@ -25,21 +26,17 @@ class Admin extends Component {
       selectedDay: undefined,
       isEmpty: true,
       isDisabled: false,
-      //BookedDates: ["2018-9-24", "2018-9-25", "2018-9-26", "2018-9-27"],
+
       disabledDates: [
         new Date(
-          "Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
+          "Tue Sep 14 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
         ),
         new Date(
-          "Tue Sep 05 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
+          "Tue Sep 15 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
         ),
-        new Date(2018 - 9 - 18),
-        new Date(2018 - 9 - 19),
-        new Date(2018 - 9 - 20),
-        new Date("2018-09-23T22:00:00.000Z"),
-        new Date(2018, 8, 12),
-        new Date(2018, 8, 15),
-        new Date(2018, 9, 16)
+        new Date("2018-09-1"),
+        new Date("2018-09-2"),
+        new Date("2018-09-3")
       ],
 
       availableAt18: true,
@@ -192,10 +189,6 @@ class Admin extends Component {
     this.fetchAllBookings();
   };
 
-  /*  onShowClick = e => {
-    this.setState({ isBookingInfoVisible: !this.state.isBookingInfoVisible });
-  }; */
-
   clickHandlerUpdateBooking = item => {
     this.updateBooking(
       item.id,
@@ -210,47 +203,26 @@ class Admin extends Component {
     this.fetchAllBookings();
   };
 
-  /*  handleDayChange(day) {
-    this.setState({ selectedDay: day });
-  } */
-
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
     const input = dayPickerInput.getInput();
-    console.log("input.value" + input.value);
-    //let newDatum = new Date(input.value);
-    console.log("new Date(input.value)" + new Date(input.value));
-    //let newDatum = this.state.selectedDay;
-    let newDatum = new Date(input.value);
-    console.log("this.state.selectedDay" + this.state.selectedDay);
-    console.log("newDatum as this.state.selectedDay" + newDatum);
-    //this.onCreateNewGuestInputInfo(event)
+
+    console.log(selectedDay);
+
     const updateNewBooking = {
       bdate: input.value
-
-      //bdate: newDatum
+      //bdate: selectedDay
     };
-    console.log("bdate: newDatum - this.state.bdate" + this.state.bdate);
+
     const updatedBooking = Object.assign(
       this.state.newBooking,
       updateNewBooking
     );
-
-    /*       this.setState({
-        newBooking: updatedBooking
-      }); */
-
     this.setState({
       newBooking: updatedBooking,
       selectedDay,
       isEmpty: !input.value.trim(),
       isDisabled: modifiers.disabled === true
     });
-    // console.log(this.state.selectedDay);
-    //console.log(new Date(newDatum));
-    //console.log(new Date("2018-09-01T22:00:00.000Z"));
-    console.log("this.state.newBooking.bdate" + this.state.newBooking.bdate);
-    console.log("this.state.selectedDay " + this.state.selectedDay);
-    console.log("testing" + new Date("2018-09-22T22:00:00.000Z"));
   }
 
   render() {
@@ -260,210 +232,132 @@ class Admin extends Component {
 
     const { selectedDay, isDisabled, isEmpty } = this.state;
     const { disabledDates } = this.state;
-    // disabledDates.map(date => console.log(new Date(date)));
-
-    //const { selectedDay } = this.state;
-    // console.log(this.state.allBookings);
     const { isBookingInfoVisible } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
     const { isEditFieldVisible } = this.state;
     const { islistOfBookingsVisible } = this.state;
 
     let list = this.state.allBookings.map((item, index) => (
-      <div key={item.bid}>
-        <br />
-        {index + 1} &nbsp; Customer ID: {item.bid} &nbsp;{" "}
-        <i
-          onClick={() =>
-            this.setState({
-              isEditFieldVisible: !this.state.isEditFieldVisible,
-              islistOfBookingsVisible: !this.state.islistOfBookingsVisible
-            })
-          }
-          className="fas fa-pencil-alt"
-        />{" "}
-        &nbsp;
-        <i
-          onClick={this.onClickDeleteHandler.bind(this, item.bid)}
-          className="fas fa-times"
-        />{" "}
-        &nbsp;{" "}
-        <i
-          onClick={() =>
-            this.setState({
-              isBookingInfoVisible: !this.state.isBookingInfoVisible
-            })
-          }
-          className="fas fa-sort-down"
-        />{" "}
-        <br />
-        <br />
-        Name:{" "}
-        {(islistOfBookingsVisible && !isEditFieldVisible) ||
-        (isBookingInfoVisible && !isEditFieldVisible) ? (
-          <span> {item.name} </span>
-        ) : null}
-        {isBookingInfoVisible ? (
-          <div className="all-bookings">
-            &nbsp;{" "}
-            <div className="fullBookingInfo">
-              {isEditFieldVisible ? (
-                <input
-                  name="name"
-                  type="text"
-                  value={item.name}
-                  onChange={event =>
-                    this.onInputChange(
-                      event.target.name,
-                      event.target.value,
-                      index
-                    )
-                  }
-                />
-              ) : null}{" "}
-              <br />
-              <div>Email: </div>
-              {islistOfBookingsVisible ? <div> {item.email} </div> : null}
-              {isEditFieldVisible ? (
-                <input
-                  type="text"
-                  name="email"
-                  value={item.email}
-                  onChange={event =>
-                    this.onInputChange(
-                      event.target.name,
-                      event.target.value,
-                      index
-                    )
-                  }
-                />
-              ) : null}
-              <br />
-              <div>Telephone: </div>
-              {islistOfBookingsVisible ? <div> {item.telephone} </div> : null}
-              {isEditFieldVisible ? (
-                <input
-                  type="number"
-                  max="999999999999"
-                  value={item.telephone}
-                  name="telephone"
-                  onChange={event =>
-                    this.onInputChange(
-                      event.target.name,
-                      event.target.value,
-                      index
-                    )
-                  }
-                />
-              ) : null}{" "}
-              <br />
-              <div>Date: </div>
-              {islistOfBookingsVisible ? <div> {item.bdate} </div> : null}
-              {isEditFieldVisible ? (
-                <CalendarInputDayPicker />
-              ) : /*                 <input
-                  type="date"
-                  min="2018-09-01"
-                  value={item.bdate}
-                  name="bdate"
-                  onChange={event =>
-                    this.onInputChange(
-                      event.target.name,
-                      event.target.value,
-                      index
-                    )
-                  }
-                /> */
-              null}{" "}
-              <br />
-              <div> Time: </div>
-              {islistOfBookingsVisible ? <div> {item.btime} </div> : null}
-              {isEditFieldVisible ? (
-                <div>
-                  <input
-                    type="number"
-                    min="18"
-                    max="21"
-                    value={item.btime}
-                    name="btime"
-                    onChange={event =>
-                      this.onInputChange(
-                        event.target.name,
-                        event.target.value,
-                        index
-                      )
-                    }
-                  />
-                  <input
-                    type="radio"
-                    value="18"
-                    name="btime"
-                    onChange={event =>
-                      this.onInputChange(
-                        event.target.name,
-                        event.target.value,
-                        index
-                      )
-                    }
-                  />
-                  18
-                  <input
-                    type="radio"
-                    value="21"
-                    name="btime"
-                    onChange={event =>
-                      this.onInputChange(
-                        event.target.name,
-                        event.target.value,
-                        index
-                      )
-                    }
-                  />
-                  21
-                </div>
-              ) : null}{" "}
-              <br />
-              <div>Number of Guests: </div>
-              {islistOfBookingsVisible ? (
-                <div> {item.numberOfGuests} </div>
-              ) : null}
-              {isEditFieldVisible ? (
-                <input
-                  type="number"
-                  min="1"
-                  max="6"
-                  value={item.numberOfGuests}
-                  name="numberOfGuests"
-                  onChange={event =>
-                    this.onInputChange(
-                      event.target.name,
-                      event.target.value,
-                      index
-                    )
-                  }
-                />
-              ) : null}
-            </div>{" "}
-            <br />
-            <button onClick={this.clickHandlerUpdateBooking.bind(this, item)}>
-              Update!
-            </button>
-          </div>
-        ) : null}
-      </div>
+      <tr key={item.bid}>
+        <td> {index + 1} </td>
+        <td>{item.customerId}</td>
+        <td>
+          {isEditFieldVisible ? (
+            <input
+              name="name"
+              type="text"
+              value={item.name}
+              onChange={event =>
+                this.onInputChange(event.target.name, event.target.value, index)
+              }
+            />
+          ) : (
+            <div>{item.name}</div>
+          )}
+        </td>
+        <td>
+          {isEditFieldVisible ? (
+            <input
+              type="number"
+              max="999999999999"
+              value={item.telephone}
+              name="telephone"
+              onChange={event =>
+                this.onInputChange(event.target.name, event.target.value, index)
+              }
+            />
+          ) : (
+            <div>{item.telephone}</div>
+          )}
+        </td>
+        <td>
+          {isEditFieldVisible ? (
+            <input
+              type="text"
+              name="email"
+              value={item.email}
+              onChange={event =>
+                this.onInputChange(event.target.name, event.target.value, index)
+              }
+            />
+          ) : (
+            <div>{item.email}</div>
+          )}
+        </td>
+        <td>{item.bdate}</td>
+        <td>{item.btime}</td>
+        <td>
+          {" "}
+          {isEditFieldVisible ? (
+            <input
+              type="number"
+              min="1"
+              max="6"
+              value={item.numberOfGuests}
+              name="numberOfGuests"
+              onChange={event =>
+                this.onInputChange(event.target.name, event.target.value, index)
+              }
+            />
+          ) : (
+            <div>{item.numberOfGuests}</div>
+          )}
+        </td>
+        <td>
+          <button>
+            <i
+              onClick={() =>
+                this.setState({
+                  isEditFieldVisible: !this.state.isEditFieldVisible
+                })
+              }
+              className="fas fa-pencil-alt"
+            />{" "}
+          </button>
+        </td>
+        <td>
+          <button
+            className="updateButton"
+            onClick={e => {
+              this.clickHandlerUpdateBooking.bind(this, item);
+              this.setState({
+                isEditFieldVisible: !this.state.isEditFieldVisible
+              });
+            }}
+          >
+            Update! <i className="fas fa-check" />
+          </button>
+        </td>
+        <td>
+          <button>
+            <i
+              onClick={this.onClickDeleteHandler.bind(this, item.bid)}
+              className="fas fa-times"
+            />
+          </button>
+        </td>
+      </tr>
     ));
-    console.log(
-      "this.state.selectedDay before return " + this.state.selectedDay
-    );
-    /*     console.log(
-      new Date("Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)")
-    ); */
+
     return (
       <React.Fragment>
         <h1>{this.props.header}</h1>
         <h2>List of bookings: </h2>
-        <div>{list}</div>
-
+        <table className="tableListABooking">
+          <thead>
+            <tr>
+              <th>Nr</th>
+              <th>Customer ID</th>
+              <th>Name</th>
+              <th>Telephone</th>
+              <th>Email</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Number Of Guests</th>
+            </tr>
+          </thead>
+          <tbody>{list}</tbody>
+        </table>
         <div className="newGuestInfoInput">
           <h2>
             Add Guest: &nbsp;{" "}
@@ -473,7 +367,7 @@ class Admin extends Component {
                   isAddNewGuestFormVisible: !this.state.isAddNewGuestFormVisible
                 })
               }
-              className="fas fa-sort-down"
+              className="fas fa-plus"
             />
           </h2>
           {isAddNewGuestFormVisible ? (
@@ -514,25 +408,6 @@ class Admin extends Component {
                 </li>
                 <li>
                   <h3>Date</h3>
-                  {/*                  <div>
-                    {selectedDay && (
-                      <p>Day: {selectedDay.toLocaleDateString()}</p>
-                    )}
-                    {!selectedDay && <p>Choose a day</p>}
-                    <DayPickerInput
-                      dayPickerProps={{
-                        month: new Date(2018, 10),
-                        showWeekNumbers: true,
-                        todayButton: "Today"
-                      }}
-                      disabledDays={disabledDates.map(date => new Date(date))}
-                      onDayChange={this.handleDayChange}
-                      onChange={event =>
-                        //this.setState({ [event.target.name]: event.target.value })
-                        this.onCreateNewGuestInputInfo(event)
-                      }
-                    />
-                  </div> */}
 
                   <div>
                     <p>
@@ -549,21 +424,9 @@ class Admin extends Component {
                       dayPickerProps={{
                         selectedDays: selectedDay,
                         disabledDays: disabledDates.map(date => new Date(date))
-                        /*               disabledDays: {
-                daysOfWeek: [0, 6]
-              } */
                       }}
                     />
                   </div>
-
-                  {/*                   <input
-                    type="text"
-                    name="bdate"
-                    onChange={event =>
-                      //this.setState({ [event.target.name]: event.target.value })
-                      this.onCreateNewGuestInputInfo(event)
-                    }
-                  /> */}
                 </li>
                 <li>
                   <h3>Time</h3>
