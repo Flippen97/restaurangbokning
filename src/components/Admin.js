@@ -47,9 +47,10 @@ class Admin extends Component {
       isEditFieldVisible: false,
 
       //search by phone
-      telephone: ""
+      telephone: "",
 
       //test
+      indexFromEditButton: ""
     };
 
     this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
@@ -294,18 +295,20 @@ class Admin extends Component {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
+
     // console.log("this.state.allBookings" + this.state.allBookings);
     const { selectedDay, isDisabled, isEmpty } = this.state;
     const { disabledDates } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
     const { isEditFieldVisible } = this.state;
-
+    const { indexFromEditButton } = this.state;
+    //console.log(indexFromEditButton);
     let list = this.state.allBookings.map((item, index) => (
       <tr key={item.bid}>
         <td> {index + 1} </td>
         <td>{item.customerId}</td>
         <td>
-          {isEditFieldVisible ? (
+          {isEditFieldVisible && indexFromEditButton === index ? (
             <input
               name="name"
               type="text"
@@ -319,7 +322,7 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          {isEditFieldVisible ? (
+          {isEditFieldVisible && indexFromEditButton === index ? (
             <input
               type="number"
               max="999999999999"
@@ -334,7 +337,7 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          {isEditFieldVisible ? (
+          {isEditFieldVisible && indexFromEditButton === index ? (
             <input
               type="text"
               name="email"
@@ -348,7 +351,7 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          {isEditFieldVisible ? (
+          {isEditFieldVisible && indexFromEditButton === index ? (
             <div>
               <p>
                 {isEmpty && "Please type or pick a day"}
@@ -374,7 +377,7 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          {isEditFieldVisible ? (
+          {isEditFieldVisible && indexFromEditButton === index ? (
             <div>
               <form action="">
                 <input
@@ -410,7 +413,7 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          {isEditFieldVisible ? (
+          {isEditFieldVisible && indexFromEditButton === index ? (
             <select
               className="selectNumberOfGuests"
               name="numberOfGuests"
@@ -433,13 +436,14 @@ class Admin extends Component {
         <td>
           <button>
             <i
-              onClick={() =>
+              onClick={e =>
                 this.setState({
-                  isEditFieldVisible: !this.state.isEditFieldVisible
+                  isEditFieldVisible: !this.state.isEditFieldVisible,
+                  indexFromEditButton: index
                 })
               }
               className="fas fa-pencil-alt"
-            />{" "}
+            />
           </button>
         </td>
         <td>
