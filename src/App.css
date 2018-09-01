@@ -1,522 +1,383 @@
-
 /******************************/
 /********** UTILITY ***********/
 /******************************/
 
 .show {
-    display: block;
+  display: block;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 /******************************/
 /********** header ***********/
 /******************************/
-header{
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    z-index: 1;
-    color: white;
+header {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  z-index: 1;
+  color: white;
 }
-header .fa{
-    font-size: 2em;
+header .fa {
+  font-size: 2em;
 }
-header i{
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-    position: absolute;
+header i {
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  position: absolute;
 }
-h1{
-    font-family: Cochin;
-    font-style: italic;
-    font-weight: 200;
-    padding-top: 7px; 
-    text-align: center;
-    margin: 0;
+h1 {
+  font-family: Cochin;
+  font-style: italic;
+  font-weight: 200;
+  padding-top: 7px;
+  text-align: center;
+  margin: 0;
 }
 /******************************/
 /*********** NAV **************/
 /******************************/
 
 .navContainer {
-    position: absolute;
-    top:50px; 
-    width: 100%;
-    color: white;
-    z-index: 2;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  color: white;
+  z-index: 2;
 }
 
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color:rgba(0,0,0,0.3);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
-li{
-    text-align: end;
+li {
+  text-align: end;
 }
 li a {
-    display:block;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
+  display: block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
 }
 
 li a:hover {
-    background-color: #555;
-    color: white;
+  background-color: #555;
+  color: white;
 }
 /******************************/
 /*********** Home *************/
 /******************************/
-.containerHome{
-    width: 100%;
-    height: 100vh;
-    background-image: url('img/mobile_bg.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-    background-size: cover;
-    background-blend-mode: darken;
-    margin: 0px auto;
-    color:white;
+.containerHome {
+  width: 100%;
+  height: 100vh;
+  background-image: url("img/mobile_bg.png"),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 31%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  background-size: cover;
+  background-blend-mode: darken;
+  margin: 0px auto;
+  color: white;
 }
-.containerHome .sectionContainer .section{ 
-    width: 100%;
-    height: calc(100vh - 50px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: radial-gradient(circle, rgba(0,0,0,0.70) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
+.containerHome .sectionContainer .section {
+  width: 100%;
+  height: calc(100vh - 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0) 31%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
-.containerHome .sectionContainer .section div{
-    text-align: center;
+.containerHome .sectionContainer .section div {
+  text-align: center;
 }
-.containerHome .sectionContainer .section .Rad1{
-    text-align: center;
-    display: block;
-    width: 100%;
+.containerHome .sectionContainer .section .Rad1 {
+  text-align: center;
+  display: block;
+  width: 100%;
 }
-.containerHome .sectionContainer .section .Rad2{
-    text-align: center;
-    display: block;
-    width: 100%;
-    font-size: 3em;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+.containerHome .sectionContainer .section .Rad2 {
+  text-align: center;
+  display: block;
+  width: 100%;
+  font-size: 3em;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
 }
-.containerHome .sectionContainer .section .Rad3{
-    text-align: center;
-    display: block;
-    width: 100%;
+.containerHome .sectionContainer .section .Rad3 {
+  text-align: center;
+  display: block;
+  width: 100%;
 }
-.containerHome .sectionContainer .section button{
-    margin-top: 10px;
-    font-weight: 400;
-    font-size: 0.8em;
-    color: #000000 !important;
-    background-color: #fff;
-    border-radius: 5px;
-    text-transform: uppercase;
-    padding: 5px 20px;
+.containerHome .sectionContainer .section button {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 0.8em;
+  color: #000000 !important;
+  background-color: #fff;
+  border-radius: 5px;
+  text-transform: uppercase;
+  padding: 5px 20px;
 }
 .containerHome .sectionContainer .section button:hover {
-    background-color:lightgray;
-    cursor: pointer;
+  background-color: lightgray;
+  cursor: pointer;
 }
-        
+
 /******************************/
 /*********** Menu *************/
 /******************************/
-.containerMenu{
-    width: 100%;
-    margin: 0px auto;
-}
-.containerMenu .sectionContainer .section .menu{
-    padding: 4%;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-}
-.containerMenu .sectionContainer .section .menu h3{
-    font-size: 1.5em;
-    text-align: center;
-}
-.containerMenu .sectionContainer .section .menu .starters div,
-.containerMenu .sectionContainer .section .menu .mainCourse div,
-.containerMenu .sectionContainer .section .menu .deserts div,
-.containerMenu .sectionContainer .section .menu .other div{
-    display: grid;
-    grid-template-columns: 80% 20%;
-}
-.containerMenu .sectionContainer .section .menu .starters div .produkt,
-.containerMenu .sectionContainer .section .menu .mainCourse div .produkt,
-.containerMenu .sectionContainer .section .menu .deserts div .produkt,
-.containerMenu .sectionContainer .section .menu .other div .produkt{
-    display: block;
-}
-.containerMenu .sectionContainer .section .menu .white div,
-.containerMenu .sectionContainer .section .menu .red div{
-    display: grid;
-    grid-template-columns: 70% 15% 15%;  
-}
-.containerMenu .sectionContainer .section .menu .white div .produkt,
-.containerMenu .sectionContainer .section .menu .red div .produkt{
-    display: block;
-}
-.containerMenu .sectionContainer .section .menu .starters div .price,
-.containerMenu .sectionContainer .section .menu .mainCourse div .price,
-.containerMenu .sectionContainer .section .menu .deserts div .price,
-.containerMenu .sectionContainer .section .menu .other div .price,
-.containerMenu .sectionContainer .section .menu .white div .priceGlas,
-.containerMenu .sectionContainer .section .menu .red div .priceGlas,
-.containerMenu .sectionContainer .section .menu .white div .priceBottle,
-.containerMenu .sectionContainer .section .menu .red div .priceBottle{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.containerMenu .sectionContainer .section .headerImg{
-    height: 185px;
-    background-image: url('img/head_mobile_menu.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-    background-size: cover;
-    background-blend-mode: darken;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.containerMenu .sectionContainer .section .headerImg h2{
-    margin: 0;
-    color: white;
-    font-size: 2em;
-    border-bottom: 1px solid;
-    border-top: 1px solid;
-    margin-top: 40px;
-    padding: 10px 73px;
+.containerMenu {
+  width: 100%;
+  height: 100vh;
+  background-color: cadetblue;
+  margin: 0px auto;
 }
 
 /******************************/
 /*********** BOOK *************/
 /******************************/
-.containerBook{
-    width: 100%;
-    margin: 0px auto;
+.containerBook {
+  width: 100%;
+  height: 100vh;
+  background-color: cadetblue;
+  margin: 0px auto;
 }
-.containerBook .sectionContainer .section .headerImg{
-    height: 185px;
-    background-image: url('img/head_mobile_book.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-    background-size: cover;
-    background-blend-mode: darken;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.bookContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
-.containerBook .sectionContainer .section .headerImg h2{
-    margin: 0;
-    color: white;
-    font-size: 2em;
-    border-bottom: 1px solid;
-    border-top: 1px solid;
-    margin-top: 40px;
-    padding: 10px 73px;
-}
+
 .bookHeader {
-    width: 100%;
-    height: 20%;
-    color: black;
-    padding: 10px;
+  width: 100%;
+  height: 20%;
+  color: lightgrey;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .bookSection {
-    width: 50%;
-    color: black;
-    padding: 10px;
-}
-.DayPicker-Day:hover {
-    background-color: #c59d5f !important;
-}
-.DayPicker-Day:active {
-    background-color: gold !important;
-}
-.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-    position: relative;
-    color: #f0f8ff;
-    background-color: #8d6f41 !important;
+  width: 33%;
+  height: 80%;
+  color: lightgrey;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
-input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.bookSection > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 400px;
+  background-color: #f1f1f1;
 }
 
-input[type=text]:disabled {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    background-color: lightgrey;
-    border-radius: 4px;
-    box-sizing: border-box;
+.bookSection > ul > li {
+  display: inline;
+  display: block;
+  color: lightgrey;
+  padding: 8px 16px;
+  text-decoration: none;
+  float: left;
 }
 
-input[type=submit],
-.nextButton{
-    width: 100%;
-    background-color: #c59d5f;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.bookSection > ul > li:hover {
+  background-color: #555;
+  color: white;
 }
 
-input[type=submit]:hover,
-input[type=submit]:disabled,
-.nextButton:hover,
-.nextButton:disabled{
-    background-color: #7c6e59;
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:disabled {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  background-color: lightgrey;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+/*** CALENDAR TEST ***/
+.react-calender__tile .react-calender__month-view__days__day {
+  background-color: red !important;
+  border: 1 px solid purple !important;
+}
+
+.red > button {
+  border: 1 px solid purple !important;
+}
+
+.react-calender__tile button {
+  background-color: red !important;
+  border: 1 px solid purple !important;
+}
+
+.react-calender__month-view__days__day button {
+  background-color: red !important;
+  border: 1 px solid purple !important;
+}
+
+button .react-calender__month-view__days__day--weekend {
+  border: 1 px solid purple !important;
+}
+
+.time {
+  color: mediumslateblue !important;
 }
 /******************************/
 /********** Contact ***********/
 /******************************/
-.containerContact{
+.containerContact {
+  width: 100%;
+  height: 100vh;
+  background-color: cadetblue;
+  margin: 0px auto;
+}
+@media screen and (min-width: 800px) {
+  .containerHome {
+    background-image: url("img/tablet_bg.png");
+  }
+}
+@media screen and (min-width: 1000px) {
+  .containerHome {
+    background-image: url("img/webb_bg.png");
+  }
+  /******************************/
+  /*********** NAV **************/
+  /******************************/
+  .navContainer {
     width: 100%;
-    margin: 0px auto;
-}
-.containerContact .sectionContainer .section .headerImg{
-    height: 185px;
-    background-image: url('img/head_mobile_contact.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-    background-size: cover;
-    background-blend-mode: darken;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.containerContact .sectionContainer .section .headerImg h2{
+    height: 20%;
+    color: lightgrey;
+  }
+
+  ul {
+    list-style-type: none;
     margin: 0;
-    color: white;
-    font-size: 2em;
-    border-bottom: 1px solid;
-    border-top: 1px solid;
-    margin-top: 40px;
-    padding: 10px 73px;
-}
-.containerContact .sectionContainer .section .contact{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-}
-.containerContact .sectionContainer .section .contact form{
-    padding: 7%;
-    padding-top: 0;
-}
-.containerContact .sectionContainer .section .contact .contactInfo{
-    padding: 7%;
-}
-.contactInfo span{
-    text-align: center;
-    width: 100%;
+    padding: 0;
+    width: 400px;
+    background-color: #f1f1f1;
+  }
+
+  li a {
+    display: inline;
     display: block;
-}
-.map {
-    -webkit-filter: grayscale(100%);
-       -moz-filter: grayscale(100%);
-        -ms-filter: grayscale(100%);
-         -o-filter: grayscale(100%);
-            filter: grayscale(100%);
+    color: lightgrey;
+    padding: 8px 16px;
+    text-decoration: none;
+    float: left;
+  }
+
+  li a:hover {
+    background-color: #555;
+    color: white;
+  }
 }
 
-/******************************************************************************************/
-/******************************** Tablet Screen *******************************************/
-/******************************************************************************************/
+/******************************/
+/********** Admin ***********/
+/******************************/
+.containerAdmin {
+  width: 100%;
+  height: 100vh;
+  background-color: cadetblue;
+  margin: 0px auto;
+}
+
+.fa-times,
+.fa-pencil-alt,
+.fa-sort-down,
+.fa-plus,
+.fa-check,
+.updateButton {
+  cursor: pointer;
+}
+
+.tableListABooking {
+  width: 100%;
+}
+
+.tableListABooking table,
+tbody,
+thead,
+tr {
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background: #e8e8e8;
+}
+
+.tableListABooking td {
+  border: 1px solid black;
+}
+
+.newGuestInfoInput {
+  margin-bottom: 40px;
+}
+
+.newGuestInfoInput li {
+  padding: 10px;
+  text-align: left;
+}
+.newGuestInfoInput button {
+  background-color: lightgray;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.adminPanel {
+  margin: 2%;
+  margin-bottom: 10%;
+}
 
 @media screen and (min-width: 800px) {
-    /******************************/
-    /*********** Home *************/
-    /******************************/
-    .containerHome {
-        background-image: url('img/tablet_bg.png'), linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-blend-mode: darken;
-    }
-    /******************************/
-    /*********** Menu *************/
-    /******************************/
-    .containerMenu .sectionContainer .section .menu{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .containerMenu .sectionContainer .section .headerImg{
-        background-image: url('img/head_tablet_menu.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-blend-mode: darken;
-        background-position: center;
-    }
-    /******************************/
-    /*********** Book *************/
-    /******************************/
-    .containerBook .sectionContainer .section .headerImg{
-        background-image: url('img/head_tablet_book.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-blend-mode: darken;
-        background-position: center;
-    }
-    /******************************/
-    /********* Contact ************/
-    /******************************/
-    .containerContact .sectionContainer .section .headerImg{
-        background-image: url('img/head_tablet_contact.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-blend-mode: darken;
-        background-position: center;
-    }
-    .containerContact .sectionContainer .section .contact{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        margin: 20px auto;
-        max-width: 900px;
-    }.containerContact .sectionContainer .section .contact form{
-        padding: 7%;
-    }
+  .containerAdmin {
+    background-image: url("");
+  }
 }
-
-
-
-/******************************************************************************************/
-/********************************** Webb Screen *******************************************/
-/******************************************************************************************/
-
 @media screen and (min-width: 1000px) {
-    header .fa{
-        display: none;
-    }
-    header{
-        position: fixed;
-    }
-    h1{
-        text-align: left;
-        margin: 0 0 0 80px;
-    }
-    /******************************/
-    /*********** NAV **************/
-    /******************************/
-    .navContainer {
-        margin-top: -50px;
-        width: 100%;
-        height: 50px;
-        color: white;
-        position: fixed;
-    }
-    .blackbackground{
-        background-color: rgba(0,0,0,0.8);
-    }
-    ul {
-        list-style-type: none;
-        text-align: right;
-        margin: 8px 60px 0 0;
-        padding: 0;
-        margin-left: auto;
-        width: 400px;
-        background-color: rgba(0,0,0,0);
-    }
-    li{
-        display: inline-block;
-    }
-    li a {
-        display: block;
-        color: white;
-        padding: 8px 16px;
-        text-decoration: none;
-        font-size: 1.3em;
-    }
-    
-    li a:hover {
-        background-color: rgba(0,0,0,0);
-        color: #c59d5f;
-        text-decoration: underline white;
-    }
-    /******************************/
-    /*********** Home *************/
-    /******************************/
-    .containerHome {
-        background-image: url('img/webb_bg.png'), linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-blend-mode: darken;
-    }
-    /******************************/
-    /*********** Menu *************/
-    /******************************/
-    .containerMenu .sectionContainer .section .menu{
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .containerMenu .sectionContainer .section .headerImg{
-        height: 200px;
-        background-image: url('img/head_webb_menu.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: darken;
-    }
-    /******************************/
-    /*********** Book *************/
-    /******************************/
-    .containerBook .sectionContainer .section .headerImg{
-        height: 200px;
-        background-image: url('img/head_webb_book.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: darken;
-    }
-    /******************************/
-    /********* Contact ************/
-    /******************************/
-    .containerContact .sectionContainer .section .headerImg{
-        height: 200px;
-        background-image: url('img/head_webb_contact.png'),linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.0) 31%,rgba(0,0,0,0) 100%);
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: darken;
-    }
-    .containerContact .sectionContainer .section .contact{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/******************************************************************************************/
-/********************************** Testar lite admin *************************************/
-/******************************************************************************************/
-
-
-.listContainer{
-    width: 600px;
-    height: auto;
-    margin-top: 20px;
-    background-color: white;
-    font-size: 0.8em;
-    color: black;
-    
-}
-
-.bookingRowContainer{
-    width: 100%;
-    height: 40px;
-    border: 1px solid black;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.bookingRowCell{
-    width: 60px;
-    height: 100%;
+  .containerAdmin {
+    background-image: url("");
+  }
 }

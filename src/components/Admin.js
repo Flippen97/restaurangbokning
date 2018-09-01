@@ -43,9 +43,7 @@ class Admin extends Component {
       availableAt21: true,
 
       //isNewBookingAdded: false
-      isBookingInfoVisible: false,
       isAddNewGuestFormVisible: false,
-      islistOfBookingsVisible: true,
       isEditFieldVisible: false
     };
 
@@ -232,10 +230,8 @@ class Admin extends Component {
 
     const { selectedDay, isDisabled, isEmpty } = this.state;
     const { disabledDates } = this.state;
-    const { isBookingInfoVisible } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
     const { isEditFieldVisible } = this.state;
-    const { islistOfBookingsVisible } = this.state;
 
     let list = this.state.allBookings.map((item, index) => (
       <tr key={item.bid}>
@@ -284,10 +280,67 @@ class Admin extends Component {
             <div>{item.email}</div>
           )}
         </td>
-        <td>{item.bdate}</td>
-        <td>{item.btime}</td>
         <td>
-          {" "}
+          {isEditFieldVisible ? (
+            <div>
+              <p>
+                {isEmpty && "Please type or pick a day"}
+                {!isEmpty && !selectedDay && "This day is invalid"}
+                {selectedDay && isDisabled && "This day is disabled"}
+                {selectedDay &&
+                  !isDisabled &&
+                  `You chose ${selectedDay.toLocaleDateString()}`}
+              </p>
+              <DayPickerInput
+                value={selectedDay}
+                onDayChange={this.handleDayChangeUpdate}
+                dayPickerProps={{
+                  selectedDays: selectedDay,
+                  disabledDays: disabledDates.map(date => new Date(date))
+                }}
+              />
+            </div>
+          ) : (
+            <div>{item.bdate}</div>
+          )}
+        </td>
+        <td>
+          {isEditFieldVisible ? (
+            <div>
+              <form action="">
+                <input
+                  type="radio"
+                  value="18"
+                  name="btime"
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+                18.00
+                <input
+                  type="radio"
+                  value="21"
+                  name="btime"
+                  onChange={event =>
+                    this.onInputChange(
+                      event.target.name,
+                      event.target.value,
+                      index
+                    )
+                  }
+                />
+                21.00
+              </form>
+            </div>
+          ) : (
+            <div>{item.btime}</div>
+          )}
+        </td>
+        <td>
           {isEditFieldVisible ? (
             <input
               type="number"
@@ -318,12 +371,13 @@ class Admin extends Component {
         <td>
           <button
             className="updateButton"
-            onClick={e => {
+            onClick={this.clickHandlerUpdateBooking.bind(this, item)}
+            /*             onClick={e => {
               this.clickHandlerUpdateBooking.bind(this, item);
               this.setState({
                 isEditFieldVisible: !this.state.isEditFieldVisible
               });
-            }}
+            }} */
           >
             Update! <i className="fas fa-check" />
           </button>
@@ -341,119 +395,124 @@ class Admin extends Component {
 
     return (
       <React.Fragment>
-        <h1>{this.props.header}</h1>
-        <h2>List of bookings: </h2>
-        <table className="tableListABooking">
-          <thead>
-            <tr>
-              <th>Nr</th>
-              <th>Customer ID</th>
-              <th>Name</th>
-              <th>Telephone</th>
-              <th>Email</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Number Of Guests</th>
-            </tr>
-          </thead>
-          <tbody>{list}</tbody>
-        </table>
-        <div className="newGuestInfoInput">
-          <h2>
-            Add Guest: &nbsp;{" "}
-            <i
-              onClick={() =>
-                this.setState({
-                  isAddNewGuestFormVisible: !this.state.isAddNewGuestFormVisible
-                })
-              }
-              className="fas fa-plus"
-            />
-          </h2>
-          {isAddNewGuestFormVisible ? (
-            <form>
-              <ul>
-                <li>
-                  <h3>Name</h3>
-                  <input
-                    type="text"
-                    name="name"
-                    onChange={
-                      event => this.onCreateNewGuestInputInfo(event)
-                      //this.setState({ [event.target.name]: event.target.value })
-                    }
-                  />
-                </li>
-                <li>
-                  <h3>Email</h3>
-                  <input
-                    type="text"
-                    name="email"
-                    onChange={event =>
-                      //this.setState({ [event.target.name]: event.target.value })
-                      this.onCreateNewGuestInputInfo(event)
-                    }
-                  />
-                </li>
-                <li>
-                  <h3>Telephone</h3>
-                  <input
-                    type="text"
-                    name="telephone"
-                    onChange={event =>
-                      //this.setState({ [event.target.name]: event.target.value })
-                      this.onCreateNewGuestInputInfo(event)
-                    }
-                  />
-                </li>
-                <li>
-                  <h3>Date</h3>
-
-                  <div>
-                    <p>
-                      {isEmpty && "Please type or pick a day"}
-                      {!isEmpty && !selectedDay && "This day is invalid"}
-                      {selectedDay && isDisabled && "This day is disabled"}
-                      {selectedDay &&
-                        !isDisabled &&
-                        `You chose ${selectedDay.toLocaleDateString()}`}
-                    </p>
-                    <DayPickerInput
-                      value={selectedDay}
-                      onDayChange={this.handleDayChange}
-                      dayPickerProps={{
-                        selectedDays: selectedDay,
-                        disabledDays: disabledDates.map(date => new Date(date))
-                      }}
+        <div className="adminPanel">
+          <h1>{this.props.header}</h1>
+          <h2>List of bookings: </h2>
+          <table className="tableListABooking">
+            <thead>
+              <tr>
+                <th>Nr</th>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Number Of Guests</th>
+              </tr>
+            </thead>
+            <tbody>{list}</tbody>
+          </table>
+          <div className="newGuestInfoInput">
+            <h2>
+              Add Guest: &nbsp;{" "}
+              <i
+                onClick={() =>
+                  this.setState({
+                    isAddNewGuestFormVisible: !this.state
+                      .isAddNewGuestFormVisible
+                  })
+                }
+                className="fas fa-plus"
+              />
+            </h2>
+            {isAddNewGuestFormVisible ? (
+              <form>
+                <ul>
+                  <li>
+                    <h3>Name</h3>
+                    <input
+                      type="text"
+                      name="name"
+                      onChange={
+                        event => this.onCreateNewGuestInputInfo(event)
+                        //this.setState({ [event.target.name]: event.target.value })
+                      }
                     />
-                  </div>
-                </li>
-                <li>
-                  <h3>Time</h3>
-                  <input
-                    type="text"
-                    name="btime"
-                    onChange={event =>
-                      // this.setState({ [event.target.name]: event.target.value })
-                      this.onCreateNewGuestInputInfo(event)
-                    }
-                  />
-                </li>
-                <li>
-                  <h3>Number Of Guests</h3>
-                  <input
-                    type="text"
-                    name="numberOfGuests"
-                    onChange={event =>
-                      // this.setState({ [event.target.name]: event.target.value })
-                      this.onCreateNewGuestInputInfo(event)
-                    }
-                  />
-                </li>
-              </ul>
-              <button onClick={this.postBooking}>Create new record</button>
-            </form>
-          ) : null}
+                  </li>
+                  <li>
+                    <h3>Email</h3>
+                    <input
+                      type="text"
+                      name="email"
+                      onChange={event =>
+                        //this.setState({ [event.target.name]: event.target.value })
+                        this.onCreateNewGuestInputInfo(event)
+                      }
+                    />
+                  </li>
+                  <li>
+                    <h3>Telephone</h3>
+                    <input
+                      type="text"
+                      name="telephone"
+                      onChange={event =>
+                        //this.setState({ [event.target.name]: event.target.value })
+                        this.onCreateNewGuestInputInfo(event)
+                      }
+                    />
+                  </li>
+                  <li>
+                    <h3>Date</h3>
+
+                    <div>
+                      <p>
+                        {isEmpty && "Please type or pick a day"}
+                        {!isEmpty && !selectedDay && "This day is invalid"}
+                        {selectedDay && isDisabled && "This day is disabled"}
+                        {selectedDay &&
+                          !isDisabled &&
+                          `You chose ${selectedDay.toLocaleDateString()}`}
+                      </p>
+                      <DayPickerInput
+                        value={selectedDay}
+                        onDayChange={this.handleDayChange}
+                        dayPickerProps={{
+                          selectedDays: selectedDay,
+                          disabledDays: disabledDates.map(
+                            date => new Date(date)
+                          )
+                        }}
+                      />
+                    </div>
+                  </li>
+                  <li>
+                    <h3>Time</h3>
+                    <input
+                      type="text"
+                      name="btime"
+                      onChange={event =>
+                        // this.setState({ [event.target.name]: event.target.value })
+                        this.onCreateNewGuestInputInfo(event)
+                      }
+                    />
+                  </li>
+                  <li>
+                    <h3>Number Of Guests</h3>
+                    <input
+                      type="text"
+                      name="numberOfGuests"
+                      onChange={event =>
+                        // this.setState({ [event.target.name]: event.target.value })
+                        this.onCreateNewGuestInputInfo(event)
+                      }
+                    />
+                  </li>
+                </ul>
+                <button onClick={this.postBooking}>Create new record</button>
+              </form>
+            ) : null}
+          </div>
         </div>
       </React.Fragment>
     );
