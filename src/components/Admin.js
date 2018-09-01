@@ -3,6 +3,7 @@ import "./../App.css";
 import DayPicker from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
+import CalendarInputDayPicker from "./CalendarInputDayPicker";
 
 class Admin extends Component {
   constructor(props) {
@@ -205,7 +206,22 @@ class Admin extends Component {
 
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
     const input = dayPickerInput.getInput();
+    console.log(input.value);
+    //this.onCreateNewGuestInputInfo(event)
+    const updateNewBooking = {
+      bdate: input.value
+    };
+
+    const updatedBooking = Object.assign(
+      this.state.newBooking,
+      updateNewBooking
+    );
+    /*       this.setState({
+        newBooking: updatedBooking
+      }); */
+
     this.setState({
+      newBooking: updatedBooking,
       selectedDay,
       isEmpty: !input.value.trim(),
       isDisabled: modifiers.disabled === true
@@ -477,7 +493,7 @@ class Admin extends Component {
                 </li>
                 <li>
                   <h3>Date</h3>
-                  <div>
+                  {/*                  <div>
                     {selectedDay && (
                       <p>Day: {selectedDay.toLocaleDateString()}</p>
                     )}
@@ -494,6 +510,28 @@ class Admin extends Component {
                         //this.setState({ [event.target.name]: event.target.value })
                         this.onCreateNewGuestInputInfo(event)
                       }
+                    />
+                  </div> */}
+
+                  <div>
+                    <p>
+                      {isEmpty && "Please type or pick a day"}
+                      {!isEmpty && !selectedDay && "This day is invalid"}
+                      {selectedDay && isDisabled && "This day is disabled"}
+                      {selectedDay &&
+                        !isDisabled &&
+                        `You chose ${selectedDay.toLocaleDateString()}`}
+                    </p>
+                    <DayPickerInput
+                      value={selectedDay}
+                      onDayChange={this.handleDayChange}
+                      dayPickerProps={{
+                        selectedDays: selectedDay,
+                        disabledDays: disabledDates.map(date => new Date(date))
+                        /*               disabledDays: {
+                daysOfWeek: [0, 6]
+              } */
+                      }}
                     />
                   </div>
 
@@ -561,6 +599,8 @@ class Admin extends Component {
             }}
           />
         </div>
+
+        <CalendarInputDayPicker />
       </React.Fragment>
     );
   }
