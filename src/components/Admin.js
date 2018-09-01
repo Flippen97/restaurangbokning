@@ -25,8 +25,14 @@ class Admin extends Component {
       selectedDay: undefined,
       isEmpty: true,
       isDisabled: false,
-
+      BookedDates: ["2018-9-24", "2018-9-25", "2018-9-26", "2018-9-27"],
       disabledDates: [
+        new Date(
+          "Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
+        ),
+        new Date(
+          "Tue Sep 05 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
+        ),
         new Date(2018, 8, 12),
         new Date(2018, 8, 15),
         new Date(2018, 9, 16)
@@ -207,9 +213,13 @@ class Admin extends Component {
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
     const input = dayPickerInput.getInput();
     console.log(input.value);
+    //let newDatum = new Date(input.value);
+    let newDatum = this.state.selectedDay;
     //this.onCreateNewGuestInputInfo(event)
     const updateNewBooking = {
-      bdate: input.value
+      //bdate: input.value
+
+      bdate: newDatum
     };
 
     const updatedBooking = Object.assign(
@@ -226,14 +236,20 @@ class Admin extends Component {
       isEmpty: !input.value.trim(),
       isDisabled: modifiers.disabled === true
     });
+    // console.log(this.state.selectedDay);
+    //console.log(new Date(newDatum));
+    //console.log(new Date("2018-09-01T22:00:00.000Z"));
   }
 
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
+
     const { selectedDay, isDisabled, isEmpty } = this.state;
     const { disabledDates } = this.state;
+    // disabledDates.map(date => console.log(new Date(date)));
+
     //const { selectedDay } = this.state;
     // console.log(this.state.allBookings);
     const { isBookingInfoVisible } = this.state;
@@ -424,7 +440,10 @@ class Admin extends Component {
         ) : null}
       </div>
     ));
-
+    console.log(this.state.selectedDay);
+    console.log(
+      new Date("Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)")
+    );
     return (
       <React.Fragment>
         <h1>{this.props.header}</h1>
