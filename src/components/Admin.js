@@ -9,7 +9,7 @@ import ListOfBookings from "./ListOfBookings";
 class Admin extends Component {
   constructor(props) {
     super(props);
-
+    this.handleDayChangeUpdate = this.handleDayChangeUpdate.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
     this.state = {
       /*** Booking: ***/
@@ -70,7 +70,7 @@ class Admin extends Component {
   }
 
   onInputChange(eventTargetName, newValue, index) {
-    console.log("Event name: " + eventTargetName);
+    //console.log("Event name: " + eventTargetName);
     let newBookings = this.state.allBookings; // create the copy of state array
     switch (eventTargetName) {
       case "name":
@@ -204,7 +204,7 @@ class Admin extends Component {
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
     const input = dayPickerInput.getInput();
 
-    console.log(selectedDay);
+    // console.log(selectedDay);
 
     const updateNewBooking = {
       bdate: input.value
@@ -223,11 +223,42 @@ class Admin extends Component {
     });
   }
 
+  handleDayChangeUpdate(selectedDay, modifiers, dayPickerInput) {
+    //console.log(index);
+    //let inp = dayPickerInput.getInput();
+    //console.log(inp.name);
+    console.log(this.state.allBookings);
+    let newBookings = this.state.allBookings; // create the copy of state array
+    const input = dayPickerInput.getInput();
+    let index = input.name;
+
+    newBookings[index].bdate = input.value;
+
+    // console.log(selectedDay);
+
+    /*     const updateNewBooking = {
+      bdate: input.value
+      //bdate: selectedDay
+    };
+
+    const updatedBooking = Object.assign(
+      this.state.newBooking,
+      updateNewBooking
+    ); */
+    this.setState({
+      //   newBooking: updatedBooking,
+      allBookings: newBookings,
+      selectedDay,
+      isEmpty: !input.value.trim(),
+      isDisabled: modifiers.disabled === true
+    });
+  }
+
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
-
+    // console.log("this.state.allBookings" + this.state.allBookings);
     const { selectedDay, isDisabled, isEmpty } = this.state;
     const { disabledDates } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
@@ -291,9 +322,11 @@ class Admin extends Component {
                   !isDisabled &&
                   `You chose ${selectedDay.toLocaleDateString()}`}
               </p>
+              {index}
               <DayPickerInput
                 value={selectedDay}
                 onDayChange={this.handleDayChangeUpdate}
+                inputProps={{ name: index }}
                 dayPickerProps={{
                   selectedDays: selectedDay,
                   disabledDays: disabledDates.map(date => new Date(date))
