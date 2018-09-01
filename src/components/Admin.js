@@ -25,7 +25,7 @@ class Admin extends Component {
       selectedDay: undefined,
       isEmpty: true,
       isDisabled: false,
-      BookedDates: ["2018-9-24", "2018-9-25", "2018-9-26", "2018-9-27"],
+      //BookedDates: ["2018-9-24", "2018-9-25", "2018-9-26", "2018-9-27"],
       disabledDates: [
         new Date(
           "Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
@@ -33,6 +33,10 @@ class Admin extends Component {
         new Date(
           "Tue Sep 05 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
         ),
+        new Date(2018 - 9 - 18),
+        new Date(2018 - 9 - 19),
+        new Date(2018 - 9 - 20),
+        new Date("2018-09-23T22:00:00.000Z"),
         new Date(2018, 8, 12),
         new Date(2018, 8, 15),
         new Date(2018, 9, 16)
@@ -212,20 +216,25 @@ class Admin extends Component {
 
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
     const input = dayPickerInput.getInput();
-    console.log(input.value);
+    console.log("input.value" + input.value);
     //let newDatum = new Date(input.value);
-    let newDatum = this.state.selectedDay;
+    console.log("new Date(input.value)" + new Date(input.value));
+    //let newDatum = this.state.selectedDay;
+    let newDatum = new Date(input.value);
+    console.log("this.state.selectedDay" + this.state.selectedDay);
+    console.log("newDatum as this.state.selectedDay" + newDatum);
     //this.onCreateNewGuestInputInfo(event)
     const updateNewBooking = {
-      //bdate: input.value
+      bdate: input.value
 
-      bdate: newDatum
+      //bdate: newDatum
     };
-
+    console.log("bdate: newDatum - this.state.bdate" + this.state.bdate);
     const updatedBooking = Object.assign(
       this.state.newBooking,
       updateNewBooking
     );
+
     /*       this.setState({
         newBooking: updatedBooking
       }); */
@@ -239,6 +248,9 @@ class Admin extends Component {
     // console.log(this.state.selectedDay);
     //console.log(new Date(newDatum));
     //console.log(new Date("2018-09-01T22:00:00.000Z"));
+    console.log("this.state.newBooking.bdate" + this.state.newBooking.bdate);
+    console.log("this.state.selectedDay " + this.state.selectedDay);
+    console.log("testing" + new Date("2018-09-22T22:00:00.000Z"));
   }
 
   render() {
@@ -440,10 +452,12 @@ class Admin extends Component {
         ) : null}
       </div>
     ));
-    console.log(this.state.selectedDay);
     console.log(
-      new Date("Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)")
+      "this.state.selectedDay before return " + this.state.selectedDay
     );
+    /*     console.log(
+      new Date("Tue Sep 04 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)")
+    ); */
     return (
       <React.Fragment>
         <h1>{this.props.header}</h1>
