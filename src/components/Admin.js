@@ -7,6 +7,7 @@ import "react-day-picker/lib/style.css";
 class Admin extends Component {
   constructor(props) {
     super(props);
+
     this.handleDayChange = this.handleDayChange.bind(this);
     this.state = {
       /*** Booking: ***/
@@ -21,7 +22,15 @@ class Admin extends Component {
       },
       //Calendar
       selectedDay: undefined,
-      disabledDates: [],
+      isEmpty: true,
+      isDisabled: false,
+
+      disabledDates: [
+        new Date(2018, 8, 12),
+        new Date(2018, 8, 15),
+        new Date(2018, 9, 16)
+      ],
+
       availableAt18: true,
       availableAt21: true,
 
@@ -190,16 +199,26 @@ class Admin extends Component {
     this.fetchAllBookings();
   };
 
-  handleDayChange(day) {
+  /*  handleDayChange(day) {
     this.setState({ selectedDay: day });
+  } */
+
+  handleDayChange(selectedDay, modifiers, dayPickerInput) {
+    const input = dayPickerInput.getInput();
+    this.setState({
+      selectedDay,
+      isEmpty: !input.value.trim(),
+      isDisabled: modifiers.disabled === true
+    });
   }
 
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
-
-    const { selectedDay } = this.state;
+    const { selectedDay, isDisabled, isEmpty } = this.state;
+    const { disabledDates } = this.state;
+    //const { selectedDay } = this.state;
     // console.log(this.state.allBookings);
     const { isBookingInfoVisible } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
@@ -299,10 +318,11 @@ class Admin extends Component {
               {isEditFieldVisible ? (
                 <DayPickerInput
                   dayPickerProps={{
-                    month: new Date(2018, 10),
+                    month: new Date(2018, 7),
                     showWeekNumbers: true,
                     todayButton: "Today"
                   }}
+                  disabledDays={disabledDates.map(date => new Date(date))}
                   onDayChange={this.handleDayChange}
                   onChange={event =>
                     //this.setState({ [event.target.name]: event.target.value })
@@ -468,6 +488,7 @@ class Admin extends Component {
                         showWeekNumbers: true,
                         todayButton: "Today"
                       }}
+                      disabledDays={disabledDates.map(date => new Date(date))}
                       onDayChange={this.handleDayChange}
                       onChange={event =>
                         //this.setState({ [event.target.name]: event.target.value })
@@ -513,11 +534,33 @@ class Admin extends Component {
           ) : null}
         </div>
 
-        {/*         <DayPicker
-          //onDayClick={onDayClick}
-          initialMonth={new Date(2018, 7)}
-          //disabledDays={disabledDates.map(date => new Date(date))}
-        /> */}
+        {/*           <DayPicker
+            //onDayClick={onDayClick}
+            initialMonth={new Date(2018, 7)}
+            disabledDays={disabledDates.map(date => new Date(date))}
+          /> */}
+
+        <div>
+          <p>
+            {isEmpty && "Please type or pick a day"}
+            {!isEmpty && !selectedDay && "This day is invalid"}
+            {selectedDay && isDisabled && "This day is disabled"}
+            {selectedDay &&
+              !isDisabled &&
+              `You chose ${selectedDay.toLocaleDateString()}`}
+          </p>
+          <DayPickerInput
+            value={selectedDay}
+            onDayChange={this.handleDayChange}
+            dayPickerProps={{
+              selectedDays: selectedDay,
+              disabledDays: disabledDates.map(date => new Date(date))
+              /*               disabledDays: {
+                daysOfWeek: [0, 6]
+              } */
+            }}
+          />
+        </div>
       </React.Fragment>
     );
   }
