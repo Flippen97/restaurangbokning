@@ -366,6 +366,10 @@ tr:nth-child(even) {
   font-size: 16px;
 }
 
+.selectNumberOfGuests option:first-child {
+  background: #b7b9b9;
+}
+
 .adminPanel {
   margin: 2%;
   margin-bottom: 10%;

@@ -26,7 +26,7 @@ class Admin extends Component {
       selectedDay: undefined,
       isEmpty: true,
       isDisabled: false,
-
+      // index: undefined,
       disabledDates: [
         new Date(
           "Tue Sep 14 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
@@ -44,7 +44,12 @@ class Admin extends Component {
 
       //isNewBookingAdded: false
       isAddNewGuestFormVisible: false,
-      isEditFieldVisible: false
+      isEditFieldVisible: false,
+
+      //search by phone
+      telephone: ""
+
+      //test
     };
 
     this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
@@ -227,7 +232,8 @@ class Admin extends Component {
     //console.log(index);
     //let inp = dayPickerInput.getInput();
     //console.log(inp.name);
-    console.log(this.state.allBookings);
+    //console.log(this.state.allBookings);
+
     let newBookings = this.state.allBookings; // create the copy of state array
     const input = dayPickerInput.getInput();
     let index = input.name;
@@ -245,6 +251,7 @@ class Admin extends Component {
       this.state.newBooking,
       updateNewBooking
     ); */
+
     this.setState({
       //   newBooking: updatedBooking,
       allBookings: newBookings,
@@ -252,7 +259,36 @@ class Admin extends Component {
       isEmpty: !input.value.trim(),
       isDisabled: modifiers.disabled === true
     });
+    /*  console.log(this.state.index);
+    console.log(index); */
   }
+
+  allreadyCustomer = () => {
+    fetch(
+      "https://www.idabergstrom.se/restaurant-api/fetchOneWithTelephone.php",
+      {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({
+          telephone: this.state.telephone
+        })
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        this.setState(
+          {
+            customerId: data[0].id
+          },
+          () => {
+            this.postBookingWithCustomerId();
+          }
+        );
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     if (!this.state.allBookings) {
@@ -322,7 +358,7 @@ class Admin extends Component {
                   !isDisabled &&
                   `You chose ${selectedDay.toLocaleDateString()}`}
               </p>
-              {index}
+
               <DayPickerInput
                 value={selectedDay}
                 onDayChange={this.handleDayChangeUpdate}
@@ -375,16 +411,21 @@ class Admin extends Component {
         </td>
         <td>
           {isEditFieldVisible ? (
-            <input
-              type="number"
-              min="1"
-              max="6"
-              value={item.numberOfGuests}
+            <select
+              className="selectNumberOfGuests"
               name="numberOfGuests"
               onChange={event =>
                 this.onInputChange(event.target.name, event.target.value, index)
               }
-            />
+            >
+              <option value={item.numberOfGuests}>{item.numberOfGuests}</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
           ) : (
             <div>{item.numberOfGuests}</div>
           )}
@@ -405,12 +446,6 @@ class Admin extends Component {
           <button
             className="updateButton"
             onClick={this.clickHandlerUpdateBooking.bind(this, item)}
-            /*             onClick={e => {
-              this.clickHandlerUpdateBooking.bind(this, item);
-              this.setState({
-                isEditFieldVisible: !this.state.isEditFieldVisible
-              });
-            }} */
           >
             Update! <i className="fas fa-check" />
           </button>
@@ -467,10 +502,7 @@ class Admin extends Component {
                     <input
                       type="text"
                       name="name"
-                      onChange={
-                        event => this.onCreateNewGuestInputInfo(event)
-                        //this.setState({ [event.target.name]: event.target.value })
-                      }
+                      onChange={event => this.onCreateNewGuestInputInfo(event)}
                     />
                   </li>
                   <li>
@@ -478,10 +510,7 @@ class Admin extends Component {
                     <input
                       type="text"
                       name="email"
-                      onChange={event =>
-                        //this.setState({ [event.target.name]: event.target.value })
-                        this.onCreateNewGuestInputInfo(event)
-                      }
+                      onChange={event => this.onCreateNewGuestInputInfo(event)}
                     />
                   </li>
                   <li>
@@ -489,15 +518,11 @@ class Admin extends Component {
                     <input
                       type="text"
                       name="telephone"
-                      onChange={event =>
-                        //this.setState({ [event.target.name]: event.target.value })
-                        this.onCreateNewGuestInputInfo(event)
-                      }
+                      onChange={event => this.onCreateNewGuestInputInfo(event)}
                     />
                   </li>
                   <li>
                     <h3>Date</h3>
-
                     <div>
                       <p>
                         {isEmpty && "Please type or pick a day"}
@@ -522,24 +547,33 @@ class Admin extends Component {
                   <li>
                     <h3>Time</h3>
                     <input
-                      type="text"
+                      type="radio"
+                      value="18"
                       name="btime"
-                      onChange={event =>
-                        // this.setState({ [event.target.name]: event.target.value })
-                        this.onCreateNewGuestInputInfo(event)
-                      }
+                      onChange={event => this.onCreateNewGuestInputInfo(event)}
                     />
+                    18.00
+                    <input
+                      type="radio"
+                      value="21"
+                      name="btime"
+                      onChange={event => this.onCreateNewGuestInputInfo(event)}
+                    />
+                    21.00
                   </li>
                   <li>
                     <h3>Number Of Guests</h3>
-                    <input
-                      type="text"
+                    <select
                       name="numberOfGuests"
-                      onChange={event =>
-                        // this.setState({ [event.target.name]: event.target.value })
-                        this.onCreateNewGuestInputInfo(event)
-                      }
-                    />
+                      onChange={event => this.onCreateNewGuestInputInfo(event)}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                    </select>
                   </li>
                 </ul>
                 <button onClick={this.postBooking}>Create new record</button>
