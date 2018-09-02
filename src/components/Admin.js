@@ -9,6 +9,7 @@ import ListOfBookings from "./ListOfBookings";
 class Admin extends Component {
   constructor(props) {
     super(props);
+    this.upvote = this.upvote.bind(this);
     this.handleDayChangeUpdate = this.handleDayChangeUpdate.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
     this.state = {
@@ -28,12 +29,12 @@ class Admin extends Component {
       isDisabled: false,
       // index: undefined,
       disabledDates: [
-        new Date(
+        /*         new Date(
           "Tue Sep 14 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
         ),
         new Date(
           "Tue Sep 15 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
-        ),
+        ), */
         new Date("2018-09-1"),
         new Date("2018-09-2"),
         new Date("2018-09-3")
@@ -56,6 +57,10 @@ class Admin extends Component {
     this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
 
     this.onClickDeleteHandler = this.onClickDeleteHandler.bind(this);
+
+    this.onSearchInputSubmit = this.onSearchInputSubmit.bind(this);
+
+    this.compareTime = this.compareTime.bind(this);
   }
 
   fetchAllBookings = () => {
@@ -73,6 +78,10 @@ class Admin extends Component {
       .then(data => {
         this.setState({ allBookings: data });
       }); */
+  }
+  upvote(e) {
+    e.preventDefault();
+    return false;
   }
 
   onInputChange(eventTargetName, newValue, index) {
@@ -291,10 +300,91 @@ class Admin extends Component {
       });
   };
 
+  postBookingWithCustomerId() {
+    console.log("got the customers");
+  }
+
+  onSearchInputSubmit(e) {
+    console.log("Hej" + e);
+  }
+
+  compareTime() {
+    if (this.state.allBookings.length) {
+      /*       console.log(this.state.allBookings[0].bdate);
+      let d = new Date("2018-10-16");
+      let c = new Date("2018,10,16");
+      let n = d.getTime();
+      let m = c.getTime(); */
+      // console.log(n);
+
+      //funkar:
+      /*       let names = this.state.allBookings.filter(
+        (item, index) => item.name === "Yahoo"
+      ); */
+
+      /*     let disabledDates = this.state.allBookings.filter(
+        (item, index) => item.name === "Yahoo"
+      ).length; */
+      let disabledDates = [];
+      let bookingDate = "2018-8-25";
+      let totalBookedDates = this.state.allBookings.filter(
+        //let unifiedDate = new Date("2018, 08, 25");
+        item =>
+          (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+            item.btime === "18") ||
+          (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+            item.btime === "21")
+      );
+
+      let totalBookedDatesAt18 = totalBookedDates.filter(
+        item =>
+          new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+          item.btime === "18"
+      );
+      console.log(
+        "Booked at 18.00:  " +
+          bookingDate +
+          " day - " +
+          totalBookedDatesAt18.length +
+          " tables"
+      );
+
+      let totalBookedDatesAt21 = totalBookedDates.filter(
+        item =>
+          new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+          item.btime === "21"
+      );
+      console.log(
+        "Booked at 21.00: " +
+          bookingDate +
+          " day - " +
+          totalBookedDatesAt21.length +
+          " tables"
+      );
+
+      //if(item.btime === 18 && (item.bdate === "2018-10-16")
+      if (totalBookedDates.length <= 30) {
+        disabledDates.push(bookingDate);
+        console.log(totalBookedDates);
+        console.log(disabledDates);
+      }
+      /*      if (d.getTime() === c.getTime()) {
+         this.setState(disabledDates: date);
+      } */
+    }
+  }
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
+
+    this.compareTime();
+    /*     this.compareTime(
+      this.state.allBookings[9].bdate,
+      this.state.allBookings[10].bdate
+    ).bind(this); */
+    /*   const newLocal = this.state.allBookings[0].bdate;
+    console.log(newLocal); */
 
     // console.log("this.state.allBookings" + this.state.allBookings);
     const { selectedDay, isDisabled, isEmpty } = this.state;
@@ -303,6 +393,28 @@ class Admin extends Component {
     const { isEditFieldVisible } = this.state;
     const { indexFromEditButton } = this.state;
     //console.log(indexFromEditButton);
+
+    let searchCustomer = (
+      <div>
+        <form>
+          <label htmlFor="searchCustomer">
+            <input name="searchCustomer" placeholder="Enter telephone" />
+          </label>
+          <input
+            className="SearchByPhone"
+            type="submit"
+            value="Submit"
+            /*             onClick={() => {
+              console.log("hej!");
+              console.log("ho!");
+              this.upvote.bind(this);
+            }} */
+            onSubmit={event => this.onSearchInputSubmit().bind(this)}
+          />
+        </form>
+      </div>
+    );
+
     let list = this.state.allBookings.map((item, index) => (
       <tr key={item.bid}>
         <td> {index + 1} </td>
@@ -469,6 +581,8 @@ class Admin extends Component {
       <React.Fragment>
         <div className="adminPanel">
           <h1>{this.props.header}</h1>
+          <h2>Find customer</h2>
+          {searchCustomer}
           <h2>List of bookings: </h2>
           <table className="tableListABooking">
             <thead>
