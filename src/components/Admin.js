@@ -40,8 +40,8 @@ class Admin extends Component {
         new Date("2018-09-3")
       ],
 
-      availableAt18: true,
-      availableAt21: true,
+      /*   availableAt18: true,
+      availableAt21: true, */
 
       //isNewBookingAdded: false
       isAddNewGuestFormVisible: false,
@@ -51,6 +51,8 @@ class Admin extends Component {
       telephone: "",
 
       //test
+      testBool: false,
+      testArray: [],
       indexFromEditButton: ""
     };
 
@@ -60,7 +62,7 @@ class Admin extends Component {
 
     this.onSearchInputSubmit = this.onSearchInputSubmit.bind(this);
 
-    this.compareTime = this.compareTime.bind(this);
+    //this.getDisabledDates = this.getDisabledDates.bind(this);
   }
 
   fetchAllBookings = () => {
@@ -78,6 +80,19 @@ class Admin extends Component {
       .then(data => {
         this.setState({ allBookings: data });
       }); */
+    /*     if (this.state.allBookings.length > 0) {
+      console.log("owej");
+      let disabledDays = this.getDisabledDates();
+      console.log(this.getDisabledDates());
+      disabledDays = [...this.state.disabledDates];
+      this.setState({ disabledDates: disabledDays });
+      console.log(this.state.disabledDates);
+    } */
+    if (this.state.allBookings.length) {
+      this.state.allBookings.map((item, index) =>
+        this.updateDisabledDates(new Date(item.bdate))
+      );
+    }
   }
   upvote(e) {
     e.preventDefault();
@@ -308,83 +323,137 @@ class Admin extends Component {
     console.log("Hej" + e);
   }
 
-  compareTime() {
+  getDisabledDates(bookingDate) {
+    let disabledDates = [];
+    // let bookingDate = "2018-9-25";
+    let totalBookedTablesForDate = this.state.allBookings.filter(
+      //let unifiedDate = new Date("2018, 08, 25");
+      item =>
+        (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+          item.btime === "18") ||
+        (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+          item.btime === "21")
+    );
+
+    let totalBookedTablesForDateAt18 = totalBookedTablesForDate.filter(
+      item =>
+        new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+        item.btime === "18"
+    );
+    console.log(
+      bookingDate +
+        " Booked at 18.00:  " +
+        totalBookedTablesForDateAt18.length +
+        " tables"
+    );
+
+    let totalBookedTablesForDateAt21 = totalBookedTablesForDate.filter(
+      item =>
+        new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
+        item.btime === "21"
+    );
+
+    console.log(
+      bookingDate +
+        " Booked at 21.00: " +
+        totalBookedTablesForDateAt21.length +
+        " tables"
+      //new Date("2018-9-8").getTime()
+    );
+
+    //if(item.btime === 18 && (item.bdate === "2018-10-16")
+    if (totalBookedTablesForDate.length >= 1) {
+      disabledDates.push(bookingDate);
+      console.log(totalBookedTablesForDate);
+      console.log(disabledDates);
+    }
+    /*       console.log(this.state.selectedDay);
+      console.log(new Date(bookingDate));
+      if (this.state.selectedDay === new Date(bookingDate)) {
+        console.log("compared selected day with given date");
+      } */
+
+    //return disabledDates;
+
+    //console.log("owej");
+    //let newDisabledDays = this.getDisabledDates("2018-9-25");
+    console.log("Disabled Days returned with method : " + disabledDates);
+    let disabledDays = [...this.state.disabledDates, ...disabledDates];
+    console.log("Disabled Days array with spread  operator : " + disabledDays);
+    //this.setState({ disabledDates: disabledDays });
+
+    /*   let d = new Date(
+      "Sat Sep 01 2018 00:00:00 GMT+0200 (centraleuropeisk sommartid)"
+    ).getTime();
+    // let d = "Sat Sep 01 2018 00:00:00 GMT+0200 (centraleuropeisk sommartid)";
+    //let c = d.getTime();
+    let w = new Date("2018-1-9").getTime();
+    console.log("d: " + d);
+    console.log("w: " + w); */
+    return disabledDays;
+  }
+
+  updateDisabledDates(date) {
     if (this.state.allBookings.length) {
-      /*       console.log(this.state.allBookings[0].bdate);
-      let d = new Date("2018-10-16");
-      let c = new Date("2018,10,16");
-      let n = d.getTime();
-      let m = c.getTime(); */
-      // console.log(n);
+      /*       console.log("owej");
+    let newDisabledDays = this.getDisabledDates("2018-9-25");
+    console.log("Disabled Days returned with method : " + newDisabledDays);
+    let disabledDays = [...this.state.disabledDates, newDisabledDays]; */
+      /*         if(this.state.disabledDates){
+          
+      } */
+      //this.setState({ disabledDates: disabledDays });
 
-      //funkar:
-      /*       let names = this.state.allBookings.filter(
-        (item, index) => item.name === "Yahoo"
-      ); */
+      /*       if (disabledDays.includes("2018-8-25")) {
+        console.log("Disabled Days in state: " + this.state.disabledDates);
+        this.setState({ disabledDates: disabledDays }); //inf loop!
+        console.log(
+          "Updated Disabled Days in state: " + this.state.disabledDates
+        );
+      } */
 
-      /*     let disabledDates = this.state.allBookings.filter(
-        (item, index) => item.name === "Yahoo"
-      ).length; */
-      let disabledDates = [];
-      let bookingDate = "2018-8-25";
-      let totalBookedDates = this.state.allBookings.filter(
-        //let unifiedDate = new Date("2018, 08, 25");
-        item =>
-          (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-            item.btime === "18") ||
-          (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-            item.btime === "21")
-      );
-
-      let totalBookedDatesAt18 = totalBookedDates.filter(
-        item =>
-          new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-          item.btime === "18"
-      );
-      console.log(
-        "Booked at 18.00:  " +
-          bookingDate +
-          " day - " +
-          totalBookedDatesAt18.length +
-          " tables"
-      );
-
-      let totalBookedDatesAt21 = totalBookedDates.filter(
-        item =>
-          new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-          item.btime === "21"
-      );
-      console.log(
-        "Booked at 21.00: " +
-          bookingDate +
-          " day - " +
-          totalBookedDatesAt21.length +
-          " tables"
-      );
-
-      //if(item.btime === 18 && (item.bdate === "2018-10-16")
-      if (totalBookedDates.length <= 30) {
-        disabledDates.push(bookingDate);
-        console.log(totalBookedDates);
-        console.log(disabledDates);
+      let disabledDays = this.getDisabledDates(date); //method generates  infinite loop
+      if (!disabledDays.includes(date)) {
+        console.log("Disabled Days in state: " + this.state.disabledDates);
+        let updatedDisableDatesArray = [...this.state.disabledDates, date];
+        this.setState({ disabledDates: updatedDisableDatesArray }); //inf loop!
+        console.log(
+          "Updated Disabled Days in state: " + this.state.disabledDates
+        );
       }
-      /*      if (d.getTime() === c.getTime()) {
-         this.setState(disabledDates: date);
+
+      /*       let size = disabledDays.filter(function(value) {
+        return value === "2018-8-25";
+      }).length;
+      console.log("Disabled Days in array: " + disabledDays);
+      console.log("Size: " + size); */
+
+      /*      if (size === 0) {
+        console.log("Disabled Days in state: " + this.state.disabledDates);
+        this.setState({ disabledDates: disabledDays }); //inf loop!
+        console.log(
+          "Updated Disabled Days in state: " + this.state.disabledDates
+        );
       } */
     }
   }
+
+  test = () => {
+    this.setState({ testBool: true });
+    console.log("Testing state testBool: " + this.state.testBool);
+  };
+
+  /*   updateAllDisabledDates = this.state.allBookings.map((item, index) =>
+    this.updateDisabledDates(item.bdate)
+  ); */
+
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
+    //this.updateDisabledDates();
 
-    this.compareTime();
-    /*     this.compareTime(
-      this.state.allBookings[9].bdate,
-      this.state.allBookings[10].bdate
-    ).bind(this); */
-    /*   const newLocal = this.state.allBookings[0].bdate;
-    console.log(newLocal); */
+    //this.test();
 
     // console.log("this.state.allBookings" + this.state.allBookings);
     const { selectedDay, isDisabled, isEmpty } = this.state;
@@ -698,6 +767,7 @@ class Admin extends Component {
               </form>
             ) : null}
           </div>
+          <button onClick={e => this.updateDisabledDates()}>Test</button>
         </div>
       </React.Fragment>
     );
