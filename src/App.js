@@ -3,16 +3,21 @@ import "font-awesome/css/font-awesome.min.css";
 import Admin from "./components/Admin";
 import "./App.css";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom'
 
-//import Nav from './components/Nav'
+
 import Home from "./components/routes/Home";
 import Menu from "./components/routes/Menu";
 import Book from "./components/routes/Book";
 import Contact from "./components/routes/Contact";
+import Error from './components/routes/Error'
 
-//import Admin from "./components/routes/Admin";
-//import ContainsAll from './components/ContainsAll'
+
 
 class App extends Component {
   state = {
@@ -35,6 +40,9 @@ class App extends Component {
     window.addEventListener("resize", this.widthCheck);
     window.addEventListener("scroll", this.handleScroll);
   };
+
+
+
 
   /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
 
@@ -176,21 +184,28 @@ class App extends Component {
                     <button onClick={this.updateBooking}>Testknapp för uppdatering</button>
                     <button onClick={this.searchBooking}>Testknapp för sök</button>
                     */}
-              </nav>
-            ) : (
-              <div />
-            )}
 
-            <div className="sectionContainer">
-              {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
-              <div className="section">
-                <Route exact path="/" component={Home} />
-                <Route path="/menu" component={Menu} />
-                <Route path="/book" component={Book} />
-                <Route path="/contact" component={Contact} />
+                    </nav>
+                ) : (
+                <div />
+                )}
+                
+        
+                <div className="sectionContainer">
+                    {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*//*Switch is going to be like a wrapper for all the routes that we have*/}
+                    <div className="section">
+                    <Switch>
+                        <Route exact path="/" component={Home}/>
+                        <Route path="/menu" component={Menu}/>
+                        <Route path="/book" component={Book}/>
+                        <Route path="/contact" component={Contact}/>
+                        <Route path="/admin" component={Admin}/>
+                        <Route component={Error} />
+                    </Switch>
+                    </div>
+                </div>
+        
 
-                <Route path="/admin" component={Admin} />
-              </div>
             </div>
           </div>
           <Admin header="Admin Panel" />
