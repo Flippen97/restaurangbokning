@@ -15,7 +15,7 @@ import Home from "./components/routes/Home";
 import Menu from "./components/routes/Menu";
 import Book from "./components/routes/Book";
 import Contact from "./components/routes/Contact";
-import Error from './components/routes/Error'
+import Error from './components/routes/Error';
 
 
 
