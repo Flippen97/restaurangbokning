@@ -486,7 +486,8 @@ class Admin extends Component {
 
     let list = this.state.allBookings.map((item, index) => (
       <tr key={item.bid}>
-        <td> {index + 1} </td>
+        {/* <td> {index + 1} </td> */}
+        <td>{item.bid}</td>
         <td>{item.customerId}</td>
         <td>
           {isEditFieldVisible && indexFromEditButton === index ? (
@@ -656,7 +657,7 @@ class Admin extends Component {
           <table className="tableListABooking">
             <thead>
               <tr>
-                <th>Nr</th>
+                <th>Booknings ID</th>
                 <th>Customer ID</th>
                 <th>Name</th>
                 <th>Telephone</th>
