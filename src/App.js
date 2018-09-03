@@ -145,6 +145,16 @@ class App extends Component {
             this.setState({ toggleNav: false });
         }
     }
+    bookNow = () =>{
+        console.log("hej")
+        this.setState({ mainStyle: "containerBook" });
+        var width = window.innerWidth;
+        if(width>1000){
+            this.setState({ toggleNav: true });
+        }else{
+            this.setState({ toggleNav: false });
+        }
+    }
     
 
  
@@ -174,14 +184,14 @@ class App extends Component {
                     */}
                     </nav>
                 ) : (
-                <div />
+                <React.Fragment />
                 )}
                 
         
                 <div className="sectionContainer">
                     {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
                     <div className="section">
-                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/" render={(props) => <Home {...props} bookNow={this.bookNow} />}/>
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>

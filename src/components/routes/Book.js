@@ -1,8 +1,6 @@
 import React from 'react';
 import './../../App.css';
 
-import CustomerForm from './../CustomerForm';
-import FormInput from './../FormInput';
 
 import Calendar from './../Calendar';
 
@@ -61,10 +59,6 @@ class Book extends React.Component {
     setTime = (event) => {
         this.setState({ btime: event.target.dataset.btime})
     }
-//    setNumberOfGuests = () => {
-//        console.log(this);
-////        this.setState({ numberOfGuests: this.target.value})
-//    }
 
     /* This function sets name, email, telephone states */
     handleChange = (event) => {
@@ -152,7 +146,7 @@ class Book extends React.Component {
 
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
+            if(counts[key] >= 29){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
@@ -187,11 +181,18 @@ class Book extends React.Component {
         })
           .then(response => response.json())
           .then(data => {
-             this.setState({ 
+            if(data.length === 0){
+                this.setState({ telephone: 'error', })
+                console.log("number dosnt exist")
+            }
+            else{
+                this.setState({ 
                     customerId: data[0].id, 
                 }, () => {
                   this.postBookingWithCustomerId();
                 })
+            }
+            
           })
           .catch(error => {
             console.log(error);
@@ -222,11 +223,11 @@ class Book extends React.Component {
      
     let timepickerText = '';
       
-    if(!this.state.bdate){
-        timepickerText = `Välkommen till våran bordsbokning! Var god välj ett datum i kalendern.`
-    }else if(this.state.bdate && !this.state.btime){
-        timepickerText = `Välj en sittning. Du kan välja mellan kl 18 och kl 21.`
-    }else if(this.state.bdate && this.state.btime){
+    if(this.state.bookingStep === "1"){
+        timepickerText = `Välkommen till våran bordsbokning! Var god välj ett datum i kalendern. Tryck sedan "nästa" för att gå vidare.`
+    }else if(this.state.bookingStep === "2"){
+        timepickerText = `Välj en sittning. Du kan välja mellan kl 18 och kl 21 Fyll sedan i hur många ni är. Tryck sedan nästa för att gå vidare.`
+    }else if(this.state.bookingStep === "3"){
         timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret till höger.`
     }
 
@@ -247,32 +248,14 @@ class Book extends React.Component {
                     onDayClick={this.onDayClick} 
                     setTime={this.setTime} 
                     setTables={this.setTables}
-                    disabledDates={this.state.disabledDates}
-                    bdate={this.state.bdate}
-                    selectedDate={this.state.selectedDate}
-                    bookingStep={this.state.bookingStep}
+                    state={this.state}
                     changeBokingStep={this.changeBokingStep}
                     setNumberOfGuests={this.setNumberOfGuests}
                     onChange={this.handleChange}
                     postBooking={this.postBooking}
+                    allreadyCustomer={this.allreadyCustomer}
                 />
-        
-        
-                {this.state.bookingStep === "3" ? (
-                <div className="bookSection">
-        
-                    Bokat tidigare? V.g. fyll i telefonnummer: 
-                    <FormInput onChange={this.handleChange} name="telephone" />
-                    <button onClick={this.allreadyCustomer}> Boka! </button>
-        
-        
-                    <h3>Dina uppgifter:</h3>
-                    <CustomerForm onChange={this.handleChange} postBooking={this.postBooking} state={this.state.btime}/>
-                    <button>Nästa</button>
-                </div>) 
-                : (<React.Fragment />)}
-        
-
+    
             </div>
         </React.Fragment>
     );
