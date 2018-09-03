@@ -207,8 +207,6 @@ class App extends Component {
         
 
             </div>
-          </div>
-          <Admin header="Admin Panel" />
         </React.Fragment>
       </Router>
     );
