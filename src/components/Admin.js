@@ -4,7 +4,7 @@ import DayPicker from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 //import CalendarInputDayPicker from "./CalendarInputDayPicker";
-import ListOfBookings from "./ListOfBookings";
+//import ListOfBookings from "./ListOfBookings";
 
 class Admin extends Component {
   constructor(props) {
