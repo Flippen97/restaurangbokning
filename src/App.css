@@ -382,7 +382,227 @@ tr:nth-child(even) {
   }
 }
 @media screen and (min-width: 1000px) {
-  .containerAdmin {
+  /*   .containerAdmin {
     background-image: url("");
-  }
+  } */
+}
+header .fa {
+  display: none;
+}
+header {
+  position: fixed;
+}
+h1 {
+  text-align: left;
+  margin: 0 0 0 80px;
+}
+/******************************/
+/*********** NAV **************/
+/******************************/
+.navContainer {
+  margin-top: -50px;
+  width: 100%;
+  height: 50px;
+  color: white;
+  position: fixed;
+}
+.blackbackground {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+ul {
+  list-style-type: none;
+  text-align: right;
+  margin: 8px 60px 0 0;
+  padding: 0;
+  margin-left: auto;
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0);
+}
+li {
+  display: inline-block;
+}
+li a {
+  display: block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 1.3em;
+}
+
+li a:hover {
+  background-color: rgba(0, 0, 0, 0);
+  color: #c59d5f;
+  text-decoration: underline white;
+}
+/******************************/
+/*********** Home *************/
+/******************************/
+.containerHome {
+  background-image: url("img/webb_bg.png"),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 31%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  background-size: cover;
+  background-blend-mode: darken;
+}
+/******************************/
+/*********** Menu *************/
+/******************************/
+.containerMenu .sectionContainer .section .menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.containerMenu .sectionContainer .section .headerImg {
+  height: 200px;
+  background-image: url("img/head_webb_menu.png"),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 31%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: darken;
+}
+/******************************/
+/*********** Book *************/
+/******************************/
+.containerBook .sectionContainer .section .headerImg {
+  height: 200px;
+  background-image: url("img/head_webb_book.png"),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 31%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: darken;
+}
+/******************************/
+/********* Contact ************/
+/******************************/
+.containerContact .sectionContainer .section .headerImg {
+  height: 200px;
+  background-image: url("img/head_webb_contact.png"),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 31%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: darken;
+}
+.containerContact .sectionContainer .section .contact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/******************************************************************************************/
+/********************************** Testar lite admin *************************************/
+/******************************************************************************************/
+
+.listContainer {
+  width: 600px;
+  height: auto;
+  margin-top: 20px;
+  background-color: white;
+  font-size: 0.8em;
+  color: black;
+}
+
+.bookingRowContainer {
+  width: 100%;
+  height: 40px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.bookingRowCell {
+  width: 60px;
+  height: 100%;
+}
+
+/******************************/
+/********** Admin ***********/
+/******************************/
+.containerAdmin {
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  margin: 0px auto;
+}
+
+.fa-times,
+.fa-pencil-alt,
+.fa-sort-down,
+.fa-plus,
+.fa-check,
+.fa-plus-circle,
+.updateButton {
+  cursor: pointer;
+}
+
+.tableListABooking {
+  width: 100%;
+}
+
+.tableListABooking table,
+tbody,
+thead,
+tr {
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background: #e8e8e8;
+}
+
+.tableListABooking td {
+  border: 1px solid black;
+}
+
+.newGuestInfoInput {
+  margin-bottom: 40px;
+}
+
+.newGuestInfoInput li {
+  padding: 10px;
+  text-align: left;
+}
+.newGuestInfoInput button {
+  background-color: lightgray;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.selectNumberOfGuests option:first-child {
+  background: #b7b9b9;
+}
+
+.adminPanel {
+  margin: 2%;
+  margin-bottom: 10%;
+}
+
+.SearchByPhone[type="submit"] {
+  width: 95px;
+  padding: 5px 15px;
+  background: #ccc;
+  border: 0 none;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
