@@ -182,6 +182,7 @@ class App extends Component {
                 <div className="sectionContainer">
                     {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
                     <div className="section">
+                    // Switch is going to be like a wrapper for all the routes that we have
                     <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route path="/menu" component={Menu}/>
