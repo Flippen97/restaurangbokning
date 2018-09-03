@@ -107,7 +107,10 @@ class Book extends React.Component {
           .catch(error => {
             console.log(error);
           });
+        
+    
     } 
+
     
     postBookingWithCustomerId = () => {
         
@@ -201,7 +204,7 @@ class Book extends React.Component {
     }
 
     fetchBookings = () => {
-    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAllGuests.php")
+    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
       .then((response) => response.json())
     }
   

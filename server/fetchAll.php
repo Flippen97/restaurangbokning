@@ -3,7 +3,7 @@
 
     include_once 'database.php';
 
-    $statement = $pdo->prepare("SELECT * FROM bookings JOIN customers WHERE bookings.customerId = customers.id");
+    $statement = $pdo->prepare("SELECT * FROM bookings JOIN customers WHERE bookings.customerId = customers.id ORDER BY bookings.bid ASC");
 
     $statement->execute();
 

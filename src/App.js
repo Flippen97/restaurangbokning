@@ -112,6 +112,7 @@ class App extends Component {
         }
     }
     
+    
     /* searchBooking = () => {   
         fetch('https://www.idabergstrom.se/restaurant-api/search.php', {
           method: 'POST',
@@ -171,7 +172,9 @@ class App extends Component {
                     <button onClick={this.deleteBooking}>Testknapp för delete</button>
                     <button onClick={this.updateBooking}>Testknapp för uppdatering</button>
                     <button onClick={this.searchBooking}>Testknapp för sök</button>
-                    */}
+                    */
+                        
+                    }
                     </nav>
                 ) : (
                 <div />
