@@ -5,7 +5,8 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Switch
 } from 'react-router-dom'
 
 //import Nav from './components/Nav'
@@ -16,7 +17,7 @@ import Contact from './components/routes/Contact'
 
 import Admin from './components/routes/Admin'
 //import ContainsAll from './components/ContainsAll'
-
+import Error from './components/routes/Error'
 
 
 class App extends Component {
@@ -179,14 +180,16 @@ class App extends Component {
                 
         
                 <div className="sectionContainer">
-                    {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
+                    {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*//*Switch is going to be like a wrapper for all the routes that we have*/}
                     <div className="section">
+                    <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>
-                    
                         <Route path="/admin" component={Admin}/>
+                        <Route component={Error} />
+                    </Switch>
                     </div>
                 </div>
         
