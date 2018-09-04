@@ -22,30 +22,48 @@ function Calendar(props) {
         { value: '5', label: '5' },
         { value: '6', label: '6' }
       ];
+    
     return (
         <React.Fragment>
         
             
-            {props.state.bookingStep === "1" ? (
+            {(props.state.bookingStep === "1") ? (
                 <div className="bookSection">
-                <h3>Välj ett datum:</h3>
-                <div className="divideSpace">
-                <DayPicker 
-                    onDayClick={props.onDayClick}
-                    selectedDays={props.state.selectedDate}
-//                    initialMonth={new Date(2018, 7)}
-                    month={new Date()}
-                    toMonth={new Date(2018, 11)}
-                    disabledDays={ props.state.disabledDates.map((date) => new Date(date))}
+             
+                {props.state.fetchCalendarError ? <div className="fetchError">
+                    Någonting gick fel.<br />
+                    Vänligen uppdatera sidan och prova igen.
+                </div> : '' }
+             
+                {!props.state.fetchCalendarError ? <div> <h3>Välj ett datum:</h3>
+                        <div className="divideSpace">
+                        <DayPicker 
+                            onDayClick={props.onDayClick}
+                            selectedDays={props.state.selectedDate}
+        //                    initialMonth={new Date(2018, 7)}
+                            month={new Date(2018, 8)}
+                            fromMonth={new Date(2018, 8)}
+                            toMonth={new Date(2018, 11)}
+                            disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
 
-                />
-                <span className="chosenDate">Valt datum: <br />{formateDate}</span>
-                </div>
-                <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === ''} value={"2"}>Nästa</button>
-                </div>) 
-                : (<React.Fragment />)}
+        //
+        //                disabledDays={[  {
+        //                                after: new Date(2018, 8, 1),
+        //                                    before: new Date(2018, 8, 3),
+        //                                },
+        //                              props.state.disabledDates.map((date) => new Date(date)) 
+        //                            ]}
 
+                        />
+                        <span className="chosenDate">Valt datum: <br />{formateDate}</span>
+                        </div>
+                        <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === '' || props.state.fetchCalendarError} value={"2"}>Nästa</button>
+{/*                        </div>) */ }
+                            </div>
 
+                        : (<React.Fragment />)}
+                           
+                </div>) : '' }
             {props.state.bookingStep === "2" ? (
                 <div className="bookSection">
                     <h3>Välj en sittning:</h3>
@@ -63,6 +81,7 @@ function Calendar(props) {
                     />
 
                     <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.btime === '' || props.state.numberOfGuests === ''} value={"3"}>Nästa</button>
+                   
                 </div>) 
             : (<React.Fragment />)}
             
@@ -91,11 +110,17 @@ function Calendar(props) {
 
             {props.state.bookingStep === "4" ? (
                 <div className="bookSection">
-                    {props.state.name ? ` ${props.state.name}` : ""}, tack för din bokning hos oss!<br /><br />
+               
+                    { !props.state.fetchBookingError 
+                        ? <div>
+                          {props.state.name ? ` ${props.state.name}` : ""}, tack för din bokning hos oss!<br /><br />
                     Du är varmt välkommen den {formateDate} klockan {props.state.btime}.00, {props.state.numberOfGuests} personer<br /><br />
                     För avbokning vänligen kontakta oss via telefon eller email.<br />
                     070-000 00 00, FoodFusion@FoodFusion.com.
-
+                          </div> 
+                        : <div className="fetchError">Oj! Något gick fel, vänligen prova igen eller kontakta oss per telefon.</div>
+                    }
+               
                     <button className="nextButton" 
                             onClick={props.changeBokingStep} 
                             value={"1"}>
@@ -105,7 +130,9 @@ function Calendar(props) {
             : (<React.Fragment />)}
 
         </React.Fragment>
+
     );
+
 
 }
 
