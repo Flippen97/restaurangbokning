@@ -31,36 +31,39 @@ function Calendar(props) {
                 <div className="bookSection">
              
                 {props.state.fetchCalendarError ? <div className="fetchError">
-                    Misslyckades med att hämta kalenderdata.<br />
+                    Någonting gick fel.<br />
                     Vänligen uppdatera sidan och prova igen.
                 </div> : '' }
              
-                <h3>Välj ett datum:</h3>
-                <div className="divideSpace">
-                <DayPicker 
-                    onDayClick={props.onDayClick}
-                    selectedDays={props.state.selectedDate}
-//                    initialMonth={new Date(2018, 7)}
-                    month={new Date(2018, 8)}
-                    fromMonth={new Date(2018, 8)}
-                    toMonth={new Date(2018, 11)}
-                    disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
+                {!props.state.fetchCalendarError ? <div> <h3>Välj ett datum:</h3>
+                        <div className="divideSpace">
+                        <DayPicker 
+                            onDayClick={props.onDayClick}
+                            selectedDays={props.state.selectedDate}
+        //                    initialMonth={new Date(2018, 7)}
+                            month={new Date(2018, 8)}
+                            fromMonth={new Date(2018, 8)}
+                            toMonth={new Date(2018, 11)}
+                            disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
 
-//
-//                disabledDays={[  {
-//                                after: new Date(2018, 8, 1),
-//                                    before: new Date(2018, 8, 3),
-//                                },
-//                              props.state.disabledDates.map((date) => new Date(date)) 
-//                            ]}
+        //
+        //                disabledDays={[  {
+        //                                after: new Date(2018, 8, 1),
+        //                                    before: new Date(2018, 8, 3),
+        //                                },
+        //                              props.state.disabledDates.map((date) => new Date(date)) 
+        //                            ]}
 
-                />
-                <span className="chosenDate">Valt datum: <br />{formateDate}</span>
-                </div>
-                <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === '' || props.state.fetchCalendarError} value={"2"}>Nästa</button>
-                </div>) 
+                        />
+                        <span className="chosenDate">Valt datum: <br />{formateDate}</span>
+                        </div>
+                        <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === '' || props.state.fetchCalendarError} value={"2"}>Nästa</button>
+{/*                        </div>) */ }
+                            </div>
 
-                : (<React.Fragment />)}
+                        : (<React.Fragment />)}
+                           
+                </div>) : '' }
                    
             {props.state.bookingStep === "2" ? (
                 <div className="bookSection">

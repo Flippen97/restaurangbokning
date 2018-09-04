@@ -201,7 +201,7 @@ class Book extends React.Component {
     }
   
     componentDidMount = () => {
-        fetch("https://www.idabergstrom.se/restaurant-api/fetchAllaa.php")
+        fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
         .then((response) => response.json())
         .then((data) => { 
             this.setState({ allBookings: data }, () => {
