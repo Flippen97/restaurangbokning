@@ -22,37 +22,49 @@ function Calendar(props) {
         { value: '5', label: '5' },
         { value: '6', label: '6' }
       ];
+    
     return (
         <React.Fragment>
         
             
-            {props.state.bookingStep === "1" ? (
+            {(props.state.bookingStep === "1") ? (
                 <div className="bookSection">
-                <h3>Välj ett datum:</h3>
-                <div className="divideSpace">
-                <DayPicker 
-                    onDayClick={props.onDayClick}
-                    selectedDays={props.selectedDate}
-//                    initialMonth={new Date(2018, 7)}
-                    month={new Date()}
-                    toMonth={new Date(2018, 11)}
-                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+             
+                {props.state.fetchCalendarError ? <div className="fetchError">
+                    Någonting gick fel.<br />
+                    Vänligen uppdatera sidan och prova igen.
+                </div> : '' }
+             
+                {!props.state.fetchCalendarError ? <div> <h3>Välj ett datum:</h3>
+                        <div className="divideSpace">
+                        <DayPicker 
+                            onDayClick={props.onDayClick}
+                            selectedDays={props.state.selectedDate}
+        //                    initialMonth={new Date(2018, 7)}
+                            month={new Date(2018, 8)}
+                            fromMonth={new Date(2018, 8)}
+                            toMonth={new Date(2018, 11)}
+                            disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
 
+        //
+        //                disabledDays={[  {
+        //                                after: new Date(2018, 8, 1),
+        //                                    before: new Date(2018, 8, 3),
+        //                                },
+        //                              props.state.disabledDates.map((date) => new Date(date)) 
+        //                            ]}
 
-//                disabledDays={[ props.disabledDates.map((date) => new Date(date)), 
-//                              {
-////                               after: new Date(2017, 3, 20),
-//                                before: new Date(),
-//                            }, ]}
+                        />
+                        <span className="chosenDate">Valt datum: <br />{formateDate}</span>
+                        </div>
+                        <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === '' || props.state.fetchCalendarError} value={"2"}>Nästa</button>
+{/*                        </div>) */ }
+                            </div>
 
-                />
-                <span className="chosenDate">Valt datum: <br />{formateDate}</span>
-                </div>
-                <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === ''} value={"2"}>Nästa</button>
-                </div>) 
-                : (<React.Fragment />)}
-
-
+                        : (<React.Fragment />)}
+                           
+                </div>) : '' }
+                   
             {props.state.bookingStep === "2" ? (
                 <div className="bookSection">
                     <h3>Välj en sittning:</h3>
@@ -70,6 +82,7 @@ function Calendar(props) {
                     />
             {/*<FormInput name="numberOfGuests" type="text" onChange={props.onChange} />*/}
                     <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.btime === '' || props.state.numberOfGuests === ''} value={"3"}>Nästa</button>
+                   
                 </div>) 
             : (<React.Fragment />)}
             
@@ -96,7 +109,12 @@ function Calendar(props) {
 
             {props.state.bookingStep === "4" ? (
                 <div className="bookSection">
-                    Tack för din bokning {props.state.name}!!
+               
+                    { !props.state.fetchBookingError 
+                        ? <div>Tack för din bokning {props.state.name}!!</div> 
+                        : <div className="fetchError">Oj! Något gick fel, vänligen prova igen eller kontakta oss per telefon.</div>
+                    }
+               
                     <button className="nextButton" 
                             onClick={props.changeBokingStep} 
                             value={"1"}>
@@ -106,7 +124,9 @@ function Calendar(props) {
             : (<React.Fragment />)}
 
         </React.Fragment>
+
     );
+
 
 }
 

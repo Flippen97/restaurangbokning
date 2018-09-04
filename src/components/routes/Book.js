@@ -22,7 +22,9 @@ class Book extends React.Component {
     availableAt18: true,
     availableAt21: true,
     /*** How far they have come in booking ***/
-    bookingStep: "1"
+    bookingStep: "1",
+    fetchCalendarError: '',
+    fetchBookingError: ''
   }
     
   /******************************************************/
@@ -34,9 +36,13 @@ class Book extends React.Component {
         if (modifiers.disabled) {
             return;
         }
-        this.setState({ selectedDate: event})
+        
         let selectedDate = event;
-        /* Date is formatted to be compatible with disable date-function in calender: */
+        /* Saving the date in original format in selectedDate state to work with selected date-function in calendar: */
+        this.setState({ selectedDate: event})
+//        this.setState({ selectedDate: selectedDate})
+        
+        /* But date is also formatted and saved to also be compatible with disable date-function in calendar: */
         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
          this.setState({ bdate: selectedDate }, () => {
@@ -67,6 +73,7 @@ class Book extends React.Component {
             this.setState({ [event.target.name] : event.target.value })
         }
     }
+    
     handleSelect = (selectedOption) => {
         this.setState({ numberOfGuests: selectedOption.value });
     }
@@ -89,15 +96,16 @@ class Book extends React.Component {
                 numberOfGuests: this.state.numberOfGuests,
             }) 
         })
-          .then(response => response.json())
-//          .then(fetched => {
-//            console.log(fetched);
-//          })
+        .then(response => response.json())
+        .then((data) => {
+            /* Removing potential old error from state */
+            this.setState({ fetchError: '' })
+        })
           .catch(error => {
-            console.log(error);
+            console.log(error.message);
+            this.setState({ fetchBookingError: error.message })
           });
     } 
-
     
     postBookingWithCustomerId = () => {
         fetch(`https://www.idabergstrom.se/restaurant-api/createWithCustomerId.php`, {
@@ -110,12 +118,14 @@ class Book extends React.Component {
                 customerId: this.state.customerId
             }) 
         })
-          .then(response => response.json())
-//          .then(fetched => {
-//            console.log(fetched);
-//          })
+        .then(response => response.json())
+        .then((data) => { 
+            /* Removing potential old error from state */
+            this.setState({ fetchBookingError: '' })
+        })
           .catch(error => {
             console.log(error);
+            this.setState({ fetchError : error.message })
           });
     } 
     
@@ -128,16 +138,19 @@ class Book extends React.Component {
     disabledDates = () => {
         let bookingsArray = this.state.allBookings;
         var counts = {};
+
         let disabledDatesArray = [];
         /* This counts how many times a specific date has occured in the bookingsArray: */
         bookingsArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 29){ // LATER ON THIS SHALL BE CHANGED TO 29!
+            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
-        this.setState({ disabledDates: disabledDatesArray }) 
+        this.setState({ disabledDates: disabledDatesArray })
+        console.log(counts);
+        console.log(disabledDatesArray);
     }
   
     isSittingAvailable = () => {
@@ -150,7 +163,7 @@ class Book extends React.Component {
         let bookingsAt21 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '21')));
         
         /* Setting different states depening on amount of booknigs (== length of array -1, because array start at zero.) */
-        /* These state are then used to toggle different style depending on whether any table is available. */
+        /* These states are then used to toggle different style depending on whether any table is available. */
         if(bookingsAt18.length >= 1){ // TEST, THESE MUST BE CHANGED TO 14 LATER ON!
             this.setState({ availableAt18: false }) 
         }
@@ -183,31 +196,26 @@ class Book extends React.Component {
                     this.postBookingWithCustomerId();
                 })
             }
-            
           })
           .catch(error => {
             console.log(error);
           });
     }
-
-//    fetchBookings = () => {
-//    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
-//      .then((response) => response.json())
-//    }
   
     componentDidMount = () => {
-//        this.fetchBookings()
         fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
         .then((response) => response.json())
         .then((data) => { 
             this.setState({ allBookings: data }, () => {
                 /* As soon as the bookings are set in state, we can proceed to calculate adjustments in booking calendar: */
                 this.disabledDates();
+                this.setState({ fetchCalendarError: '' })
             });
         })
         .catch(error => {
-          console.log(error);
-        });
+            this.setState({ fetchCalendarError : error.message })
+        }); 
+        
     }
     
   render() {
@@ -234,7 +242,7 @@ class Book extends React.Component {
         
                 <div className="bookHeader">
                     <h2>Bordsboking</h2>
-                    {timepickerText}
+        {/*                    {timepickerText} */}
                 </div>
         
                 <Calendar 
