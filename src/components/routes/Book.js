@@ -23,7 +23,8 @@ class Book extends React.Component {
     availableAt21: true,
     /*** How far they have come in booking ***/
     bookingStep: "1",
-    fetchError: ''
+    fetchCalendarError: '',
+    fetchBookingError: ''
   }
     
   /******************************************************/
@@ -96,9 +97,12 @@ class Book extends React.Component {
             }) 
         })
           .then(response => response.json())
+        .then((data) => { 
+                this.setState({ fetchError: '' })
+        })
           .catch(error => {
             console.log(error.message);
-            this.setState({ fetchError : error.message })
+            this.setState({ fetchBookingError: error.message })
           });
     } 
     
@@ -114,6 +118,9 @@ class Book extends React.Component {
             }) 
         })
           .then(response => response.json())
+        .then((data) => { 
+                this.setState({ fetchBookingError: '' })
+        })
           .catch(error => {
             console.log(error);
             this.setState({ fetchError : error.message })
@@ -194,20 +201,19 @@ class Book extends React.Component {
     }
   
     componentDidMount = () => {
-        fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
+        fetch("https://www.idabergstrom.se/restaurant-api/fetchAllaa.php")
         .then((response) => response.json())
         .then((data) => { 
             this.setState({ allBookings: data }, () => {
                 /* As soon as the bookings are set in state, we can proceed to calculate adjustments in booking calendar: */
                 this.disabledDates();
+                this.setState({ fetchCalendarError: '' })
             });
         })
         .catch(error => {
           console.log(error);
-            this.setState({ fetchError : error.message })
-        });
-        
-        this.setState({ fetchError: '' }) 
+            this.setState({ fetchCalendarError : error.message })
+        }); 
         
     }
     
