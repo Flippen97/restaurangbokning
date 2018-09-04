@@ -121,22 +121,14 @@ class App extends Component {
                     <Link to="/contact">Kontakt</Link>
                   </li>
                 </ul>
-                {/* Just a test button. Remove later: */
-                /* 
-                    <button onClick={this.deleteBooking}>Testknapp för delete</button>
-                    <button onClick={this.updateBooking}>Testknapp för uppdatering</button>
-                    <button onClick={this.searchBooking}>Testknapp för sök</button>
-
-                */}
-
-                    </nav>
+              </nav>
                 ) : (
                 <React.Fragment />
                 )}
                 
         
                 <div className="sectionContainer">
-                    {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*//*Switch is going to be like a wrapper for all the routes that we have*/}
+
                     <div className="section">
 
                     <Switch>
