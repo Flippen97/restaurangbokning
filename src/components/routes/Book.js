@@ -22,7 +22,8 @@ class Book extends React.Component {
     availableAt18: true,
     availableAt21: true,
     /*** How far they have come in booking ***/
-    bookingStep: "1"
+    bookingStep: "1",
+    fetchError: ''
   }
     
   /******************************************************/
@@ -34,9 +35,13 @@ class Book extends React.Component {
         if (modifiers.disabled) {
             return;
         }
-        this.setState({ selectedDate: event})
+        
         let selectedDate = event;
-        /* Date is formatted to be compatible with disable date-function in calender: */
+        /* Saving the date in original format in selectedDate state to work with selected date-function in calendar: */
+//        this.setState({ selectedDate: event})
+        this.setState({ selectedDate: selectedDate})
+        
+        /* But date is also formatted and saved to also be compatible with disable date-function in calendar: */
         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
          this.setState({ bdate: selectedDate }, () => {
@@ -67,6 +72,7 @@ class Book extends React.Component {
             this.setState({ [event.target.name] : event.target.value })
         }
     }
+    
     handleSelect = (selectedOption) => {
         this.setState({ numberOfGuests: selectedOption.value });
     }
@@ -90,14 +96,11 @@ class Book extends React.Component {
             }) 
         })
           .then(response => response.json())
-//          .then(fetched => {
-//            console.log(fetched);
-//          })
           .catch(error => {
-            console.log(error);
+            console.log(error.message);
+            this.setState({ fetchError : error.message })
           });
     } 
-
     
     postBookingWithCustomerId = () => {
         fetch(`https://www.idabergstrom.se/restaurant-api/createWithCustomerId.php`, {
@@ -111,11 +114,9 @@ class Book extends React.Component {
             }) 
         })
           .then(response => response.json())
-//          .then(fetched => {
-//            console.log(fetched);
-//          })
           .catch(error => {
             console.log(error);
+            this.setState({ fetchError : error.message })
           });
     } 
     
@@ -153,7 +154,7 @@ class Book extends React.Component {
         let bookingsAt21 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '21')));
         
         /* Setting different states depening on amount of booknigs (== length of array -1, because array start at zero.) */
-        /* These state are then used to toggle different style depending on whether any table is available. */
+        /* These states are then used to toggle different style depending on whether any table is available. */
         if(bookingsAt18.length >= 1){ // TEST, THESE MUST BE CHANGED TO 14 LATER ON!
             this.setState({ availableAt18: false }) 
         }
@@ -186,7 +187,6 @@ class Book extends React.Component {
                     this.postBookingWithCustomerId();
                 })
             }
-            
           })
           .catch(error => {
             console.log(error);
@@ -204,7 +204,11 @@ class Book extends React.Component {
         })
         .catch(error => {
           console.log(error);
+            this.setState({ fetchError : error.message })
         });
+        
+        this.setState({ fetchError: '' }) 
+        
     }
     
   render() {
@@ -231,7 +235,7 @@ class Book extends React.Component {
         
                 <div className="bookHeader">
                     <h2>Bordsboking</h2>
-                    {timepickerText}
+        {/*                    {timepickerText} */}
                 </div>
         
                 <Calendar 
