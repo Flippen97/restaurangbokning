@@ -59,8 +59,3 @@ function Contact() {
 }
 
 export default Contact;
-
-/**
- * MY key: AIzaSyCtkvZ8dVnzdTpt6OFEHYtd-fI8Oq-hIhM
- * AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
- */

@@ -16,6 +16,3 @@ function Home(props) {
 }
 
 export default Home;
-/*
-<Link to="/book" >Boka Nu</Link>
-*/

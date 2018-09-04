@@ -1,8 +1,7 @@
 import React from 'react';
 import './../../App.css';
-import CustomerForm from './../CustomerForm';
-import FormInput from './../FormInput';
-import Calendar from './../Calendar';
+
+import BookSections from './../BookSections';
 import moment from 'moment';
     
 class Book extends React.Component {
@@ -49,6 +48,9 @@ class Book extends React.Component {
     
     changeBokingStep = (event) => {
         this.setState({ bookingStep: event.target.value}) 
+        if(event.target.value === "1"){
+            this.setState({name: '', email: '', telephone: '', bdate: '', btime: '', numberOfGuests: '', customerId: ''})
+        }
     }
     
     setTime = (event) => {
@@ -68,7 +70,7 @@ class Book extends React.Component {
             } 
         }else if(event.target.name === 'name'){
             /* check if string only contains letters  */
-            if( event.target.value.search(/[^a-zA-Z]+/) === -1){
+            if( event.target.value.search(/[^a-öA-Ö]\s+/) === -1){
                 this.setState({ [event.target.name] : event.target.value })
             }else{
                 this.setState({ [event.target.name] : 'error' })
@@ -110,7 +112,7 @@ class Book extends React.Component {
         .then(response => response.json())
         .then((data) => {
             /* Removing potential old error from state */
-            this.setState({ fetchError: '' })
+            this.setState({ fetchError: ''})
         })
         .catch(error => {
             this.setState({ fetchBookingError: error.message })
@@ -245,7 +247,7 @@ class Book extends React.Component {
                     {timepickerText}
                 </div>
         
-                <Calendar 
+                <BookSections 
                     onDayClick={this.onDayClick} 
                     setTime={this.setTime} 
                     setTables={this.setTables}
