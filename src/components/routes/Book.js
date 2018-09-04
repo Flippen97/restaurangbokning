@@ -243,9 +243,9 @@ class Book extends React.Component {
     if(this.state.bookingStep === "1"){
         timepickerText = `Välkommen till våran bordsbokning! Var god välj ett datum i kalendern. Tryck sedan "nästa" för att gå vidare.`
     }else if(this.state.bookingStep === "2"){
-        timepickerText = `Välj en sittning. Du kan välja mellan kl 18 och kl 21 Fyll sedan i hur många ni är. Tryck sedan nästa för att gå vidare.`
+        timepickerText = `Välj sittning och hur många ni är i sällskapet (maxantal per bord är 6 personer). Tryck sedan "nästa" för att gå vidare.`
     }else if(this.state.bookingStep === "3"){
-        timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret till höger.`
+        timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret nedan.`
     }
 
     
