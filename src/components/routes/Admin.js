@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import "./../../App.css";
-import DayPicker from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-//import CalendarInputDayPicker from "./CalendarInputDayPicker";
+
+import moment from "moment";
 
 class Admin extends Component {
   constructor(props) {
     super(props);
-    this.upvote = this.upvote.bind(this);
+
     this.handleDayChangeUpdate = this.handleDayChangeUpdate.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
+    this.onDayClick = this.onDayClick.bind(this);
+
     this.state = {
       /*** Booking: ***/
       allBookings: [],
@@ -26,42 +28,22 @@ class Admin extends Component {
       selectedDay: undefined,
       isEmpty: true,
       isDisabled: false,
-      // index: undefined,
-      disabledDates: [
-        /*         new Date(
-          "Tue Sep 14 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
-        ),
-        new Date(
-          "Tue Sep 15 2018 12:00:00 GMT+0200 (centraleuropeisk sommartid)"
-        ), */
-        new Date("2018-09-1"),
-        new Date("2018-09-2"),
-        new Date("2018-09-3")
-      ],
 
-      /*   availableAt18: true,
-      availableAt21: true, */
+      /*** Booking: ***/
+      //bdate is today - booknings day
+      bdate: "",
+      availableAt18: true,
+      availableAt21: true,
+      disabledDates: [],
 
-      //isNewBookingAdded: false
       isAddNewGuestFormVisible: false,
       isEditFieldVisible: false,
 
-      //search by phone
-      telephone: "",
-
-      //test
-      testBool: false,
-      testArray: [],
       indexFromEditButton: ""
     };
 
     this.clickHandlerUpdateBooking = this.clickHandlerUpdateBooking.bind(this);
-
     this.onClickDeleteHandler = this.onClickDeleteHandler.bind(this);
-
-    this.onSearchInputSubmit = this.onSearchInputSubmit.bind(this);
-
-    //this.getDisabledDates = this.getDisabledDates.bind(this);
   }
 
   fetchAllBookings = () => {
@@ -69,37 +51,53 @@ class Admin extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ allBookings: data });
+        this.disabledDates();
       });
+  };
+
+  disabledDates = () => {
+    let bookingsArray = this.state.allBookings;
+    var counts = {};
+    let disabledDatesArray = [];
+    /* This counts how many times a specific date has occured in the bookingsArray: */
+    bookingsArray.forEach(function(x) {
+      counts[x.bdate] = (counts[x.bdate] || 0) + 1;
+    });
+    /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
+    for (var key in counts) {
+      if (counts[key] >= 30) {
+        disabledDatesArray.push(key);
+      }
+    }
+    this.setState({ disabledDates: disabledDatesArray });
+  };
+
+  isSittingAvailable = () => {
+    let selectedDate = this.state.bdate;
+    let bookingsArray = this.state.allBookings;
+    const bookingsAt18 = bookingsArray.filter(
+      day => new Date(day.bdate).getTime() === new Date(selectedDate).getTime()
+    );
+    const bookingsAt21 = bookingsArray.filter(
+      day => day.bdate === selectedDate && day.btime === "21"
+    );
+    /* There are 15 tables, but we have to count with 14 here because of how array works: */
+    if (bookingsAt18.length >= 15) {
+      this.setState({ availableAt18: false });
+    }
+    if (bookingsAt21.length >= 15) {
+      this.setState({ availableAt21: false });
+    }
   };
 
   componentDidMount() {
     this.fetchAllBookings();
-    /*     fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ allBookings: data });
-      }); */
-    /*     if (this.state.allBookings.length > 0) {
-      console.log("owej");
-      let disabledDays = this.getDisabledDates();
-      console.log(this.getDisabledDates());
-      disabledDays = [...this.state.disabledDates];
-      this.setState({ disabledDates: disabledDays });
-      console.log(this.state.disabledDates);
-    } */
     if (this.state.allBookings.length) {
-      this.state.allBookings.map((item, index) =>
-        this.updateDisabledDates(new Date(item.bdate))
-      );
+      this.state.allBookings.map((item, index) => this.disabledDates());
     }
-  }
-  upvote(e) {
-    e.preventDefault();
-    return false;
   }
 
   onInputChange(eventTargetName, newValue, index) {
-    //console.log("Event name: " + eventTargetName);
     let newBookings = this.state.allBookings; // create the copy of state array
     switch (eventTargetName) {
       case "name":
@@ -227,17 +225,14 @@ class Admin extends Component {
       item.numberOfGuests
     );
 
-    this.fetchAllBookings();
+    //this.fetchAllBookings();
+    this.setState({ isEditFieldVisible: false });
   };
 
   handleDayChange(selectedDay, modifiers, dayPickerInput) {
     const input = dayPickerInput.getInput();
-
-    // console.log(selectedDay);
-
     const updateNewBooking = {
       bdate: input.value
-      //bdate: selectedDay
     };
 
     const updatedBooking = Object.assign(
@@ -250,31 +245,16 @@ class Admin extends Component {
       isEmpty: !input.value.trim(),
       isDisabled: modifiers.disabled === true
     });
+
+    this.onDayClick();
   }
 
   handleDayChangeUpdate(selectedDay, modifiers, dayPickerInput) {
-    //console.log(index);
-    //let inp = dayPickerInput.getInput();
-    //console.log(inp.name);
-    //console.log(this.state.allBookings);
-
     let newBookings = this.state.allBookings; // create the copy of state array
     const input = dayPickerInput.getInput();
     let index = input.name;
 
     newBookings[index].bdate = input.value;
-
-    // console.log(selectedDay);
-
-    /*     const updateNewBooking = {
-      bdate: input.value
-      //bdate: selectedDay
-    };
-
-    const updatedBooking = Object.assign(
-      this.state.newBooking,
-      updateNewBooking
-    ); */
 
     this.setState({
       //   newBooking: updatedBooking,
@@ -283,205 +263,38 @@ class Admin extends Component {
       isEmpty: !input.value.trim(),
       isDisabled: modifiers.disabled === true
     });
-    /*  console.log(this.state.index);
-    console.log(index); */
+
+    this.onDayClick();
   }
 
-  allreadyCustomer = () => {
-    fetch(
-      "https://www.idabergstrom.se/restaurant-api/fetchOneWithTelephone.php",
-      {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify({
-          telephone: this.state.telephone
-        })
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        this.setState(
-          {
-            customerId: data[0].id
-          },
-          () => {
-            this.postBookingWithCustomerId();
-          }
-        );
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  postBookingWithCustomerId() {
-    console.log("got the customers");
-  }
-
-  onSearchInputSubmit(e) {
-    console.log("Hej" + e);
-  }
-
-  getDisabledDates(bookingDate) {
-    let disabledDates = [];
-    // let bookingDate = "2018-9-25";
-    let totalBookedTablesForDate = this.state.allBookings.filter(
-      //let unifiedDate = new Date("2018, 08, 25");
-      item =>
-        (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-          item.btime === "18") ||
-        (new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-          item.btime === "21")
-    );
-
-    let totalBookedTablesForDateAt18 = totalBookedTablesForDate.filter(
-      item =>
-        new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-        item.btime === "18"
-    );
-    console.log(
-      bookingDate +
-        " Booked at 18.00:  " +
-        totalBookedTablesForDateAt18.length +
-        " tables"
-    );
-
-    let totalBookedTablesForDateAt21 = totalBookedTablesForDate.filter(
-      item =>
-        new Date(item.bdate).getTime() === new Date(bookingDate).getTime() &&
-        item.btime === "21"
-    );
-
-    console.log(
-      bookingDate +
-        " Booked at 21.00: " +
-        totalBookedTablesForDateAt21.length +
-        " tables"
-      //new Date("2018-9-8").getTime()
-    );
-
-    //if(item.btime === 18 && (item.bdate === "2018-10-16")
-    if (totalBookedTablesForDate.length >= 1) {
-      disabledDates.push(bookingDate);
-      console.log(totalBookedTablesForDate);
-      console.log(disabledDates);
+  onDayClick = (event, modifiers = {}) => {
+    if (modifiers.disabled) {
+      return;
     }
-    /*       console.log(this.state.selectedDay);
-      console.log(new Date(bookingDate));
-      if (this.state.selectedDay === new Date(bookingDate)) {
-        console.log("compared selected day with given date");
-      } */
 
-    //return disabledDates;
+    this.setState({ selectedDate: event });
+    let selectedDate = event;
+    /* Date is formatted to be compatible with disable date-function in calender: */
+    selectedDate = moment(selectedDate).format("YYYY[-]MM[-]DD");
 
-    //console.log("owej");
-    //let newDisabledDays = this.getDisabledDates("2018-9-25");
-    console.log("Disabled Days returned with method : " + disabledDates);
-    let disabledDays = [...this.state.disabledDates, ...disabledDates];
-    console.log("Disabled Days array with spread  operator : " + disabledDays);
-    //this.setState({ disabledDates: disabledDays });
-
-    /*   let d = new Date(
-      "Sat Sep 01 2018 00:00:00 GMT+0200 (centraleuropeisk sommartid)"
-    ).getTime();
-    // let d = "Sat Sep 01 2018 00:00:00 GMT+0200 (centraleuropeisk sommartid)";
-    //let c = d.getTime();
-    let w = new Date("2018-1-9").getTime();
-    console.log("d: " + d);
-    console.log("w: " + w); */
-    return disabledDays;
-  }
-
-  updateDisabledDates(date) {
-    if (this.state.allBookings.length) {
-      /*       console.log("owej");
-    let newDisabledDays = this.getDisabledDates("2018-9-25");
-    console.log("Disabled Days returned with method : " + newDisabledDays);
-    let disabledDays = [...this.state.disabledDates, newDisabledDays]; */
-      /*         if(this.state.disabledDates){
-          
-      } */
-      //this.setState({ disabledDates: disabledDays });
-
-      /*       if (disabledDays.includes("2018-8-25")) {
-        console.log("Disabled Days in state: " + this.state.disabledDates);
-        this.setState({ disabledDates: disabledDays }); //inf loop!
-        console.log(
-          "Updated Disabled Days in state: " + this.state.disabledDates
-        );
-      } */
-
-      let disabledDays = this.getDisabledDates(date); //method generates  infinite loop
-      if (!disabledDays.includes(date)) {
-        console.log("Disabled Days in state: " + this.state.disabledDates);
-        let updatedDisableDatesArray = [...this.state.disabledDates, date];
-        this.setState({ disabledDates: updatedDisableDatesArray }); //inf loop!
-        console.log(
-          "Updated Disabled Days in state: " + this.state.disabledDates
-        );
-      }
-
-      /*       let size = disabledDays.filter(function(value) {
-        return value === "2018-8-25";
-      }).length;
-      console.log("Disabled Days in array: " + disabledDays);
-      console.log("Size: " + size); */
-
-      /*      if (size === 0) {
-        console.log("Disabled Days in state: " + this.state.disabledDates);
-        this.setState({ disabledDates: disabledDays }); //inf loop!
-        console.log(
-          "Updated Disabled Days in state: " + this.state.disabledDates
-        );
-      } */
-    }
-  }
-
-  test = () => {
-    this.setState({ testBool: true });
-    console.log("Testing state testBool: " + this.state.testBool);
+    this.setState({ bdate: selectedDate }, () => {
+      /* If a date is selected, we need to check which times are available on that date, 
+               so we are running another function to check that: isSittingAvailable() */
+      this.isSittingAvailable();
+    });
   };
-
-  /*   updateAllDisabledDates = this.state.allBookings.map((item, index) =>
-    this.updateDisabledDates(item.bdate)
-  ); */
 
   render() {
     if (!this.state.allBookings) {
       return <div>Loading...</div>;
     }
-    //this.updateDisabledDates();
 
-    //this.test();
-
-    // console.log("this.state.allBookings" + this.state.allBookings);
     const { selectedDay, isDisabled, isEmpty } = this.state;
     const { disabledDates } = this.state;
     const { isAddNewGuestFormVisible } = this.state;
     const { isEditFieldVisible } = this.state;
     const { indexFromEditButton } = this.state;
-    //console.log(indexFromEditButton);
-
-    let searchCustomer = (
-      <div>
-        <form>
-          <label htmlFor="searchCustomer">
-            <input name="searchCustomer" placeholder="Enter telephone" />
-          </label>
-          <input
-            className="SearchByPhone"
-            type="submit"
-            value="Submit"
-            /*             onClick={() => {
-              console.log("hej!");
-              console.log("ho!");
-              this.upvote.bind(this);
-            }} */
-            onSubmit={event => this.onSearchInputSubmit().bind(this)}
-          />
-        </form>
-      </div>
-    );
+    const { availableAt18, availableAt21 } = this.state;
 
     let list = this.state.allBookings.map((item, index) => (
       <tr key={item.bid}>
@@ -558,9 +371,14 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          {isEditFieldVisible && indexFromEditButton === index ? (
-            <div>
-              <form action="">
+          <div>
+            {isEditFieldVisible && indexFromEditButton === index ? null : (
+              <div>{item.btime}</div>
+            )}
+            {isEditFieldVisible &&
+            availableAt18 &&
+            indexFromEditButton === index ? (
+              <div>
                 <input
                   type="radio"
                   value="18"
@@ -574,6 +392,12 @@ class Admin extends Component {
                   }
                 />
                 18.00
+              </div>
+            ) : null}
+            {isEditFieldVisible &&
+            availableAt21 &&
+            indexFromEditButton === index ? (
+              <div>
                 <input
                   type="radio"
                   value="21"
@@ -587,11 +411,9 @@ class Admin extends Component {
                   }
                 />
                 21.00
-              </form>
-            </div>
-          ) : (
-            <div>{item.btime}</div>
-          )}
+              </div>
+            ) : null}
+          </div>
         </td>
         <td>
           {isEditFieldVisible && indexFromEditButton === index ? (
@@ -602,7 +424,11 @@ class Admin extends Component {
                 this.onInputChange(event.target.name, event.target.value, index)
               }
             >
-              <option value={item.numberOfGuests}>{item.numberOfGuests}</option>
+              {
+                <option value={item.numberOfGuests}>
+                  {item.numberOfGuests}
+                </option>
+              }
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -615,16 +441,15 @@ class Admin extends Component {
           )}
         </td>
         <td>
-          <button>
-            <i
-              onClick={e =>
-                this.setState({
-                  isEditFieldVisible: !this.state.isEditFieldVisible,
-                  indexFromEditButton: index
-                })
-              }
-              className="fas fa-pencil-alt"
-            />
+          <button
+            onClick={e =>
+              this.setState({
+                isEditFieldVisible: !this.state.isEditFieldVisible,
+                indexFromEditButton: index
+              })
+            }
+          >
+            <i className="fas fa-pencil-alt" />
           </button>
         </td>
         <td>
@@ -636,11 +461,8 @@ class Admin extends Component {
           </button>
         </td>
         <td>
-          <button>
-            <i
-              onClick={this.onClickDeleteHandler.bind(this, item.bid)}
-              className="fas fa-times"
-            />
+          <button onClick={this.onClickDeleteHandler.bind(this, item.bid)}>
+            <i className="fas fa-times" />
           </button>
         </td>
       </tr>
@@ -649,10 +471,9 @@ class Admin extends Component {
     return (
       <React.Fragment>
         <div className="adminPanel">
-          <h1>{this.props.header}</h1>
-          <h2>Find customer</h2>
-          {searchCustomer}
-          <h2>List of bookings: </h2>
+          <h2>Admin Panel</h2>
+
+          <h3 className="subheader">List of bookings: </h3>
           <table className="tableListABooking">
             <thead>
               <tr>
@@ -671,15 +492,16 @@ class Admin extends Component {
           <div className="newGuestInfoInput">
             <h2>
               Add Guest: &nbsp;{" "}
-              <i
+              <button
                 onClick={() =>
                   this.setState({
                     isAddNewGuestFormVisible: !this.state
                       .isAddNewGuestFormVisible
                   })
                 }
-                className="fas fa-plus-circle"
-              />
+              >
+                <i className="fas fa-plus-circle" />
+              </button>
             </h2>
             {isAddNewGuestFormVisible ? (
               <form>
@@ -733,24 +555,37 @@ class Admin extends Component {
                   </li>
                   <li>
                     <h3>Time</h3>
-                    <input
-                      type="radio"
-                      value="18"
-                      name="btime"
-                      onChange={event => this.onCreateNewGuestInputInfo(event)}
-                    />
-                    18.00
-                    <input
-                      type="radio"
-                      value="21"
-                      name="btime"
-                      onChange={event => this.onCreateNewGuestInputInfo(event)}
-                    />
-                    21.00
+                    {availableAt21 ? (
+                      <div>
+                        <input
+                          type="radio"
+                          value="18"
+                          name="btime"
+                          onChange={event =>
+                            this.onCreateNewGuestInputInfo(event)
+                          }
+                        />
+                        18.00
+                      </div>
+                    ) : null}
+                    {availableAt21 ? (
+                      <div>
+                        <input
+                          type="radio"
+                          value="21"
+                          name="btime"
+                          onChange={event =>
+                            this.onCreateNewGuestInputInfo(event)
+                          }
+                        />
+                        21.00
+                      </div>
+                    ) : null}
                   </li>
                   <li>
                     <h3>Number Of Guests</h3>
                     <select
+                      className="selectNumberOfGuests"
                       name="numberOfGuests"
                       onChange={event => this.onCreateNewGuestInputInfo(event)}
                     >
@@ -767,7 +602,6 @@ class Admin extends Component {
               </form>
             ) : null}
           </div>
-          <button onClick={e => this.updateDisabledDates()}>Test</button>
         </div>
       </React.Fragment>
     );
