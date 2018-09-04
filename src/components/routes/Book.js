@@ -147,7 +147,7 @@ class Book extends React.Component {
         bookingsArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 30!
+            if(counts[key] >= 30){
                 disabledDatesArray.push(key);
             }
         }
@@ -167,10 +167,10 @@ class Book extends React.Component {
         
         /* Setting different states depening on amount of booknigs */
         /* These states are then used to toggle different style depending on whether any table is available. */
-        if(bookingsAt18.length >= 1){ // TEST, THESE MUST BE CHANGED TO 15 LATER ON!
+        if(bookingsAt18.length >= 15){
             this.setState({ availableAt18: false }) 
         }
-        if(bookingsAt21.length >= 1){ // TEST, THESE MUST BE CHANGED TO 15 LATER ON!
+        if(bookingsAt21.length >= 15){
             this.setState({ availableAt21: false }) 
         }
     }
