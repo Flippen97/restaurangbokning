@@ -192,14 +192,8 @@ class Book extends React.Component {
             console.log(error);
           });
     }
-
-//    fetchBookings = () => {
-//    return fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
-//      .then((response) => response.json())
-//    }
   
     componentDidMount = () => {
-//        this.fetchBookings()
         fetch("https://www.idabergstrom.se/restaurant-api/fetchAll.php")
         .then((response) => response.json())
         .then((data) => { 

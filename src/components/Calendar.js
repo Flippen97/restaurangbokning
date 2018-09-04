@@ -33,7 +33,7 @@ function Calendar(props) {
                 <DayPicker 
                     onDayClick={props.onDayClick}
                     selectedDays={props.state.selectedDate}
-                    initialMonth={new Date(2018, 7)}
+//                    initialMonth={new Date(2018, 7)}
                     month={new Date(2018, 8)}
                     fromMonth={new Date(2018, 8)}
                     toMonth={new Date(2018, 11)}
