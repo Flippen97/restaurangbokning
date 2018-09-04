@@ -4,13 +4,24 @@ import DayPicker from 'react-day-picker';
 import FormInput from './FormInput';
 import 'react-day-picker/lib/style.css';
 import CustomerForm from './CustomerForm';
+import Select from 'react-select';
 
-    
+
+
 function Calendar(props) {
     if(props.state.bdate !== ''){
     var formate = props.state.bdate.split(", ");
     var formateDate = formate[2]+"-"+formate[1]+"-"+formate[0]
     }
+    const { selectedOption } = props.state.numberOfGuests;
+    const options = [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5', label: '5' },
+        { value: '6', label: '6' }
+      ];
     return (
         <React.Fragment>
         
@@ -40,14 +51,13 @@ function Calendar(props) {
                         {props.state.availableAt21 ? <label className="radio inline"><input type="radio" onClick={props.setTime} data-btime="21" name="time" /><span>21:00</span></label>: <React.Fragment />}
                     </form>
                     Antal personer: <br />
-                    <select id="single" name="numberOfGuests" onChange={props.onChange}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
+                    <Select
+                        className={"selectMenu"}
+                        placeholder="Antal personer"
+                        value={selectedOption}
+                        onChange={props.onChangeSelect}
+                        options={options}
+                    />
             {/*<FormInput name="numberOfGuests" type="text" onChange={props.onChange} />*/}
                     <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.btime === '' || props.state.numberOfGuests === ''} value={"3"}>Nästa</button>
                 </div>) 
@@ -59,7 +69,7 @@ function Calendar(props) {
                     <h3>Bokat tidigare? V.g. fyll i telefonnummer: </h3>
                     <FormInput onChange={props.onChange} name="telephone" type="text"/>
                     {props.state.telephone === 'error' ? <span className="error">Telefonnumret finns inte i vår databas</span> : ""}
-                    <button className="nextButton" onClick={props.allreadyCustomer}> Boka! </button>
+                    <button className="nextButton" onClick={(event)=>{props.allreadyCustomer(); props.changeBokingStep(event);}} disabled={props.state.telephone === ''} value={"4"}> Boka! </button>
 
                     <h3>Dina uppgifter:</h3>
                     <CustomerForm onChange={props.onChange}/>

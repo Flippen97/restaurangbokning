@@ -19,6 +19,7 @@ import Admin from './components/routes/Admin'
 
 
 
+
 class App extends Component {
     state = {
         toggleNav: false,
@@ -191,7 +192,7 @@ class App extends Component {
                 <div className="sectionContainer">
                     {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*/}
                     <div className="section">
-                        <Route exact path="/" render={(props) => <Home {...props} bookNow={this.bookNow} />}/>
+                        <Route exact path="/" render={(props) => <Home {...props} link={<button><Link to="/book" className="bookNowButton" onClick={this.bookNow}>Boka Nu</Link></button>} />}/>
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>

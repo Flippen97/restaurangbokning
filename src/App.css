@@ -127,7 +127,10 @@ li a:hover {
     background-color:lightgray;
     cursor: pointer;
 }
-        
+.bookNowButton{
+    color: #000;
+    text-decoration: none;
+}
 /******************************/
 /*********** Menu *************/
 /******************************/
@@ -303,7 +306,7 @@ input[type=submit]:hover:enabled,
     margin-bottom: 10px;
 }
 .radio{
-    color:#999;
+    color: #242424;
     position:relative;
     margin-left: 4px;
   }
@@ -344,6 +347,19 @@ input[type=submit]:hover:enabled,
     left:5px;
     top:6px;
     border-radius:100%;
+}
+.selectMenu .css-2o5izw,
+.selectMenu .css-2o5izw:hover{
+    border-color: #c59d5f;
+    box-shadow: 0 0 0 1px #c59d5f;
+}
+.selectMenu .css-wqgs6e {
+    background-color: #c59d5f;
+}
+.selectMenu .css-z5z6cw,
+.selectMenu .css-z5z6cw:active,
+.selectMenu .css-wqgs6e:active {
+    background-color: #8d6f41 ;
 }
 /******************************/
 /********** Contact ***********/

@@ -28,7 +28,7 @@ class Book extends React.Component {
     availableAt18: true,
     availableAt21: true,
     /*** How far they have come in booking ***/
-    bookingStep: "1",
+    bookingStep: "4",
 
 
   }
@@ -72,6 +72,9 @@ class Book extends React.Component {
         }else{
             this.setState({ [event.target.name] : event.target.value })
         }
+    }
+    handleSelect = (selectedOption) => {
+        this.setState({ numberOfGuests: selectedOption.value });
     }
     
     validateEmail(emailToValidate){
@@ -252,6 +255,7 @@ class Book extends React.Component {
                     changeBokingStep={this.changeBokingStep}
                     setNumberOfGuests={this.setNumberOfGuests}
                     onChange={this.handleChange}
+                    onChangeSelect={this.handleSelect}
                     postBooking={this.postBooking}
                     allreadyCustomer={this.allreadyCustomer}
                 />
