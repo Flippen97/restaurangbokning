@@ -39,8 +39,8 @@ class Book extends React.Component {
         
         let selectedDate = event;
         /* Saving the date in original format in selectedDate state to work with selected date-function in calendar: */
-//        this.setState({ selectedDate: event})
-        this.setState({ selectedDate: selectedDate})
+        this.setState({ selectedDate: event})
+//        this.setState({ selectedDate: selectedDate})
         
         /* But date is also formatted and saved to also be compatible with disable date-function in calendar: */
         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
@@ -96,9 +96,10 @@ class Book extends React.Component {
                 numberOfGuests: this.state.numberOfGuests,
             }) 
         })
-          .then(response => response.json())
-        .then((data) => { 
-                this.setState({ fetchError: '' })
+        .then(response => response.json())
+        .then((data) => {
+            /* Removing potential old error from state */
+            this.setState({ fetchError: '' })
         })
           .catch(error => {
             console.log(error.message);
@@ -117,9 +118,10 @@ class Book extends React.Component {
                 customerId: this.state.customerId
             }) 
         })
-          .then(response => response.json())
+        .then(response => response.json())
         .then((data) => { 
-                this.setState({ fetchBookingError: '' })
+            /* Removing potential old error from state */
+            this.setState({ fetchBookingError: '' })
         })
           .catch(error => {
             console.log(error);
@@ -211,7 +213,6 @@ class Book extends React.Component {
             });
         })
         .catch(error => {
-          console.log(error);
             this.setState({ fetchCalendarError : error.message })
         }); 
         
