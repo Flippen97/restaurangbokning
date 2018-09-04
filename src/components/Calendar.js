@@ -32,18 +32,21 @@ function Calendar(props) {
                 <div className="divideSpace">
                 <DayPicker 
                     onDayClick={props.onDayClick}
-                    selectedDays={props.selectedDate}
-//                    initialMonth={new Date(2018, 7)}
-                    month={new Date()}
+                    selectedDays={props.state.selectedDate}
+                    initialMonth={new Date(2018, 7)}
+                    month={new Date(2018, 8)}
+                    fromMonth={new Date(2018, 8)}
                     toMonth={new Date(2018, 11)}
-//                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+                    disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
 
 
-                disabledDays={[ props.disabledDates.map((date) => new Date(date)), 
-                              {
-                               after: new Date(2018, 10, 20),
-                                before: new Date(),
-                            }, ]}
+//                disabledDays={[ 
+//                              props.state.disabledDates.map((date) => new Date(date)), 
+//                              {
+//                               after: new Date(2018, 10, 20),
+//                                before: new Date(),
+//                              }
+//                              , ]}
 
                 />
                 <span className="chosenDate">Valt datum: <br />{formateDate}</span>

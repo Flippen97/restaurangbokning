@@ -128,16 +128,19 @@ class Book extends React.Component {
     disabledDates = () => {
         let bookingsArray = this.state.allBookings;
         var counts = {};
+
         let disabledDatesArray = [];
         /* This counts how many times a specific date has occured in the bookingsArray: */
         bookingsArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 29){ // LATER ON THIS SHALL BE CHANGED TO 29!
+            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
-        this.setState({ disabledDates: disabledDatesArray }) 
+        this.setState({ disabledDates: disabledDatesArray })
+        console.log(counts);
+        console.log(disabledDatesArray);
     }
   
     isSittingAvailable = () => {
