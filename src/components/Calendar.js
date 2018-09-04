@@ -11,7 +11,7 @@ import Select from 'react-select';
 function Calendar(props) {
     if(props.state.bdate !== ''){
     var formate = props.state.bdate.split(", ");
-    var formateDate = formate[2]+"-"+formate[1]+"-"+formate[0]
+    var formateDate = formate[0]+"-"+formate[1]+"-"+formate[2]
     }
     const { selectedOption } = props.state.numberOfGuests;
     const options = [
@@ -64,7 +64,6 @@ function Calendar(props) {
                         : (<React.Fragment />)}
                            
                 </div>) : '' }
-                   
             {props.state.bookingStep === "2" ? (
                 <div className="bookSection">
                     <h3>Välj en sittning:</h3>
@@ -80,7 +79,7 @@ function Calendar(props) {
                         onChange={props.onChangeSelect}
                         options={options}
                     />
-            {/*<FormInput name="numberOfGuests" type="text" onChange={props.onChange} />*/}
+
                     <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.btime === '' || props.state.numberOfGuests === ''} value={"3"}>Nästa</button>
                    
                 </div>) 
@@ -91,14 +90,16 @@ function Calendar(props) {
                 <div className="bookSection">
                     <h3>Bokat tidigare? V.g. fyll i telefonnummer: </h3>
                     <FormInput onChange={props.onChange} name="telephone" type="text"/>
-                    {props.state.telephone === 'error' ? <span className="error">Telefonnumret finns inte i vår databas</span> : ""}
-                    <button className="nextButton" onClick={(event)=>{props.allreadyCustomer(); props.changeBokingStep(event);}} disabled={props.state.telephone === ''} value={"4"}> Boka! </button>
+                    {props.state.telephone === 'error' && props.state.name === '' ? <span className="error">Telefonnumret finns inte i vår databas</span> : ""}
+                    <button className="nextButton" onClick={(event)=>{ props.changeBokingStep(event);}} disabled={props.state.telephone === '' || props.state.name !== ''} value={"4"}> Boka! </button>
 
                     <h3>Dina uppgifter:</h3>
-                    <CustomerForm onChange={props.onChange}/>
+                    <CustomerForm onChange={props.onChange} state={props.state}/>
                     <button className="nextButton" 
                             onClick={(event)=>{props.postBooking(); props.changeBokingStep(event);}} 
-                            value={"4"}>
+                            value={"4"}
+                            disabled={props.state.telephone === '' || props.state.telephone === 'error' || props.state.name === '' || props.state.name === 'error' || props.state.email === '' || props.state.email === 'error'}
+                            >
                         BOKA NU!!
                     </button>
 
@@ -111,7 +112,12 @@ function Calendar(props) {
                 <div className="bookSection">
                
                     { !props.state.fetchBookingError 
-                        ? <div>Tack för din bokning {props.state.name}!!</div> 
+                        ? <div>
+                          {props.state.name ? ` ${props.state.name}` : ""}, tack för din bokning hos oss!<br /><br />
+                    Du är varmt välkommen den {formateDate} klockan {props.state.btime}.00, {props.state.numberOfGuests} personer<br /><br />
+                    För avbokning vänligen kontakta oss via telefon eller email.<br />
+                    070-000 00 00, FoodFusion@FoodFusion.com.
+                          </div> 
                         : <div className="fetchError">Oj! Något gick fel, vänligen prova igen eller kontakta oss per telefon.</div>
                     }
                

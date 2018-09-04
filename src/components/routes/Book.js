@@ -62,12 +62,28 @@ class Book extends React.Component {
 
     /* This function sets name, email, telephone states */
     handleChange = (event) => {
-        let email = event.target.value; 
         
         /* Email only pushed to state if it's valid. If empty state, the user will not be allowed to book. */
         if(event.target.name === 'email'){
+            let email = event.target.value; 
             if(this.validateEmail(email)){
                 this.setState({ email : email })
+            }else{
+                this.setState({ email : 'error' })
+            } 
+        }else if(event.target.name === 'name'){
+            /* check if string only contains letters  */
+            if( event.target.value.search(/[^a-zA-Z]+/) === -1){
+                this.setState({ [event.target.name] : event.target.value })
+            }else{
+                this.setState({ [event.target.name] : 'error' })
+            } 
+        }else if(event.target.name === 'telephone'){
+            /* check if telephone input only contains numbers */
+            if( event.target.value.search(/[^\d+$]/) === -1){
+                this.setState({ [event.target.name] : event.target.value })
+            } else{
+                this.setState({ [event.target.name] : 'error' })
             } 
         }else{
             this.setState({ [event.target.name] : event.target.value })
@@ -84,7 +100,7 @@ class Book extends React.Component {
     }
   
     postBooking = () => {
-        fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
+       fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
@@ -241,8 +257,8 @@ class Book extends React.Component {
             <div className="bookContainer">
         
                 <div className="bookHeader">
-                    <h2>Bordsboking</h2>
-        {/*                    {timepickerText} */}
+                    <h2>Bordsbokning</h2>
+                    {timepickerText}
                 </div>
         
                 <Calendar 
@@ -256,8 +272,7 @@ class Book extends React.Component {
                     onChangeSelect={this.handleSelect}
                     postBooking={this.postBooking}
                     allreadyCustomer={this.allreadyCustomer}
-                    availableAt18={this.state.availableAt18}
-                    availableAt21={this.state.availableAt21}
+                
                 />
     
             </div>
