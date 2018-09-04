@@ -26,7 +26,7 @@
     $msg = "Tack för din bokning.";
     // use wordwrap() if lines are longer than 70 characters
     $msg = wordwrap($msg,70);
-    mail($array["email"],"Tack för din bokning.",$msg); 
+    mail($array["email"],"Food Fusion bokningsbekräftelse",$msg); 
     */
 
     echo json_encode($data, JSON_PRETTY_PRINT);

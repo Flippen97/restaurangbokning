@@ -21,14 +21,14 @@ function Calendar(props) {
 //                    initialMonth={new Date(2018, 7)}
                     month={new Date()}
                     toMonth={new Date(2018, 11)}
-                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+//                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
 
 
-//                disabledDays={[ props.disabledDates.map((date) => new Date(date)), 
-//                              {
-////                               after: new Date(2017, 3, 20),
-//                                before: new Date(),
-//                            }, ]}
+                disabledDays={[ props.disabledDates.map((date) => new Date(date)), 
+                              {
+                               after: new Date(2018, 10, 20),
+                                before: new Date(),
+                            }, ]}
 
                 />
                 <span className="chosenDate">Valt datum: {props.bdate}</span>
