@@ -19,6 +19,7 @@ import Error from './components/routes/Error';
 
 
 
+
 class App extends Component {
   state = {
     toggleNav: false,
@@ -146,8 +147,18 @@ class App extends Component {
     } else {
       this.setState({ toggleNav: false });
     }
-  };
-
+   };
+   bookNow = () =>{
+        console.log("hej")
+        this.setState({ mainStyle: "containerBook" });
+        var width = window.innerWidth;
+        if(width>1000){
+            this.setState({ toggleNav: true });
+        }else{
+            this.setState({ toggleNav: false });
+        }
+    }
+    
   render() {
     return (
       <Router>
@@ -188,15 +199,16 @@ class App extends Component {
 
                     </nav>
                 ) : (
-                <div />
+                <React.Fragment />
                 )}
                 
         
                 <div className="sectionContainer">
                     {/* this.state.mainStyle != "containerHome" ? (<div className="headerImg"></div>) : (<React.Fragment /> )*//*Switch is going to be like a wrapper for all the routes that we have*/}
                     <div className="section">
+
                     <Switch>
-                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/" render={(props) => <Home {...props} link={<button><Link to="/book" className="bookNowButton" onClick={this.bookNow}>Boka Nu</Link></button>} />}/>
                         <Route path="/menu" component={Menu}/>
                         <Route path="/book" component={Book}/>
                         <Route path="/contact" component={Contact}/>
