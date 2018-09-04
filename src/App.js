@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "font-awesome/css/font-awesome.min.css";
-import Admin from "./components/Admin";
+import Admin from "./components/routes/Admin";
 import "./App.css";
 
 import {
@@ -26,64 +26,14 @@ class App extends Component {
     mainStyle: "containerHome",
     scroll: ""
   };
+
   componentDidMount = () => {
-    //        fetch('https://www.idabergstrom.se/restaurant-api/product/read.php')
-    //          .then(function(response) {
-    //            return response.json();
-    //          })
-    //          .then(function(myJson) {
-    //            console.log(myJson);
-    //          });
     //add styling if you go to site from direkturl
     this.checkUrl();
     //check width to see if nav should be displayed
     this.widthCheck();
     window.addEventListener("resize", this.widthCheck);
     window.addEventListener("scroll", this.handleScroll);
-  };
-
-
-
-
-  /***** ADMIN TEST FUNCTIONS, THESE ARE TO BE MOVED LATER TO ADMIN UI *******/
-
-  updateBooking = () => {
-    fetch("https://www.idabergstrom.se/restaurant-api/update.php", {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify({
-        id: "24",
-        name: "Uppdaterat namn",
-        email: "Uppdaterad mail",
-        telephone: "Uppdaterat telefonnummer",
-        bdate: "Uppdaterad dag",
-        btime: "Uppdaterad tid"
-      })
-    })
-      .then(response => response.json())
-      .then(fetched => {
-        console.log(fetched);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  deleteBooking = () => {
-    fetch("https://www.idabergstrom.se/restaurant-api/deleteBooking.php", {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify({
-        bid: "20"
-      })
-    })
-      .then(response => response.json())
-      .then(fetched => {
-        console.log(fetched);
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
 
   checkUrl = () => {
@@ -97,6 +47,7 @@ class App extends Component {
       this.setState({ mainStyle: "containerHome" });
     }
   };
+
   handleScroll = () => {
     const scroll = window.scrollY;
     if (scroll > 160) {
@@ -104,8 +55,8 @@ class App extends Component {
     } else {
       this.setState({ scroll: "" });
     }
-    console.log(scroll);
   };
+
   widthCheck = () => {
     var width = window.innerWidth;
     if (width > 1000) {
@@ -115,30 +66,10 @@ class App extends Component {
     }
   };
 
-  /* searchBooking = () => {   
-        fetch('https://www.idabergstrom.se/restaurant-api/search.php', {
-          method: 'POST',
-          mode: 'cors',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-          body: JSON.stringify({
-            keywords: 'Pelle'
-          }) 
-        })
-          .then(response => response.json())
-          .then(fetched => {
-            console.log(fetched);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-    } */
-
-  /**************************************************************************/
   toggleNav = () => {
     this.setState({ toggleNav: !this.state.toggleNav });
   };
+
   mainStyle = input => {
     this.setState({ mainStyle: input });
     var width = window.innerWidth;
@@ -148,6 +79,7 @@ class App extends Component {
       this.setState({ toggleNav: false });
     }
    };
+
    bookNow = () =>{
         console.log("hej")
         this.setState({ mainStyle: "containerBook" });

@@ -91,7 +91,7 @@ function Calendar(props) {
                     <h3>Bokat tidigare? V.g. fyll i telefonnummer: </h3>
                     <FormInput onChange={props.onChange} name="telephone" type="text"/>
                     {props.state.telephone === 'error' && props.state.name === '' ? <span className="error">Telefonnumret finns inte i vår databas</span> : ""}
-                    <button className="nextButton" onClick={(event)=>{ props.changeBokingStep(event);}} disabled={props.state.telephone === '' || props.state.name !== ''} value={"4"}> Boka! </button>
+                    <button className="nextButton" onClick={(event)=>{ props.changeBokingStep(event);}} disabled={props.state.telephone === '' || props.state.name !== ''} value={"4"}> BOKA NU! </button>
 
                     <h3>Dina uppgifter:</h3>
                     <CustomerForm onChange={props.onChange} state={props.state}/>
@@ -100,7 +100,7 @@ function Calendar(props) {
                             value={"4"}
                             disabled={props.state.telephone === '' || props.state.telephone === 'error' || props.state.name === '' || props.state.name === 'error' || props.state.email === '' || props.state.email === 'error'}
                             >
-                        BOKA NU!!
+                        BOKA NU!
                     </button>
 
                 </div>) 
