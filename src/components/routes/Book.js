@@ -6,32 +6,28 @@ import Calendar from './../Calendar';
 import moment from 'moment';
     
 class Book extends React.Component {
-  state = { 
-    /*** Booking: ***/
-    name: '',
-    email: '',
-    telephone: '',
-    bdate: '',
-    btime: '',
-    numberOfGuests: '',
-    customerId: '',
-    /*** Calendar: ***/
-    selectedDate: undefined,
-    allBookings: [],
-    disabledDates: [],
-    availableAt18: true,
-    availableAt21: true,
-    /*** How far they have come in booking ***/
-    bookingStep: "1",
-    fetchCalendarError: '',
-    fetchBookingError: ''
-  }
-    
-  /******************************************************/
-  /***************** Booking functions ******************/
-  /******************************************************/
+    state = { 
+        /*** Booking: ***/
+        name: '',
+        email: '',
+        telephone: '',
+        bdate: '',
+        btime: '',
+        numberOfGuests: '',
+        customerId: '',
+        /*** Calendar: ***/
+        selectedDate: undefined,
+        allBookings: [],
+        disabledDates: [],
+        availableAt18: true,
+        availableAt21: true,
+        /*** How far they have come in booking ***/
+        bookingStep: "1",
+        fetchCalendarError: '',
+        fetchBookingError: ''
+    }
 
-     /* This function is called from the Calendar component: */
+    /* This function is called from the Calendar component: */
     onDayClick = (event,  modifiers = {}) => {
         if (modifiers.disabled) {
             return;
@@ -40,12 +36,11 @@ class Book extends React.Component {
         let selectedDate = event;
         /* Saving the date in original format in selectedDate state to work with selected date-function in calendar: */
         this.setState({ selectedDate: event})
-//        this.setState({ selectedDate: selectedDate})
         
         /* But date is also formatted and saved to also be compatible with disable date-function in calendar: */
         selectedDate = moment(selectedDate).format("YYYY[,] MM[,] DD");
          
-         this.setState({ bdate: selectedDate }, () => {
+        this.setState({ bdate: selectedDate }, () => {
              /* When a date is selected, we need to check which times are available on that date, 
              so we are running another function to check that: */
             this.isSittingAvailable();
@@ -117,10 +112,9 @@ class Book extends React.Component {
             /* Removing potential old error from state */
             this.setState({ fetchError: '' })
         })
-          .catch(error => {
-            console.log(error.message);
+        .catch(error => {
             this.setState({ fetchBookingError: error.message })
-          });
+        });
     } 
     
     postBookingWithCustomerId = () => {
@@ -139,17 +133,10 @@ class Book extends React.Component {
             /* Removing potential old error from state */
             this.setState({ fetchBookingError: '' })
         })
-          .catch(error => {
-            console.log(error);
-            this.setState({ fetchError : error.message })
-          });
+        .catch(error => {
+            this.setState({ fetchBookingError : error.message })
+        });
     } 
-    
-    
-    
-  /******************************************************/
-  /***************** Availability content ***************/
-  /******************************************************/
 
     disabledDates = () => {
         let bookingsArray = this.state.allBookings;
@@ -165,8 +152,6 @@ class Book extends React.Component {
             }
         }
         this.setState({ disabledDates: disabledDatesArray })
-        console.log(counts);
-        console.log(disabledDatesArray);
     }
   
     isSittingAvailable = () => {
@@ -178,12 +163,12 @@ class Book extends React.Component {
         let bookingsAt18 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '18')));
         let bookingsAt21 = bookingsArray.filter((day) => ((day.bdate === selectedDate) && (day.btime === '21')));
         
-        /* Setting different states depening on amount of booknigs (== length of array -1, because array start at zero.) */
+        /* Setting different states depening on amount of booknigs */
         /* These states are then used to toggle different style depending on whether any table is available. */
-        if(bookingsAt18.length >= 1){ // TEST, THESE MUST BE CHANGED TO 14 LATER ON!
+        if(bookingsAt18.length >= 1){ // TEST, THESE MUST BE CHANGED TO 15 LATER ON!
             this.setState({ availableAt18: false }) 
         }
-        if(bookingsAt21.length >= 1){ // TEST, THESE MUST BE CHANGED TO 14 LATER ON!
+        if(bookingsAt21.length >= 1){ // TEST, THESE MUST BE CHANGED TO 15 LATER ON!
             this.setState({ availableAt21: false }) 
         }
     }
@@ -225,6 +210,7 @@ class Book extends React.Component {
             this.setState({ allBookings: data }, () => {
                 /* As soon as the bookings are set in state, we can proceed to calculate adjustments in booking calendar: */
                 this.disabledDates();
+                /* Removing potential old error from state */
                 this.setState({ fetchCalendarError: '' })
             });
         })
@@ -235,11 +221,8 @@ class Book extends React.Component {
     }
     
   render() {
-      
-
-     
+    
     let timepickerText = '';
-      
     if(this.state.bookingStep === "1"){
         timepickerText = `Välkommen till våran bordsbokning! Var god välj ett datum i kalendern. Tryck sedan "nästa" för att gå vidare.`
     }else if(this.state.bookingStep === "2"){
@@ -248,7 +231,6 @@ class Book extends React.Component {
         timepickerText = `Nu kan du fylla i dina kontaktuppgifter i formuläret nedan.`
     }
 
-    
     return (
         <React.Fragment>
             <div className="headerImg">
