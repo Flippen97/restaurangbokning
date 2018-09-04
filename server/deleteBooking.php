@@ -9,4 +9,8 @@
 
     $statement->execute(array(":bid" => $array["bid"]));
 
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($data, JSON_PRETTY_PRINT);
+
 ?>
