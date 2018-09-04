@@ -36,7 +36,7 @@ function Calendar(props) {
 //                    initialMonth={new Date(2018, 7)}
                     month={new Date()}
                     toMonth={new Date(2018, 11)}
-                    disabledDays={ props.disabledDates.map((date) => new Date(date)) }
+                    disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
 
 
 //                disabledDays={[ props.disabledDates.map((date) => new Date(date)), 

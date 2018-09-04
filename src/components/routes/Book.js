@@ -248,8 +248,7 @@ class Book extends React.Component {
                     onChangeSelect={this.handleSelect}
                     postBooking={this.postBooking}
                     allreadyCustomer={this.allreadyCustomer}
-                    availableAt18={this.state.availableAt18}
-                    availableAt21={this.state.availableAt21}
+                
                 />
     
             </div>
