@@ -29,10 +29,6 @@ function CustomerForm(props) {
                 id="telephoneField" 
                 onChange={props.onChange}
             />
-
-            {/*<div className="form-group">
-                <input type="submit" onClick={props.postBooking} value="Posta ny kund" state={props.state}/>
-            </div>*/}
       </form>
       
     );

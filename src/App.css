@@ -7,6 +7,10 @@
 .hide {
     display: none;
 }
+.error{
+    color: rgb(174, 22, 22);
+    display: block;
+}
 /******************************/
 /********** header ***********/
 /******************************/
@@ -118,7 +122,10 @@ li a:hover {
     background-color:lightgray;
     cursor: pointer;
 }
-        
+.bookNowButton{
+    color: #000;
+    text-decoration: none;
+}
 /******************************/
 /*********** Menu *************/
 /******************************/
@@ -214,16 +221,28 @@ li a:hover {
     margin-top: 40px;
     padding: 10px 73px;
 }
-.bookHeader {
+
+.bookContainer{
     width: 100%;
-    height: 20%;
-    color: black;
-    padding: 10px;
+    margin: 0px auto;
+    max-width: 600px;
 }
-.bookSection {
-    width: 50%;
-    color: black;
-    padding: 10px;
+.bookSection, .bookHeader{
+    margin:15px;
+}
+.divideSpace{
+    display: grid;
+    grid-template-columns: 100%; 
+}
+.chosenDate{
+    display: flex;
+    justify-content: start;
+    font-size:1.2em;
+    font-weight: bold;
+}
+.DayPicker{
+    margin: 0 auto;
+    max-width: 290px;
 }
 .DayPicker-Day:hover {
     background-color: #c59d5f !important;
@@ -265,11 +284,74 @@ input[type=submit],
     border-radius: 4px;
     cursor: pointer;
 }
-input[type=submit]:hover,
+/*input[type=submit]:hover,*/
+
 input[type=submit]:disabled,
-.nextButton:hover,
 .nextButton:disabled{
     background-color: #7c6e59;
+}
+input[type=submit]:hover:enabled,
+.nextButton:hover:enabled{
+    background-color: #f9b551;
+}
+.containerBook form{
+    margin-bottom: 10px;
+}
+.radio{
+    color: #242424;
+    position:relative;
+    margin-left: 4px;
+  }
+.radio span{
+    position:relative;
+    padding-left:20px;
+}
+.radio span:after{
+    content:'';
+    width:15px;
+    height:15px;
+    border:3px solid;
+    position:absolute;
+    left:0;
+    top:1px;
+    border-radius:100%;
+    box-sizing:border-box;
+}
+.radio input[type="radio"]{
+    cursor: pointer; 
+    position:absolute;
+    width:100%;
+    height:100%;
+    z-index: 1;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"
+}
+.radio input[type="radio"]:checked + span{
+    color:#c59d5f;  
+}
+.radio input[type="radio"]:checked + span:before{
+    content:'';
+    width:5px;
+    height:5px;
+    position:absolute;
+    background:#c59d5f;
+    left:5px;
+    top:6px;
+    border-radius:100%;
+}
+.selectMenu .css-2o5izw,
+.selectMenu .css-2o5izw:hover{
+    border-color: #c59d5f;
+    box-shadow: 0 0 0 1px #c59d5f;
+}
+.selectMenu .css-wqgs6e {
+    background-color: #c59d5f;
+}
+.selectMenu .css-z5z6cw,
+.selectMenu .css-z5z6cw:active,
+.selectMenu .css-wqgs6e:active {
+    background-color: #8d6f41 ;
 }
 /******************************/
 /********** Contact ***********/
@@ -353,6 +435,17 @@ input[type=submit]:disabled,
         background-size: cover;
         background-blend-mode: darken;
         background-position: center;
+    }
+    .divideSpace{
+        display: grid;
+        grid-template-columns: 50% 50%; 
+    }
+    .chosenDate{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size:1.2em;
+        font-weight: bold;
     }
     /******************************/
     /********* Contact ************/
