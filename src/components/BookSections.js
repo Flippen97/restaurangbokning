@@ -28,7 +28,7 @@ function BookSections(props) {
             
             {(props.state.bookingStep === "1") ? (
                 <div className="bookSection">
-                
+             
                 {props.state.fetchCalendarError ? <div className="fetchError">
                     Någonting gick fel.<br />
                     Vänligen uppdatera sidan och prova igen.
@@ -43,14 +43,35 @@ function BookSections(props) {
                             fromMonth={new Date(2018, 8)}
                             toMonth={new Date(2018, 11)}
                             disabledDays={ props.state.disabledDates.map((date) => new Date(date)) }
-                         />
+                        />
                         <span className="chosenDate">Valt datum: <br />{formateDate}</span>
                         </div>
                         <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.bdate === '' || props.state.fetchCalendarError} value={"2"}>Nästa</button>
                             </div>
-                         : (<React.Fragment />)}
+
+                        : (<React.Fragment />)}
                            
                 </div>) : '' }
+            {props.state.bookingStep === "2" ? (
+                <div className="bookSection">
+                    <h3>Välj en sittning:</h3>
+                    <form>
+                        {props.state.availableAt18 ? <label className="radio inline"><input type="radio" onClick={props.setTime} data-btime="18" name="time" /><span>18:00</span></label>: <React.Fragment />}
+                        {props.state.availableAt21 ? <label className="radio inline"><input type="radio" onClick={props.setTime} data-btime="21" name="time" /><span>21:00</span></label>: <React.Fragment />}
+                    </form>
+                    Antal personer: <br />
+                    <Select
+                        className={"selectMenu"}
+                        placeholder="Antal personer"
+                        value={selectedOption}
+                        onChange={props.onChangeSelect}
+                        options={options}
+                    />
+
+                    <button className="nextButton" onClick={props.changeBokingStep} disabled={props.state.btime === '' || props.state.numberOfGuests === ''} value={"3"}>Nästa</button>
+                   
+                </div>) 
+            : (<React.Fragment />)}
             
 
             {props.state.bookingStep === "3" ? (
