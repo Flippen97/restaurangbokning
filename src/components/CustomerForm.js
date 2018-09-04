@@ -13,7 +13,7 @@ function CustomerForm(props) {
                 id="nameField" 
                 onChange={props.onChange} 
             />
-        
+            {props.state.name === 'error' ? <span className="error">Namn får bara innehålla bokstäver!</span> : ""}
             <FormInput
                 label="Email: "
                 type="text" 
@@ -21,7 +21,7 @@ function CustomerForm(props) {
                 id="emailField" 
                 onChange={props.onChange} 
             />
-        
+            {props.state.email === 'error' ? <span className="error">Måste vara en email t.ex test@test.com !</span> : ""}
             <FormInput
                 label="Telefon: "
                 type="text" 
@@ -29,6 +29,7 @@ function CustomerForm(props) {
                 id="telephoneField" 
                 onChange={props.onChange}
             />
+            {props.state.telephone === 'error' && props.state.name !== '' ? <span className="error">Telefonnumret finns inte i vår databas</span> : ""}
       </form>
       
     );

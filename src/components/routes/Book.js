@@ -56,12 +56,28 @@ class Book extends React.Component {
 
     /* This function sets name, email, telephone states */
     handleChange = (event) => {
-        let email = event.target.value; 
         
         /* Email only pushed to state if it's valid. If empty state, the user will not be allowed to book. */
         if(event.target.name === 'email'){
+            let email = event.target.value; 
             if(this.validateEmail(email)){
                 this.setState({ email : email })
+            }else{
+                this.setState({ email : 'error' })
+            } 
+        }else if(event.target.name === 'name'){
+            /* check if string only contains letters  */
+            if( event.target.value.search(/[^a-zA-Z]+/) === -1){
+                this.setState({ [event.target.name] : event.target.value })
+            }else{
+                this.setState({ [event.target.name] : 'error' })
+            } 
+        }else if(event.target.name === 'telephone'){
+            /* check if telephone input only contains numbers */
+            if( event.target.value.search(/[^\d+$]/) === -1){
+                this.setState({ [event.target.name] : event.target.value })
+            } else{
+                this.setState({ [event.target.name] : 'error' })
             } 
         }else{
             this.setState({ [event.target.name] : event.target.value })
@@ -77,7 +93,7 @@ class Book extends React.Component {
     }
   
     postBooking = () => {
-        fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
+     /*   fetch(`https://www.idabergstrom.se/restaurant-api/create.php`, {
           method: "POST",
           mode: "cors",
           body: JSON.stringify({
@@ -95,7 +111,9 @@ class Book extends React.Component {
 //          })
           .catch(error => {
             console.log(error);
-          });
+          });  
+          
+          */
     } 
 
     
@@ -133,7 +151,7 @@ class Book extends React.Component {
         bookingsArray.forEach(function(x) { counts[x.bdate] = (counts[x.bdate] || 0)+1; });
         /* This takes bookings that has over 30 counts (= restaurant fully booked) and push them into disabledDates state: */
         for(var key in counts){
-            if(counts[key] >= 29){ // LATER ON THIS SHALL BE CHANGED TO 29!
+            if(counts[key] >= 2){ // LATER ON THIS SHALL BE CHANGED TO 29!
                 disabledDatesArray.push(key);
             }
         }
@@ -233,7 +251,7 @@ class Book extends React.Component {
             <div className="bookContainer">
         
                 <div className="bookHeader">
-                    <h2>Bordsboking</h2>
+                    <h2>Bordsbokning</h2>
                     {timepickerText}
                 </div>
         
