@@ -81,7 +81,6 @@ class App extends Component {
    };
 
    bookNow = () =>{
-        console.log("hej")
         this.setState({ mainStyle: "containerBook" });
         var width = window.innerWidth;
         if(width>1000){
