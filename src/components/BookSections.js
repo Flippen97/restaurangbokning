@@ -87,7 +87,7 @@ function BookSections(props) {
                     <button className="nextButton" 
                             onClick={(event)=>{props.postBooking(); props.changeBokingStep(event);}} 
                             value={"4"}
-                            disabled={props.state.telephone === '' || props.state.telephone === 'error' || props.state.name === '' || props.state.name === 'error' || props.state.email === '' || props.state.email === 'error'}
+                            disabled={props.state.telephone === '' || props.state.telephone === 'error' || props.state.name === '' || props.state.name === 'error' || props.state.email === '' || props.state.email === 'error' || props.state.terms === false}
                             >
                         BOKA NU!!
                     </button>
