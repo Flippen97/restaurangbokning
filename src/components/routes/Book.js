@@ -20,6 +20,7 @@ class Book extends React.Component {
         disabledDates: [],
         availableAt18: true,
         availableAt21: true,
+        terms: false,
         /*** How far they have come in booking ***/
         bookingStep: "1",
         fetchCalendarError: '',
@@ -70,7 +71,7 @@ class Book extends React.Component {
             } 
         }else if(event.target.name === 'name'){
             /* check if string only contains letters  */
-            if( event.target.value.search(/[^a-öA-Ö]\s+/) === -1){
+            if( event.target.value.search(/[^a-öA-Ö\s+$]/) === -1){
                 this.setState({ [event.target.name] : event.target.value })
             }else{
                 this.setState({ [event.target.name] : 'error' })
@@ -82,6 +83,8 @@ class Book extends React.Component {
             } else{
                 this.setState({ [event.target.name] : 'error' })
             } 
+        }else if(event.target.name === 'terms'){
+            this.setState({ [event.target.name]: !this.state.terms });
         }else{
             this.setState({ [event.target.name] : event.target.value })
         }

@@ -81,7 +81,7 @@ class Admin extends Component {
     const bookingsAt21 = bookingsArray.filter(
       day => day.bdate === selectedDate && day.btime === "21"
     );
-    /* There are 15 tables, but we have to count with 14 here because of how array works: */
+    
     if (bookingsAt18.length >= 15) {
       this.setState({ availableAt18: false });
     }

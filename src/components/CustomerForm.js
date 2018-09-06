@@ -30,6 +30,7 @@ function CustomerForm(props) {
                 onChange={props.onChange}
             />
             {props.state.telephone === 'error' && props.state.name !== '' ? <span className="error">Telefonnumret finns inte i vår databas</span> : ""}
+            <input type="checkbox" id="terms" onChange={props.onChange} name="terms" value="terms" /> Ja, jag accepterar FoodFusion allmänna villkor & sekretsspolicy.
       </form>
       
     );
